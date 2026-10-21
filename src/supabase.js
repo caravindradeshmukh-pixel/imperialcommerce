@@ -1035,6 +1035,104 @@ export async function dbFetchFeeStructures() {
   }
 }
 
+export async function dbDeleteFeeStructure(feeId) {
+  try {
+    const { error } = await supabase
+      .from('fee_structures')
+      .delete()
+      .eq('id', feeId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete fee structure from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteStudent(studentId) {
+  try {
+    const { error } = await supabase
+      .from('students')
+      .delete()
+      .eq('id', studentId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete student from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteReceipt(receiptNo) {
+  try {
+    const { error } = await supabase
+      .from('receipts')
+      .delete()
+      .eq('receipt_no', receiptNo);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete receipt from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteExpense(voucherNo) {
+  try {
+    const { error } = await supabase
+      .from('expenses')
+      .delete()
+      .eq('voucher_no', voucherNo);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete expense from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteEnquiry(enquiryId) {
+  try {
+    const { error } = await supabase
+      .from('enquiries')
+      .delete()
+      .eq('id', enquiryId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete enquiry from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteRecruitmentCandidate(candidateId) {
+  try {
+    const { error } = await supabase
+      .from('recruitment_candidates')
+      .delete()
+      .eq('id', candidateId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete recruitment candidate from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbDeleteTeacher(teacherId) {
+  try {
+    const { error } = await supabase
+      .from('teachers')
+      .delete()
+      .eq('id', teacherId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete teacher from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
 // -------------------------------------------------------------
 // BULK SEEDING & BACKUP EXPORT SERVICES
 // -------------------------------------------------------------

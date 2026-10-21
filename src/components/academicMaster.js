@@ -185,9 +185,12 @@ export function renderAcademicAndFeeMasterTab(container, showToast) {
                     <td style="padding: 0.55rem; font-size: 0.75rem; color: var(--text-dim); max-width: 140px;">
                       ${f.notes || 'Standard Per Subject Fee'}
                     </td>
-                    <td style="padding: 0.55rem; text-align: right;">
-                      <button class="edit-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.6rem; font-size: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer;">
+                    <td style="padding: 0.55rem; text-align: right; white-space: nowrap;">
+                      <button class="edit-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer;">
                         ✏️ Edit
+                      </button>
+                      <button class="delete-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; margin-left: 0.3rem;" title="Delete Fee Rule">
+                        🗑️ Delete
                       </button>
                     </td>
                   </tr>
@@ -234,9 +237,12 @@ export function renderAcademicAndFeeMasterTab(container, showToast) {
                         : `<span style="color: var(--text-dim);">-</span>`
                       }
                     </td>
-                    <td style="padding: 0.55rem; text-align: right;">
-                      <button class="edit-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.6rem; font-size: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer;">
+                    <td style="padding: 0.55rem; text-align: right; white-space: nowrap;">
+                      <button class="edit-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer;">
                         ✏️ Edit
+                      </button>
+                      <button class="delete-fee-btn" data-fee-id="${f.id}" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; margin-left: 0.3rem;" title="Delete Fee Rule">
+                        🗑️ Delete
                       </button>
                     </td>
                   </tr>
@@ -491,6 +497,20 @@ export function renderAcademicAndFeeMasterTab(container, showToast) {
       const feeId = btn.getAttribute('data-fee-id');
       const feeObj = state.feeStructures.find(f => f.id === feeId);
       openFeeStructureModal(showToast, feeObj, () => renderAcademicAndFeeMasterTab(container, showToast));
+    });
+  });
+
+  // Delete fee structure buttons (Director Privilege)
+  container.querySelectorAll('.delete-fee-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const feeId = btn.getAttribute('data-fee-id');
+      const feeObj = state.feeStructures.find(f => f.id === feeId);
+      if (!feeObj) return;
+      if (confirm(`Director Authorization: Are you sure you want to delete fee rule for "${feeObj.courseName}" at ${feeObj.branchName || feeObj.branch}?`)) {
+        state.deleteFeeStructure(feeId);
+        showToast(`Fee rule for "${feeObj.courseName}" deleted.`, 'info');
+        renderAcademicAndFeeMasterTab(container, showToast);
+      }
     });
   });
 

@@ -55,6 +55,13 @@ import {
   dbDeleteSubject,
   dbSaveFeeStructure,
   dbFetchFeeStructures,
+  dbDeleteFeeStructure,
+  dbDeleteStudent,
+  dbDeleteReceipt,
+  dbDeleteExpense,
+  dbDeleteEnquiry,
+  dbDeleteRecruitmentCandidate,
+  dbDeleteTeacher,
   seedSupabaseIfEmpty,
   testConnection
 } from './supabase.js';
@@ -937,6 +944,16 @@ class AppState {
     return fee;
   }
 
+  deleteFeeStructure(feeId) {
+    const idx = this.feeStructures.findIndex(f => f.id === feeId);
+    if (idx === -1) return { success: false, message: 'Fee rule not found' };
+    const removed = this.feeStructures.splice(idx, 1)[0];
+    this._save('imp_fee_structures_v6', this.feeStructures);
+    dbDeleteFeeStructure(feeId);
+    this.notify();
+    return { success: true, feeStructure: removed };
+  }
+
   calculateStudentFee(arg1, arg2, selectedSubjects) {
     // Detect which argument is branch and which is course:
     let branchStr = '';
@@ -1107,6 +1124,17 @@ class AppState {
     return { success: true, student };
   }
 
+  deleteStudent(studentId) {
+    const idx = this.students.findIndex(s => s.id === studentId);
+    if (idx === -1) return { success: false, message: 'Student not found' };
+    const removed = this.students.splice(idx, 1)[0];
+    this._save('imp_students_v6', this.students);
+    this._save('imp_students_v5', this.students);
+    dbDeleteStudent(studentId);
+    this.notify();
+    return { success: true, student: removed };
+  }
+
   setPublicTab(tab) {
     this.currentPublicTab = tab;
     localStorage.setItem('imp_public_tab_v5', tab);
@@ -1156,12 +1184,39 @@ class AppState {
     };
 
     this.receipts.unshift(receipt);
+    this._save('imp_students_v6', this.students);
     this._save('imp_students_v5', this.students);
+    this._save('imp_receipts_v6', this.receipts);
     this._save('imp_receipts_v5', this.receipts);
     dbSaveReceipt(receipt);
     dbSaveStudent(student);
     this.notify();
     return receipt;
+  }
+
+  deleteReceipt(receiptNo) {
+    const idx = this.receipts.findIndex(r => r.receiptNo === receiptNo);
+    if (idx === -1) return { success: false, message: 'Receipt not found' };
+    const removed = this.receipts.splice(idx, 1)[0];
+    
+    // Reverse paid fee on student record if present
+    if (removed.studentId) {
+      const student = this.students.find(s => s.id === removed.studentId);
+      if (student) {
+        student.paidFees = Math.max(0, (student.paidFees || 0) - (removed.amount || 0));
+        student.dueFees = Math.max(0, (student.totalFees || 0) - (student.paidFees || 0));
+        student.status = student.dueFees === 0 ? 'Paid' : (student.paidFees > 0 ? 'Partial' : 'Pending');
+        this._save('imp_students_v6', this.students);
+        this._save('imp_students_v5', this.students);
+        dbSaveStudent(student);
+      }
+    }
+
+    this._save('imp_receipts_v6', this.receipts);
+    this._save('imp_receipts_v5', this.receipts);
+    dbDeleteReceipt(receiptNo);
+    this.notify();
+    return { success: true, receipt: removed };
   }
 
   // --- ACTIONS: EXPENSES & VOUCHERS (WITH COURSE & COMMON ALLOCATION) ---
@@ -1206,6 +1261,16 @@ class AppState {
     dbSaveExpense(expense);
     this.notify();
     return expense;
+  }
+
+  deleteExpense(voucherNo) {
+    const idx = this.expenses.findIndex(e => e.voucherNo === voucherNo);
+    if (idx === -1) return { success: false, message: 'Expense voucher not found' };
+    const removed = this.expenses.splice(idx, 1)[0];
+    this._save('imp_expenses_v5', this.expenses);
+    dbDeleteExpense(voucherNo);
+    this.notify();
+    return { success: true, expense: removed };
   }
 
   // --- ACTIONS: ATTENDANCE & WHATSAPP ALERTS ---
@@ -1353,6 +1418,16 @@ class AppState {
       dbUpdateEnquiryStatus(id, newStatus, reason);
       this.notify();
     }
+  }
+
+  deleteEnquiry(id) {
+    const idx = this.enquiries.findIndex(e => e.id === id);
+    if (idx === -1) return { success: false, message: 'Enquiry not found' };
+    const removed = this.enquiries.splice(idx, 1)[0];
+    this._save('imp_enquiries_v5', this.enquiries);
+    dbDeleteEnquiry(id);
+    this.notify();
+    return { success: true, enquiry: removed };
   }
 
   // --- ACTIONS: TEACHING PLANS & LESSON NOTES ---
@@ -1766,6 +1841,125 @@ class AppState {
       dbUpdateCandidateStatus(id, newStatus, notes);
       this.notify();
     }
+  }
+
+  deleteCandidate(id) {
+    const idx = this.recruitment.findIndex(c => c.id === id);
+    if (idx === -1) return { success: false, message: 'Candidate not found' };
+    const removed = this.recruitment.splice(idx, 1)[0];
+    this._save('imp_recruitment_v5', this.recruitment);
+    dbDeleteRecruitmentCandidate(id);
+    this.notify();
+    return { success: true, candidate: removed };
+  }
+
+  deleteAnyEntry(type, id) {
+    switch (type) {
+      case 'student':
+        return this.deleteStudent(id);
+      case 'receipt':
+        return this.deleteReceipt(id);
+      case 'expense':
+      case 'voucher':
+        return this.deleteExpense(id);
+      case 'enquiry':
+        return this.deleteEnquiry(id);
+      case 'course':
+        return this.deleteCourse(id);
+      case 'subject':
+        return this.deleteSubject(id);
+      case 'feeStructure':
+        return this.deleteFeeStructure(id);
+      case 'candidate':
+        return this.deleteCandidate(id);
+      default:
+        return { success: false, message: `Unknown data type "${type}"` };
+    }
+  }
+
+  purgeMockData({ keepOfficialStudents = true, clearReceipts = false, clearExpenses = false, clearEnquiries = false } = {}) {
+    const officialStudentIds = ['s1', 's2', 's3', 's4', 's5'];
+    let removedStudents = 0;
+    let removedReceipts = 0;
+    let removedExpenses = 0;
+    let removedEnquiries = 0;
+
+    if (keepOfficialStudents) {
+      const mockStudents = this.students.filter(s => !officialStudentIds.includes(s.id));
+      removedStudents = mockStudents.length;
+      mockStudents.forEach(s => dbDeleteStudent(s.id));
+      this.students = this.students.filter(s => officialStudentIds.includes(s.id));
+      this._save('imp_students_v6', this.students);
+      this._save('imp_students_v5', this.students);
+    }
+
+    if (clearReceipts) {
+      removedReceipts = this.receipts.length;
+      this.receipts.forEach(r => dbDeleteReceipt(r.receiptNo));
+      this.receipts = [];
+      this._save('imp_receipts_v6', this.receipts);
+      this._save('imp_receipts_v5', this.receipts);
+
+      // Reset students to pending
+      this.students.forEach(s => {
+        s.paidFees = 0;
+        s.dueFees = s.totalFees;
+        s.status = 'Pending';
+      });
+      this._save('imp_students_v6', this.students);
+      this._save('imp_students_v5', this.students);
+    }
+
+    if (clearExpenses) {
+      removedExpenses = this.expenses.length;
+      this.expenses.forEach(e => dbDeleteExpense(e.voucherNo));
+      this.expenses = [];
+      this._save('imp_expenses_v5', this.expenses);
+    }
+
+    if (clearEnquiries) {
+      removedEnquiries = this.enquiries.length;
+      this.enquiries.forEach(enq => dbDeleteEnquiry(enq.id));
+      this.enquiries = [];
+      this._save('imp_enquiries_v5', this.enquiries);
+    }
+
+    this.notify();
+    return {
+      success: true,
+      removedStudents,
+      removedReceipts,
+      removedExpenses,
+      removedEnquiries
+    };
+  }
+
+  resetToOfficialRecords() {
+    this.students = JSON.parse(JSON.stringify(INITIAL_STUDENTS));
+    this.courses = JSON.parse(JSON.stringify(INITIAL_COURSES));
+    this.subjectsCatalog = JSON.parse(JSON.stringify(SUBJECTS_CATALOG));
+    this.feeStructures = JSON.parse(JSON.stringify(INITIAL_FEE_STRUCTURES));
+    this.receipts = JSON.parse(JSON.stringify(INITIAL_RECEIPTS));
+    this.expenses = JSON.parse(JSON.stringify(INITIAL_EXPENSES));
+    this.enquiries = JSON.parse(JSON.stringify(INITIAL_ENQUIRIES));
+    this.recruitment = JSON.parse(JSON.stringify(INITIAL_RECRUITMENT));
+    this.teachers = JSON.parse(JSON.stringify(INITIAL_TEACHERS));
+
+    this._save('imp_students_v6', this.students);
+    this._save('imp_students_v5', this.students);
+    this._save('imp_courses_v6', this.courses);
+    this._save('imp_subjects_v6', this.subjectsCatalog);
+    this._save('imp_fee_structures_v6', this.feeStructures);
+    this._save('imp_receipts_v6', this.receipts);
+    this._save('imp_receipts_v5', this.receipts);
+    this._save('imp_expenses_v5', this.expenses);
+    this._save('imp_enquiries_v5', this.enquiries);
+    this._save('imp_recruitment_v5', this.recruitment);
+    this._save('imp_teachers_v6', this.teachers);
+    this._save('imp_teachers_v5', this.teachers);
+
+    this.notify();
+    return { success: true, message: 'All records successfully restored to official baseline.' };
   }
 
   // --- FINANCIAL & REMUNERATION LEDGER CALCULATIONS ---

@@ -13,6 +13,7 @@ import {
   openEnrolStudentModal,
   openEditStudentModal
 } from './academicMaster.js';
+import { openDataCleanupModal } from './dataCleanupModal.js';
 
 export function renderDirectorPortal(container, showToast) {
   const activeTab = state.currentDirectorTab || 'academicMaster';
@@ -29,7 +30,8 @@ export function renderDirectorPortal(container, showToast) {
     { id: 'performance', label: 'Performance & Marks', icon: '🎯', desc: 'Weekly tests, quarterly exams, pre-boards, behavioral remarks & homework audit' },
     { id: 'teachers', label: 'Teachers & 60% Share', icon: '👨‍🏫', desc: 'Daily 60% fee share ledger, teaching plans stipulated vs actual, & portion notes' },
     { id: 'communication', label: 'Communication (WhatsApp)', icon: '💬', desc: 'Direct 1-click WhatsApp parent/student connect for fees, attendance & counseling' },
-    { id: 'recruitment', label: 'Recruitment Desk', icon: '👔', desc: 'Faculty & staff candidate pipeline, demo lecture schedules & hiring status' }
+    { id: 'recruitment', label: 'Recruitment Desk', icon: '👔', desc: 'Faculty & staff candidate pipeline, demo lecture schedules & hiring status' },
+    { id: 'dataManagement', label: 'Data Cleanup & Purge', icon: '🧹', desc: 'Delete wrong entries, remove mock test data, or restore official master baseline' }
   ];
 
   const currentTabObj = tabs.find(t => t.id === activeTab) || tabs[0];
@@ -75,7 +77,7 @@ export function renderDirectorPortal(container, showToast) {
             }).join('')}
           </div>
 
-          <!-- Fast Master Creation Buttons -->
+          <!-- Fast Master Creation & Data Management Buttons -->
           <button id="director-quick-course-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(207,168,78,0.15); border: 1px solid var(--border-gold); color: var(--accent-gold-light); font-weight: 700; border-radius: 6px; cursor: pointer;">
             + Course
           </button>
@@ -90,6 +92,9 @@ export function renderDirectorPortal(container, showToast) {
           </button>
           <button id="director-quick-voucher-btn" class="btn btn-secondary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); color: #e2e8f0; border-radius: 6px; cursor: pointer;">
             + Voucher
+          </button>
+          <button id="director-quick-cleanup-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.45); color: #fca5a5; font-weight: 800; border-radius: 6px; cursor: pointer;" title="Director Data Cleanup & Purge Center">
+            🧹 Clean Data
           </button>
         </div>
       </div>
@@ -207,6 +212,13 @@ export function renderDirectorPortal(container, showToast) {
     });
   }
 
+  const quickCleanupBtn = container.querySelector('#director-quick-cleanup-btn');
+  if (quickCleanupBtn) {
+    quickCleanupBtn.addEventListener('click', () => {
+      openDataCleanupModal(showToast, () => renderDirectorPortal(container, showToast));
+    });
+  }
+
   // Render the active tab view
   switch (activeTab) {
     case 'academicMaster':
@@ -238,6 +250,12 @@ export function renderDirectorPortal(container, showToast) {
       break;
     case 'recruitment':
       renderRecruitmentTab(tabContent, showToast);
+      break;
+    case 'dataManagement':
+      openDataCleanupModal(showToast, () => {
+        state.currentDirectorTab = 'fees';
+        renderDirectorPortal(container, showToast);
+      });
       break;
     default:
       renderAcademicAndFeeMasterTab(tabContent, showToast);
@@ -355,9 +373,12 @@ function renderFeeDetailsTab(container, showToast) {
                 <td style="padding: 0.6rem; font-weight: 700; color: #34d399;">₹${r.amount.toLocaleString()}</td>
                 <td style="padding: 0.6rem; font-weight: 600; color: var(--accent-gold-light);">₹${(r.teacherShare60 || Math.round(r.amount * 0.6)).toLocaleString()}</td>
                 <td style="padding: 0.6rem; font-size: 0.8rem; color: var(--text-dim);">${r.mode}</td>
-                <td style="padding: 0.6rem; text-align: right;">
-                  <button class="view-receipt-btn" data-receipt-no="${r.receiptNo}" style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer; font-size: 0.75rem;">
+                <td style="padding: 0.6rem; text-align: right; white-space: nowrap;">
+                  <button class="view-receipt-btn" data-receipt-no="${r.receiptNo}" style="padding: 0.3rem 0.55rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer; font-size: 0.75rem;">
                     📄 View
+                  </button>
+                  <button class="delete-receipt-btn" data-receipt-no="${r.receiptNo}" style="padding: 0.3rem 0.55rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; font-size: 0.75rem; font-weight: 700; margin-left: 0.3rem;" title="Delete Receipt">
+                    🗑️ Delete
                   </button>
                 </td>
               </tr>
@@ -433,6 +454,9 @@ function renderStudentFeeRows(students) {
           <button class="row-collect-btn" data-student-id="${s.id}" style="padding: 0.3rem 0.65rem; background: rgba(207,168,78,0.18); border: 1px solid var(--border-gold); border-radius: 4px; color: var(--accent-gold-light); font-size: 0.72rem; font-weight: 600; cursor: pointer;">
             + Receipt
           </button>
+          <button class="row-delete-student-btn" data-student-id="${s.id}" data-student-name="${s.name}" style="padding: 0.3rem 0.55rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; font-size: 0.72rem; cursor: pointer; font-weight: 700;" title="Delete Student Record">
+            🗑️ Delete
+          </button>
         </div>
       </td>
     </tr>
@@ -453,6 +477,18 @@ function attachStudentRowEvents(container, showToast) {
       openFeeReceiptDialog(showToast, sId);
     });
   });
+
+  container.querySelectorAll('.row-delete-student-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sId = btn.getAttribute('data-student-id');
+      const sName = btn.getAttribute('data-student-name');
+      if (confirm(`Director Authorization: Are you sure you want to delete student "${sName}"? This entry will be permanently deleted from local and cloud databases.`)) {
+        state.deleteStudent(sId);
+        showToast(`Student "${sName}" successfully deleted.`, 'info');
+        renderFeeDetailsTab(container, showToast);
+      }
+    });
+  });
 }
 
 function attachReceiptPrintEvents(container) {
@@ -463,6 +499,17 @@ function attachReceiptPrintEvents(container) {
       if (rec) {
         const modalContainer = document.getElementById('modal-container');
         openReceiptModal(rec, modalContainer);
+      }
+    });
+  });
+
+  container.querySelectorAll('.delete-receipt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const recNo = btn.getAttribute('data-receipt-no');
+      if (confirm(`Director Authorization: Are you sure you want to delete receipt ${recNo}? Corresponding student balance will be recalculated.`)) {
+        state.deleteReceipt(recNo);
+        showToast(`Receipt ${recNo} successfully deleted.`, 'info');
+        renderFeeDetailsTab(container, showToast);
       }
     });
   });
@@ -656,9 +703,12 @@ function renderExpensesTab(container, showToast) {
                 <td style="padding: 0.65rem; font-weight: 700; color: #f87171;">₹${exp.amount.toLocaleString()}</td>
                 <td style="padding: 0.65rem; font-size: 0.75rem; color: var(--text-muted);">${exp.mode} (${exp.reference})</td>
                 <td style="padding: 0.65rem; font-size: 0.8rem; color: var(--text-gold);">${exp.authorizedBy}</td>
-                <td style="padding: 0.65rem; text-align: right;">
-                  <button class="view-voucher-btn" data-voucher-no="${exp.voucherNo}" style="padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer; font-size: 0.75rem;">
+                <td style="padding: 0.65rem; text-align: right; white-space: nowrap;">
+                  <button class="view-voucher-btn" data-voucher-no="${exp.voucherNo}" style="padding: 0.3rem 0.55rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; cursor: pointer; font-size: 0.75rem;">
                     🧾 View
+                  </button>
+                  <button class="delete-voucher-btn" data-voucher-no="${exp.voucherNo}" style="padding: 0.3rem 0.55rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; font-size: 0.75rem; font-weight: 700; margin-left: 0.3rem;" title="Delete Voucher">
+                    🗑️ Delete
                   </button>
                 </td>
               </tr>
@@ -682,6 +732,18 @@ function renderExpensesTab(container, showToast) {
       if (v) {
         const modalContainer = document.getElementById('modal-container');
         openVoucherModal(v, modalContainer);
+      }
+    });
+  });
+
+  // Attach delete voucher listener
+  container.querySelectorAll('.delete-voucher-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const vNo = btn.getAttribute('data-voucher-no');
+      if (confirm(`Director Authorization: Are you sure you want to delete expenditure voucher ${vNo}?`)) {
+        state.deleteExpense(vNo);
+        showToast(`Voucher ${vNo} deleted.`, 'info');
+        renderExpensesTab(container, showToast);
       }
     });
   });
@@ -1471,6 +1533,7 @@ function renderEnquiryReportTab(container, showToast) {
               <th style="padding: 0.65rem;">Center</th>
               <th style="padding: 0.65rem;">Counselor Notes</th>
               <th style="padding: 0.65rem;">Follow Up</th>
+              <th style="padding: 0.65rem; text-align: right;">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -1486,6 +1549,11 @@ function renderEnquiryReportTab(container, showToast) {
                 <td style="padding: 0.65rem; font-size: 0.8rem; color: var(--text-muted);">${e.branch}</td>
                 <td style="padding: 0.65rem; font-size: 0.8rem; color: #cbd5e1;">${e.counselorNotes}</td>
                 <td style="padding: 0.65rem; font-size: 0.8rem; color: #34d399; font-weight: 600;">${e.followUpDate}</td>
+                <td style="padding: 0.65rem; text-align: right;">
+                  <button class="delete-enquiry-btn" data-enquiry-id="${e.id}" style="padding: 0.25rem 0.55rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; font-size: 0.72rem; font-weight: 700;">
+                    🗑️ Delete
+                  </button>
+                </td>
               </tr>
             `).join('')}
           </tbody>
@@ -1508,6 +1576,7 @@ function renderEnquiryReportTab(container, showToast) {
               <th style="padding: 0.65rem;">Center</th>
               <th style="padding: 0.65rem; color: #fca5a5;">Discontinuation Reason (Documented)</th>
               <th style="padding: 0.65rem;">Status</th>
+              <th style="padding: 0.65rem; text-align: right;">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -1531,6 +1600,11 @@ function renderEnquiryReportTab(container, showToast) {
                     Discontinued
                   </span>
                 </td>
+                <td style="padding: 0.65rem; text-align: right;">
+                  <button class="delete-enquiry-btn" data-enquiry-id="${e.id}" style="padding: 0.25rem 0.55rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 4px; color: #f87171; cursor: pointer; font-size: 0.72rem; font-weight: 700;">
+                    🗑️ Delete
+                  </button>
+                </td>
               </tr>
             `).join('')}
           </tbody>
@@ -1542,6 +1616,18 @@ function renderEnquiryReportTab(container, showToast) {
   // Attach new enquiry modal
   container.querySelector('#add-enquiry-btn').addEventListener('click', () => {
     openNewEnquiryDialog(showToast);
+  });
+
+  // Attach delete enquiry listeners
+  container.querySelectorAll('.delete-enquiry-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const eId = btn.getAttribute('data-enquiry-id');
+      if (confirm('Director Authorization: Are you sure you want to delete this enquiry?')) {
+        state.deleteEnquiry(eId);
+        showToast('Enquiry deleted.', 'info');
+        renderEnquiryReportTab(container, showToast);
+      }
+    });
   });
 }
 
