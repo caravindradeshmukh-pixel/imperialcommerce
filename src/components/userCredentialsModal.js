@@ -5,6 +5,19 @@ import { state } from '../state.js';
 import { UNIVERSAL_PASSWORD } from '../mockData.js';
 
 export function renderUserCredentialsTab(container, showToast) {
+  if (!state.currentUser || state.currentUser.role !== 'director') {
+    container.innerHTML = `
+      <div class="card" style="padding: 3rem 2rem; text-align: center; background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #b91c1c; border-radius: 12px; max-width: 600px; margin: 3rem auto;">
+        <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
+        <h3 style="color: #0f2042; font-weight: 800; margin-bottom: 0.5rem;">Confidentiality Restriction</h3>
+        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">
+          This master credentials desk is strictly confidential and reserved exclusively for Director Ishwari Deshmukh and Director Shrikrishna Deshmukh.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
   const activeDirector = state.getActiveDirector();
   let filterRole = 'all';
   let searchQuery = '';
@@ -132,8 +145,8 @@ export function renderUserCredentialsTab(container, showToast) {
             <div style="font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
               <span>📋</span> Official User Directory (${accounts.length} Accounts Displayed)
             </div>
-            <div style="font-size: 0.78rem; color: #cbd5e1;">
-              Default Universal Password: <code style="background: rgba(255,255,255,0.15); padding: 0.15rem 0.45rem; border-radius: 4px; color: #fef08a;">${UNIVERSAL_PASSWORD}</code>
+            <div style="font-size: 0.78rem; color: #e2e8f0; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🛡️</span> Director Ishwari Deshmukh Authority • Encrypted Credentials
             </div>
           </div>
 

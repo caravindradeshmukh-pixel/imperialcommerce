@@ -15,8 +15,58 @@ import {
 } from './academicMaster.js';
 import { openDataCleanupModal } from './dataCleanupModal.js';
 import { renderUserCredentialsTab } from './userCredentialsModal.js';
+import { openLoginModal } from './loginModal.js';
+import { openMandatoryPasswordResetModal } from './passwordResetModal.js';
 
 export function renderDirectorPortal(container, showToast) {
+  // 1. Strict Authentication Guard - Confidential Executive Window Only
+  if (!state.currentUser || (state.currentUser.role !== 'director' && !state.canAccessRole('director'))) {
+    container.innerHTML = `
+      <div style="max-width: 620px; margin: 4rem auto; padding: 2.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-top: 6px solid #0f2042; border-radius: 14px; text-align: center; box-shadow: 0 15px 40px rgba(15,32,66,0.12);">
+        <div style="width: 58px; height: 58px; margin: 0 auto 1.25rem; border-radius: 14px; background: linear-gradient(135deg, #0f2042, #1e3a8a); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #ffffff;">🔒</div>
+        <h2 style="color: #0f2042; font-size: 1.45rem; font-weight: 800; margin-bottom: 0.5rem;">Access Restricted • Executive Authentication Required</h2>
+        <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          The Director Executive Console contains confidential student enrolments, fee collections, faculty records, and financial statements. Only authorized Imperial Commerce Directors may view this page.
+        </p>
+        <button id="gate-director-login-btn" style="background: linear-gradient(135deg, #0f2042, #1e3a8a); color: #fff; border: none; padding: 0.8rem 1.85rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 15px rgba(15,32,66,0.25);">
+          🔐 Sign In with Director Credentials
+        </button>
+      </div>
+    `;
+    const btn = container.querySelector('#gate-director-login-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        openLoginModal('director');
+      });
+    }
+    return;
+  }
+
+  // 2. Mandatory First-Time Password Reset Guard (Password@123 must be reset immediately)
+  if (state.currentUser && state.currentUser.mustResetPassword) {
+    container.innerHTML = `
+      <div style="max-width: 620px; margin: 4.5rem auto; padding: 2.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-top: 6px solid #0f2042; border-radius: 14px; text-align: center; box-shadow: 0 20px 50px rgba(15,32,66,0.18);">
+        <div style="width: 64px; height: 64px; margin: 0 auto 1.25rem; border-radius: 16px; background: linear-gradient(135deg, #0f2042, #1e3a8a); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #ffffff;">🔑</div>
+        <h2 style="color: #0f2042; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Mandatory Password Reset Required</h2>
+        <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          Welcome Director <strong>${state.currentUser.name}</strong>. In accordance with institutional confidentiality governance, you must reset your initial temporary password (<code>Password@123</code>) to establish your private credentials before viewing the Executive Console.
+        </p>
+        <button id="btn-trigger-director-reset" style="background: linear-gradient(135deg, #0f2042, #1e3a8a); color: #fff; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(15,32,66,0.25);">
+          🔑 Set My Private Password Now →
+        </button>
+      </div>
+    `;
+    const btn = container.querySelector('#btn-trigger-director-reset');
+    const launchReset = () => {
+      openMandatoryPasswordResetModal(state.currentUser, showToast, () => {
+        renderDirectorPortal(container, showToast);
+      });
+    };
+    if (btn) btn.addEventListener('click', launchReset);
+    launchReset();
+    return;
+  }
+
   const activeTab = state.currentDirectorTab || 'academicMaster';
   const activeDirector = state.getActiveDirector();
   const allDirectors = state.directors || [];

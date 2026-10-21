@@ -91,13 +91,22 @@ class AppState {
 
     // Auth & Navigation State
     this.currentUser = this._load('imp_current_user_v8', null);
-    this.currentRole = localStorage.getItem('imp_role_v8') || 'public';
+    // Strict Confidentiality Guard: If not authenticated, role is ALWAYS 'public'
+    this.currentRole = this.currentUser ? (this.currentUser.role || 'public') : 'public';
+    localStorage.setItem('imp_role_v8', this.currentRole);
     this.currentStudentId = localStorage.getItem('imp_student_id_v8') || 's1';
     this.currentParentStudentId = localStorage.getItem('imp_parent_ward_v8') || 's1';
     this.currentTeacherId = localStorage.getItem('imp_teacher_id_v8') || 't1';
 
     // User Accounts & Password Management Desk (Under authority of Director Ishwari Deshmukh)
     this.userAccounts = this._load('imp_user_accounts_v8', INITIAL_USER_ACCOUNTS);
+    // Ensure both Directors require first-time password reset if not yet completed
+    this.userAccounts.forEach(u => {
+      if (u.role === 'director' && u.hasResetInitialPassword === undefined && (u.password === 'Password@123' || !u.passwordChangedAt)) {
+        u.mustResetPassword = true;
+        u.hasResetInitialPassword = false;
+      }
+    });
     
     // Active tabs within portals
     this.currentPublicTab = localStorage.getItem('imp_public_tab_v8') || 'overview';
@@ -857,13 +866,36 @@ class AppState {
       };
     }
 
-    // Verify Password against custom assigned password OR universal fallback
-    const isPasswordValid = (acc.password && cleanPass === acc.password) || cleanPass === UNIVERSAL_PASSWORD;
-    if (!isPasswordValid) {
-      return { 
-        success: false, 
-        message: 'Incorrect password. Please contact Director Ishwari Deshmukh if you need your password reset.' 
-      };
+    // Verify Password against role-specific security rules
+    if (acc.role === 'director') {
+      const isInitialPass = cleanPass === 'Password@123';
+      const isCustomPass = acc.password && cleanPass === acc.password;
+
+      if (acc.mustResetPassword) {
+        if (!isInitialPass && !isCustomPass) {
+          return {
+            success: false,
+            message: 'Incorrect initial password. For first login, please enter the initial temporary password Password@123.'
+          };
+        }
+      } else {
+        // Once director has reset their initial password, ONLY their personal private password is accepted
+        if (!isCustomPass) {
+          return {
+            success: false,
+            message: 'Incorrect password. Please enter the private password you established, or contact Director Ishwari Deshmukh.'
+          };
+        }
+      }
+    } else {
+      // For staff, teachers, students, parents
+      const isPasswordValid = (acc.password && cleanPass === acc.password) || cleanPass === UNIVERSAL_PASSWORD;
+      if (!isPasswordValid) {
+        return { 
+          success: false, 
+          message: 'Incorrect password. Please verify credentials issued by Director Ishwari Deshmukh.' 
+        };
+      }
     }
 
     // Set persona & active references
@@ -884,7 +916,63 @@ class AppState {
     localStorage.setItem('imp_role_v8', this.currentRole);
     this.notify();
 
-    return { success: true, user: this.currentUser };
+    return { 
+      success: true, 
+      user: this.currentUser,
+      requiresPasswordReset: acc.role === 'director' && !!acc.mustResetPassword
+    };
+  }
+
+  changeDirectorPassword(directorId, currentPassword, newPassword) {
+    const acc = this.userAccounts.find(u => u.id === directorId || u.directorId === directorId);
+    if (!acc) {
+      return { success: false, message: 'Director account not found.' };
+    }
+
+    const cleanCurrent = String(currentPassword || '').trim();
+    const cleanNew = String(newPassword || '').trim();
+
+    // Verify current password against initial Password@123 or saved password
+    const validCurrent = (acc.password && cleanCurrent === acc.password) || cleanCurrent === 'Password@123';
+    if (!validCurrent) {
+      return { success: false, message: 'Current password does not match. Please verify your initial password.' };
+    }
+
+    if (!cleanNew || cleanNew.length < 6) {
+      return { success: false, message: 'New password must be at least 6 characters long for director accounts.' };
+    }
+
+    if (cleanNew.toLowerCase() === 'password@123') {
+      return { success: false, message: 'New password cannot be the default "Password@123". Please choose a unique private password.' };
+    }
+
+    acc.password = cleanNew;
+    acc.mustResetPassword = false;
+    acc.hasResetInitialPassword = true;
+    acc.passwordChangedAt = new Date().toISOString();
+
+    if (this.currentUser && (this.currentUser.id === acc.id || this.currentUser.directorId === acc.directorId)) {
+      this.currentUser.password = cleanNew;
+      this.currentUser.mustResetPassword = false;
+      this.currentUser.hasResetInitialPassword = true;
+      this._save('imp_current_user_v8', this.currentUser);
+    }
+
+    this._save('imp_user_accounts_v8', this.userAccounts);
+    this.notify();
+
+    return { 
+      success: true, 
+      message: `Password changed successfully for Director ${acc.name}. Welcome to the Executive Console.`,
+      account: acc
+    };
+  }
+
+  canAccessRole(role) {
+    if (role === 'public') return true;
+    if (!this.currentUser) return false;
+    if (this.currentUser.role === 'director') return true;
+    return this.currentUser.role === role;
   }
 
   logout() {
@@ -896,9 +984,34 @@ class AppState {
   }
 
   setRole(role) {
+    // Public site is always accessible
+    if (role === 'public') {
+      this.currentRole = 'public';
+      localStorage.setItem('imp_role_v8', 'public');
+      this.notify();
+      return { success: true };
+    }
+
+    // Confidential Portals require an authenticated session
+    if (!this.currentUser) {
+      this.currentRole = 'public';
+      localStorage.setItem('imp_role_v8', 'public');
+      this.notify();
+      return { success: false, requiresAuth: true, message: 'Please sign in to access this portal.' };
+    }
+
+    // Role-based boundary enforcement
+    if (this.currentUser.role !== role && this.currentUser.role !== 'director') {
+      return { 
+        success: false, 
+        message: `Access denied. You are logged in as "${this.currentUser.name}" (${this.currentUser.role}).` 
+      };
+    }
+
     this.currentRole = role;
     localStorage.setItem('imp_role_v8', role);
     this.notify();
+    return { success: true };
   }
 
   // --- ACTIONS: COURSE MASTER (Director Authority) ---

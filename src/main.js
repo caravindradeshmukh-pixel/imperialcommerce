@@ -48,6 +48,25 @@ function renderApp() {
   // Render navigation dock
   renderNavbar(navContainer);
 
+  // Strict Confidentiality Gate: Never render confidential portals if unauthenticated
+  if (state.currentRole !== 'public' && !state.currentUser) {
+    state.currentRole = 'public';
+    renderPublicSite(appRoot, showToast);
+    return;
+  }
+
+  // If Director is logged in but has not yet reset initial password, trigger mandatory reset modal
+  if (state.currentUser && state.currentUser.role === 'director' && state.currentUser.mustResetPassword) {
+    const modalContainer = document.getElementById('modal-container');
+    if (modalContainer && modalContainer.classList.contains('hidden')) {
+      import('./components/passwordResetModal.js').then(({ openMandatoryPasswordResetModal }) => {
+        openMandatoryPasswordResetModal(state.currentUser, showToast, () => {
+          renderApp();
+        });
+      });
+    }
+  }
+
   // Render active role view
   switch (state.currentRole) {
     case 'public':
@@ -89,42 +108,49 @@ state.subscribe(() => {
   renderApp();
 });
 
-// Support URL query parameter ?theme=, ?role= and ?tab=
+// Support URL query parameters with strict security validation
 const urlParams = new URLSearchParams(window.location.search);
 const queryTheme = urlParams.get('theme');
 if (queryTheme === 'light' || queryTheme === 'dark') {
   state.setTheme(queryTheme);
 }
+
 const queryRole = urlParams.get('role');
 if (queryRole) {
   if (queryRole === 'recruitment' || queryRole === 'careers') {
     state.currentRole = 'public';
     state.currentPublicTab = 'recruitment';
-  } else {
+  } else if (state.currentUser && state.canAccessRole(queryRole)) {
     state.currentRole = queryRole;
-    if (!state.currentUser && queryRole === 'director') {
-      state.currentUser = { userId: 'Director', role: 'director', name: 'Director Dr. S. K. Joshi', avatar: '👑' };
-    } else if (!state.currentUser && queryRole === 'admin') {
-      state.currentUser = { userId: 'Admin', role: 'admin', name: 'Admin Officer Nilesh Patil', avatar: '🛡️' };
-    }
+  } else {
+    // Unauthenticated attempt to access private portal: Keep public, open login modal
+    state.currentRole = 'public';
+    setTimeout(() => {
+      import('./components/loginModal.js').then(({ openLoginModal }) => {
+        openLoginModal(queryRole);
+      });
+    }, 300);
   }
 }
 
 const queryTab = urlParams.get('tab');
 if (queryTab) {
-  if (queryRole === 'director') {
-    state.currentDirectorTab = queryTab;
-  } else if (queryRole === 'admin') {
-    state.currentAdminTab = queryTab;
-  } else if (queryRole === 'student') {
-    state.currentStudentTab = queryTab;
-  } else if (queryRole === 'teacher') {
-    state.currentTeacherTab = queryTab;
-  } else if (['recruitment', 'careers', 'join-team', 'join'].includes(queryTab)) {
+  if (['recruitment', 'careers', 'join-team', 'join'].includes(queryTab)) {
     state.currentRole = 'public';
     state.currentPublicTab = 'recruitment';
-  } else {
-    state.currentDirectorTab = queryTab;
+  } else if (['overview', 'courses', 'branches', 'toppers'].includes(queryTab)) {
+    state.currentRole = 'public';
+    state.currentPublicTab = queryTab;
+  } else if (state.currentUser) {
+    if (state.currentRole === 'director') {
+      state.currentDirectorTab = queryTab;
+    } else if (state.currentRole === 'admin') {
+      state.currentAdminTab = queryTab;
+    } else if (state.currentRole === 'student') {
+      state.currentStudentTab = queryTab;
+    } else if (state.currentRole === 'teacher') {
+      state.currentTeacherTab = queryTab;
+    }
   }
 }
 

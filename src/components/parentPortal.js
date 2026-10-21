@@ -5,7 +5,32 @@ import { state } from '../state.js';
 import { openQRPayModal } from './qrPayModal.js';
 import { openReceiptModal } from './receiptModal.js';
 
+import { openLoginModal } from './loginModal.js';
+
 export function renderParentPortal(container, showToast) {
+  // Strict Session Guard
+  if (!state.currentUser || (!['parent', 'director'].includes(state.currentUser.role))) {
+    container.innerHTML = `
+      <div style="max-width: 600px; margin: 4rem auto; padding: 2.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-top: 5px solid #0f2042; border-radius: 14px; text-align: center; box-shadow: 0 15px 40px rgba(15,32,66,0.12);">
+        <div style="font-size: 2.8rem; margin-bottom: 1rem;">👨‍👩‍👧</div>
+        <h2 style="color: #0f2042; font-size: 1.45rem; font-weight: 800; margin-bottom: 0.5rem;">Parent Authentication Required</h2>
+        <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          Please sign in with your verified Parent account to monitor your ward's academic attendance, portion progress, and official fee receipts.
+        </p>
+        <button id="gate-parent-login-btn" style="background: linear-gradient(135deg, #0f2042, #1e3a8a); color: #fff; border: none; padding: 0.8rem 1.85rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 15px rgba(15,32,66,0.25);">
+          🔐 Sign In as Parent
+        </button>
+      </div>
+    `;
+    const btn = container.querySelector('#gate-parent-login-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        openLoginModal('parent');
+      });
+    }
+    return;
+  }
+
   const modalContainer = document.getElementById('modal-container');
 
   function render() {
