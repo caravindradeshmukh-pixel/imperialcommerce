@@ -2,42 +2,92 @@
 
 export const UNIVERSAL_PASSWORD = 'Password@123';
 
+export const DIRECTORS_LIST = [
+  {
+    id: 'dir1',
+    name: 'Ishwari Deshmukh',
+    email: 'ishwari.deshmukh@gmail.com',
+    altEmail: 'ishwari1.deshmukh@gmail.com',
+    phone: '9850311082',
+    avatar: 'ID',
+    title: 'Managing Director & Academic Patron',
+    badge: 'Managing Director'
+  },
+  {
+    id: 'dir2',
+    name: 'Shrikrishna Deshmukh',
+    email: 'k.deshmukh78@gmail.com',
+    phone: '9823979878',
+    avatar: 'SD',
+    title: 'Managing Director & Operations Head',
+    badge: 'Managing Director'
+  }
+];
+
 export const USER_CREDENTIALS = {
+  'Director - Ishwari Deshmukh': {
+    role: 'director',
+    directorId: 'dir1',
+    name: 'Ishwari Deshmukh',
+    email: 'ishwari.deshmukh@gmail.com',
+    phone: '9850311082',
+    avatar: 'ID',
+    title: 'Managing Director & Academic Patron',
+    badge: 'Managing Director'
+  },
+  'Director - Shrikrishna Deshmukh': {
+    role: 'director',
+    directorId: 'dir2',
+    name: 'Shrikrishna Deshmukh',
+    email: 'k.deshmukh78@gmail.com',
+    phone: '9823979878',
+    avatar: 'SD',
+    title: 'Managing Director & Operations Head',
+    badge: 'Managing Director'
+  },
   'Director': {
     role: 'director',
-    name: 'Dr. S. K. Joshi (Director)',
-    avatar: 'DIR',
+    directorId: 'dir1',
+    name: 'Ishwari Deshmukh',
+    email: 'ishwari.deshmukh@gmail.com',
+    phone: '9850311082',
+    avatar: 'ID',
     title: 'Managing Director & Academic Patron',
-    badge: 'Executive Admin'
+    badge: 'Managing Director'
   },
   'Admin Staff': {
     role: 'admin',
-    name: 'Nilesh Patil (Admin Officer)',
-    avatar: 'ADM',
-    title: 'Chief Administrator & Accounts Desk',
+    name: 'Pranav Toradmal',
+    email: 'toradmalpranav33@gmail.com',
+    phone: '9850311082',
+    avatar: 'PT',
+    title: 'Administrator & Operations Desk',
     badge: 'Operations Desk'
   },
   'Teacher': {
     role: 'teacher',
-    name: 'Prof. Arvind Deshpande (CA)',
-    avatar: 'AD',
-    title: 'Senior Faculty - Accounts & Taxation',
-    badge: 'Faculty Lead'
+    teacherId: 't1',
+    name: 'CA Ravindra Deshmukh',
+    email: 'caravindradeshmukh@gmail.com',
+    phone: '9823283377',
+    avatar: 'RD',
+    title: 'Senior Faculty - Accounts & Economics',
+    badge: 'Lead Faculty'
   },
   'Student': {
     role: 'student',
-    name: 'Aarav Sharma',
+    name: 'Arush Thorat',
     studentId: 's1',
-    avatar: 'AS',
-    title: '12th Commerce Regular Student (Roll #IMP-2026-01)',
+    avatar: 'AT',
+    title: '12th ICGSE Student (Roll #IMP-2026-01)',
     badge: 'Gangapur Rd Center'
   },
   'Parents': {
     role: 'parent',
-    name: 'Rajesh Sharma',
+    name: 'Mr Thorat',
     wardId: 's1',
-    avatar: 'RS',
-    title: 'Parent of Aarav Sharma (12th Commerce)',
+    avatar: 'MT',
+    title: 'Parent of Arush Thorat (12th ICGSE)',
     badge: 'Verified Guardian'
   }
 };
@@ -45,45 +95,67 @@ export const USER_CREDENTIALS = {
 export const INITIAL_TEACHERS = [
   {
     id: 't1',
-    name: 'Prof. Arvind Deshpande (CA)',
-    avatar: 'AD',
-    qualification: 'Chartered Accountant (FCA) & M.Com (Advanced Accountancy)',
-    role: 'Senior Faculty Lead - Accounts & Taxation',
-    phone: '+91 98220 12345',
-    email: 'arvind.deshpande@imperialcommerce.edu.in',
-    assignedCourses: ['c1', 'c2', 'c3', 'c5'],
-    assignedSubjects: ['Accounts', 'Income Tax', 'GST', 'Law & Ethics'],
+    name: 'CA Ravindra Deshmukh',
+    avatar: 'RD',
+    qualification: 'Chartered Accountant (FCA) & Senior Commerce Faculty',
+    role: 'Senior Faculty Lead - Accounts, Economics & Enterprise',
+    phone: '9823283377',
+    email: 'caravindradeshmukh@gmail.com',
+    branch: 'Gangapur Road',
+    assignedBranches: ['Gangapur Road'],
+    assignedCourses: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'],
+    assignedSubjects: ['Account', 'Economics', 'Enterprise', 'Accounts', 'Income Tax', 'GST'],
     status: 'Active',
     honorariumSharePercent: 60,
-    directorRemarks: 'Lead faculty for Accountancy and Direct/Indirect Tax; assigned 11th, 12th, and CA/CS batches.'
+    directorRemarks: 'Lead faculty for Accountancy, Economics and Cambridge IGCSE pedagogy at Gangapur Road.'
   },
   {
     id: 't2',
-    name: 'Prof. Rajesh Kulkarni (CMA)',
-    avatar: 'RK',
-    qualification: 'Cost & Management Accountant (ACMA) & B.Com',
-    role: 'Senior Cost & Management Accounting Faculty',
-    phone: '+91 98221 54321',
-    email: 'rajesh.kulkarni@imperialcommerce.edu.in',
-    assignedCourses: ['c4', 'c3'],
-    assignedSubjects: ['Costing (Cost & Management Accounting)', 'Maths & Statistics'],
+    name: 'Pranav Toradmal',
+    avatar: 'PT',
+    qualification: 'Corporate Law & Commercial Accounts Specialist',
+    role: 'Senior Faculty - Accountancy & Corporate Law',
+    phone: '9370728283',
+    email: 'toradmalpranav33@gmail.com',
+    branch: 'Satpur Colony',
+    assignedBranches: ['Satpur Colony'],
+    assignedCourses: ['c1', 'c2', 'c3', 'c4', 'c5'],
+    assignedSubjects: ['Account', 'Law', 'Costing (Cost & Management Accounting)', 'Accounts'],
     status: 'Active',
     honorariumSharePercent: 60,
-    directorRemarks: 'Specialist for CMA & CA Inter Costing, Standard Costing and Quantitative Arithmetic.'
+    directorRemarks: 'Specialist for Corporate & Mercantile Law, CS EET and Foundation Accounts at Satpur Colony.'
   },
   {
     id: 't3',
-    name: 'Prof. Sunita Rao',
-    avatar: 'SR',
-    qualification: 'M.Com, Cambridge Certified Commerce Faculty',
-    role: 'International Curriculum & Economics Specialist',
-    phone: '+91 98223 99887',
-    email: 'sunita.rao@imperialcommerce.edu.in',
-    assignedCourses: ['c6', 'c1', 'c2'],
-    assignedSubjects: ['Enterprises', 'Economics'],
+    name: 'Mrs Kavita Oak',
+    avatar: 'KO',
+    qualification: 'M.Sc. Mathematics & Quantitative Statistics Faculty',
+    role: 'Senior Quantitative Aptitude & Mathematics Faculty',
+    phone: '93599 88246',
+    email: 'kavitaoak@gmail.com',
+    branch: 'Satpur Colony & Gangapur Road',
+    assignedBranches: ['Satpur Colony', 'Gangapur Road'],
+    assignedCourses: ['c1', 'c2', 'c3'],
+    assignedSubjects: ['Maths', 'Maths & Statistics'],
     status: 'Active',
     honorariumSharePercent: 60,
-    directorRemarks: 'Head for Cambridge IGCSE Enterprises, Macro & Micro Economics pedagogy.'
+    directorRemarks: 'Head of Mathematics for Junior College & CA Foundation across Satpur and Gangapur Road.'
+  },
+  {
+    id: 't4',
+    name: 'Mr Digvijay Pawar',
+    avatar: 'DP',
+    qualification: 'M.A. Economics & Applied Business Economics Faculty',
+    role: 'Economics Specialist Faculty',
+    phone: '82755 86504',
+    email: 'digvijaypawar410@gmail.com',
+    branch: 'Satpur Colony',
+    assignedBranches: ['Satpur Colony'],
+    assignedCourses: ['c1', 'c2', 'c3'],
+    assignedSubjects: ['Eco', 'Economics'],
+    status: 'Active',
+    honorariumSharePercent: 60,
+    directorRemarks: 'Economics faculty specializing in State Board & Professional Foundation economics.'
   }
 ];
 
@@ -110,53 +182,131 @@ export const NASHIK_BRANCHES = [
 
 export const SUBJECTS_CATALOG = [
   {
-    name: 'Accounts',
-    coverage: 'All Courses (11th, 12th, CA, CMA, CS, IGCSE)',
+    name: 'Account',
+    category: 'Core Accounting',
+    coverage: '11th, 12th, CA Foundation, CMA, CS EET, ICGSE',
     tag: 'Core Foundation',
-    desc: 'Ledger perfection, Journal entries, Partnership accounts, Company Balance Sheets, and Advanced Accounting standards.'
+    desc: 'Ledger perfection, Journal entries, Partnership accounts, Company Balance Sheets, and Advanced Accounting standards.',
+    defaultFee: 10000
   },
   {
-    name: 'Maths & Statistics',
-    coverage: 'All Courses (11th, 12th, CA, CMA, CS)',
-    tag: 'Quantitative Aptitude',
-    desc: 'Business Mathematics, Logical Reasoning, Calculus, Financial Mathematics, and Statistical distributions.'
+    name: 'Accounts',
+    category: 'Core Accounting',
+    coverage: 'All Courses (11th, 12th, CA, CMA, CS, IGCSE)',
+    tag: 'Core Foundation',
+    desc: 'Ledger balancing, Double entry systems, Final Accounts and Corporate financial statements.',
+    defaultFee: 10000
+  },
+  {
+    name: 'Account 1',
+    category: 'Degree Accounting',
+    coverage: 'FY Bcom (Pune University)',
+    tag: 'Degree Accounting',
+    desc: 'Financial Accounting Paper 1: Amortization, Consignment, Royalty Accounts & Hire Purchase.',
+    defaultFee: 8000
+  },
+  {
+    name: 'Account 2',
+    category: 'Degree Accounting',
+    coverage: 'FY Bcom (Pune University)',
+    tag: 'Degree Accounting',
+    desc: 'Financial Accounting Paper 2: Departmental Accounts, Branch Accounts & Final Accounts of Companies.',
+    defaultFee: 8000
   },
   {
     name: 'Economics',
+    category: 'Economics & Commerce',
     coverage: 'All Courses (11th, 12th, CA, CMA, CS, IGCSE)',
     tag: 'Macro & Micro',
-    desc: 'Consumer equilibrium, National Income, Public Finance, Monetary Policy, and International Trade dynamics.'
+    desc: 'Consumer equilibrium, National Income, Public Finance, Monetary Policy, and International Trade dynamics.',
+    defaultFee: 10000
+  },
+  {
+    name: 'Eco',
+    category: 'Economics & Commerce',
+    coverage: 'Satpur & Gangapur Batches (11th, 12th, CA Foundation)',
+    tag: 'Applied Economics',
+    desc: 'Micro & Macro economic analysis, demand forecasting and Indian economic environment.',
+    defaultFee: 6500
+  },
+  {
+    name: 'Maths & Statistics',
+    category: 'Quantitative Aptitude',
+    coverage: 'All Courses (11th, 12th, CA, CMA, CS)',
+    tag: 'Quantitative Aptitude',
+    desc: 'Business Mathematics, Logical Reasoning, Calculus, Financial Mathematics, and Statistical distributions.',
+    defaultFee: 10000
+  },
+  {
+    name: 'Maths',
+    category: 'Quantitative Aptitude',
+    coverage: '11th, 12th, CA Foundation (Satpur & Gangapur)',
+    tag: 'Quantitative Aptitude',
+    desc: 'Higher commercial mathematics, matrices, differential calculus, probability and quantitative problem-solving.',
+    defaultFee: 8000
+  },
+  {
+    name: 'Enterprise',
+    category: 'International Curriculum',
+    coverage: '10th & 12th ICGSE (Cambridge International)',
+    tag: 'International Curriculum',
+    desc: 'Business innovation, Entrepreneurial finance, Marketing strategies, and Practical enterprise business plan formulation.',
+    defaultFee: 15000
+  },
+  {
+    name: 'Law',
+    category: 'Corporate & Mercantile Law',
+    coverage: 'CA Foundation, CS EET, CMA Foundation',
+    tag: 'Corporate & Mercantile Law',
+    desc: 'Indian Contract Act 1872, Sale of Goods Act, Partnership Act & Companies Act essentials.',
+    defaultFee: 10000
   },
   {
     name: 'Costing (Cost & Management Accounting)',
+    category: 'Professional Intermediate',
     coverage: 'CA Inter, CMA Inter, CS Inter',
     tag: 'Professional Intermediate',
-    desc: 'Material, Labor & Overheads, Activity Based Costing, Standard Costing, Marginal Costing, and Budgetary Control.'
+    desc: 'Material, Labor & Overheads, Activity Based Costing, Standard Costing, Marginal Costing, and Budgetary Control.',
+    defaultFee: 15000
   },
   {
     name: 'Income Tax (Direct Taxation)',
+    category: 'Professional Intermediate',
     coverage: 'CA Inter, CS Inter, CMA Inter',
     tag: 'Professional Intermediate',
-    desc: 'Five Heads of Income, Deductions under Chapter VI-A, Clubbing, Set-off & Carry Forward, and Assessment procedures.'
+    desc: 'Five Heads of Income, Deductions under Chapter VI-A, Clubbing, Set-off & Carry Forward, and Assessment procedures.',
+    defaultFee: 15000
   },
   {
     name: 'GST (Goods & Services Tax - Indirect Taxation)',
+    category: 'Professional Intermediate',
     coverage: 'CA Inter, CS Inter, CMA Inter',
     tag: 'Professional Intermediate',
-    desc: 'CGST/SGST/IGST framework, Levy & Collection, Input Tax Credit (ITC), Valuation rules, and Digital Invoicing.'
-  },
-  {
-    name: 'Enterprises',
-    coverage: 'IGCSE (Commerce)',
-    tag: 'International Curriculum',
-    desc: 'Business innovation, Entrepreneurial finance, Marketing strategies, and Practical enterprise business plan formulation.'
-  },
-  {
-    name: 'Law & Ethics',
-    coverage: 'CA, CS, CMA (Foundation & Inter)',
-    tag: 'Corporate & Mercantile Law',
-    desc: 'Indian Contract Act, Sale of Goods Act, Companies Act 2013, LLP Act, and Corporate Governance & Ethics.'
+    desc: 'CGST/SGST/IGST framework, Levy & Collection, Input Tax Credit (ITC), Valuation rules, and Digital Invoicing.',
+    defaultFee: 15000
   }
+];
+
+export const INITIAL_FEE_STRUCTURES = [
+  // Gangapur Road (Standard Rates per Image 1 & Users.xlsx)
+  { id: 'fee_g1', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c1', courseName: '11th Commerce', perSubjectFee: 10000, feeText: 'per subject Rs 10,000/-', specialRates: {}, notes: 'per subject Rs 10,000/-' },
+  { id: 'fee_g2', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c2', courseName: '12th Commerce', perSubjectFee: 10000, feeText: 'per subject Rs 10,000/-', specialRates: {}, notes: 'per subject Rs 10,000/-' },
+  { id: 'fee_g3', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c3', courseName: 'CA Foundation', perSubjectFee: 15000, feeText: 'per subject Rs 15,000/-', specialRates: {}, notes: 'per subject Rs 15,000/-' },
+  { id: 'fee_g4', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c4', courseName: 'CMA Foundation', perSubjectFee: 15000, feeText: 'per subject Rs 15,000/-', specialRates: {}, notes: 'per subject Rs 15,000/-' },
+  { id: 'fee_g5', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c5', courseName: 'CS EET', perSubjectFee: 15000, feeText: 'per subject Rs 15,000/-', specialRates: {}, notes: 'per subject Rs 15,000/-' },
+  { id: 'fee_g6', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c6', courseName: '10th ICGSE', perSubjectFee: 15000, feeText: 'per subject Rs 15,000/-', specialRates: {}, notes: 'per subject Rs 15,000/-' },
+  { id: 'fee_g7', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c7', courseName: '12th ICGSE', perSubjectFee: 15000, feeText: 'per subject Rs 15,000/-', specialRates: {}, notes: 'per subject Rs 15,000/-' },
+  { id: 'fee_g8', branchId: 'b2', branch: 'Gangapur Road Center', branchName: 'Gangapur Road', courseId: 'c8', courseName: 'FY Bcom', perSubjectFee: 8000, feeText: 'per subject Rs 8,000/-', specialRates: {}, notes: 'per subject Rs 8,000/-' },
+
+  // Satpur Colony (Regular Rates & Maths Special per Image 1 & Users.xlsx)
+  { id: 'fee_s1', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c1', courseName: '11th Commerce', perSubjectFee: 6500, feeText: 'Per subject 6500 ( Maths Rs 8000)', specialRates: { Maths: 8000, 'Maths & Statistics': 8000 }, notes: 'Per subject 6500 ( Maths Rs 8000)' },
+  { id: 'fee_s2', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c2', courseName: '12th Commerce', perSubjectFee: 7000, feeText: 'Per subject 7000 ( Maths Rs 9000)', specialRates: { Maths: 9000, 'Maths & Statistics': 9000 }, notes: 'Per subject 7000 ( Maths Rs 9000)' },
+  { id: 'fee_s3', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c3', courseName: 'CA Foundation', perSubjectFee: 10000, feeText: 'Per subject 10,000', specialRates: {}, notes: 'Per subject 10,000' },
+  { id: 'fee_s4', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c4', courseName: 'CMA Foundation', perSubjectFee: 10000, feeText: 'Per subject 10,000', specialRates: {}, notes: 'Per subject 10,000' },
+  { id: 'fee_s5', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c5', courseName: 'CS EET', perSubjectFee: 10000, feeText: 'Per subject 10,000', specialRates: {}, notes: 'Per subject 10,000' },
+  { id: 'fee_s6', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c6', courseName: '10th ICGSE', perSubjectFee: 10000, feeText: 'Per subject 10,000', specialRates: {}, notes: 'Per subject 10,000' },
+  { id: 'fee_s7', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c7', courseName: '12th ICGSE', perSubjectFee: 10000, feeText: 'Per subject 10,000', specialRates: {}, notes: 'Per subject 10,000' },
+  { id: 'fee_s8', branchId: 'b1', branch: 'Satpur Colony Center', branchName: 'Satpur Colony', courseId: 'c8', courseName: 'FY Bcom', perSubjectFee: 6000, feeText: 'Per subject 6,000', specialRates: {}, notes: 'Per subject 6,000' }
 ];
 
 export const INITIAL_COURSES = [
@@ -167,10 +317,12 @@ export const INITIAL_COURSES = [
     level: 'Junior College Foundation',
     board: 'Maharashtra State Board / CBSE',
     branches: 'Satpur Colony & Gangapur Road Centers',
+    perSubjectFee: 10000,
+    fullFee: 30000,
     subjectsList: [
-      { name: 'Accounts', note: 'Double entry book-keeping, Journal & Ledger foundation' },
-      { name: 'Maths & Statistics', note: 'Business maths, commercial arithmetic & statistics' },
-      { name: 'Economics', note: 'Basic micro & macro economic principles & graph analysis' }
+      { name: 'Account', note: 'Double entry book-keeping, Journal & Ledger foundation' },
+      { name: 'Economics', note: 'Basic micro & macro economic principles & graph analysis' },
+      { name: 'Maths', note: 'Business maths, commercial arithmetic & statistics' }
     ],
     servicesOffered: [
       'Daily Portion Covered tracking visible to parents & students',
@@ -190,10 +342,12 @@ export const INITIAL_COURSES = [
     level: 'HSC Board Excellence',
     board: 'Maharashtra State Board / CBSE',
     branches: 'Satpur Colony & Gangapur Road Centers',
+    perSubjectFee: 10000,
+    fullFee: 30000,
     subjectsList: [
-      { name: 'Accounts', note: 'Partnership final accounts, Company shares & debentures' },
-      { name: 'Maths & Statistics', note: 'Calculus, Commercial mathematics & Probability' },
-      { name: 'Economics', note: 'National Income, Public Finance & Board question answers' }
+      { name: 'Account', note: 'Partnership final accounts, Company shares & debentures' },
+      { name: 'Economics', note: 'National Income, Public Finance & Board question answers' },
+      { name: 'Maths', note: 'Calculus, Commercial mathematics & Probability' }
     ],
     servicesOffered: [
       'Comprehensive Board Exam Answer Presentation clinics',
@@ -208,19 +362,18 @@ export const INITIAL_COURSES = [
   },
   {
     id: 'c3',
-    code: 'CA-PRO',
-    name: 'CA Foundation / Inter',
+    code: 'CA-FOUND',
+    name: 'CA Foundation',
     level: 'ICAI Professional Course',
     board: 'Institute of Chartered Accountants of India',
     branches: 'Satpur Colony & Gangapur Road Centers',
+    perSubjectFee: 15000,
+    fullFee: 45000,
     subjectsList: [
-      { name: 'Accounts (Foundation & Inter)', note: 'Accounting principles & Advanced company accounts' },
-      { name: 'Maths & Statistics (Foundation)', note: 'Business mathematics, logical reasoning & stats' },
-      { name: 'Economics (Foundation)', note: 'Business economics & commercial knowledge' },
-      { name: 'Costing (CA Inter)', note: 'Cost & Management Accounting, standard & marginal costing' },
-      { name: 'Income Tax (CA Inter)', note: 'Direct taxation, heads of income & total income computation' },
-      { name: 'GST (CA Inter)', note: 'Indirect taxation, supply, ITC & compliance procedures' },
-      { name: 'Law (CA Foundation & Inter)', note: 'Business laws, Indian Contract Act & Companies Act 2013' }
+      { name: 'Account', note: 'Accounting principles & Advanced company accounts' },
+      { name: 'Law', note: 'Business laws, Indian Contract Act & Companies Act 2013' },
+      { name: 'Economics', note: 'Business economics & commercial knowledge' },
+      { name: 'Maths', note: 'Business mathematics, logical reasoning & stats' }
     ],
     servicesOffered: [
       'Lectures delivered by practicing Qualified Chartered Accountants',
@@ -235,19 +388,18 @@ export const INITIAL_COURSES = [
   },
   {
     id: 'c4',
-    code: 'CMA-PRO',
-    name: 'CMA Foundation / Inter',
+    code: 'CMA-FOUND',
+    name: 'CMA Foundation',
     level: 'ICMAI Professional Course',
     board: 'Institute of Cost Accountants of India',
     branches: 'Satpur Colony & Gangapur Road Centers',
+    perSubjectFee: 15000,
+    fullFee: 45000,
     subjectsList: [
-      { name: 'Accounts (Foundation & Inter)', note: 'Financial accounting & corporate reporting' },
-      { name: 'Maths & Statistics (Foundation)', note: 'Quantitative aptitude & statistical techniques' },
-      { name: 'Economics (Foundation)', note: 'Business economics & fundamentals of management' },
-      { name: 'Costing (CMA Inter)', note: 'Cost accounting, operational analysis & budgetary control' },
-      { name: 'Income Tax (CMA Inter)', note: 'Direct taxation assessment & corporate tax computation' },
-      { name: 'GST (CMA Inter)', note: 'Indirect taxation, GST laws, rules & customs procedures' },
-      { name: 'Law (CMA Foundation & Inter)', note: 'Commercial laws, industrial jurisprudence & corporate law' }
+      { name: 'Account', note: 'Financial accounting & corporate reporting' },
+      { name: 'Law', note: 'Commercial laws, industrial jurisprudence & corporate law' },
+      { name: 'Economics', note: 'Business economics & fundamentals of management' },
+      { name: 'Maths', note: 'Quantitative aptitude & statistical techniques' }
     ],
     servicesOffered: [
       'Specialized focus on Industrial Costing numericals and variance analysis',
@@ -263,16 +415,16 @@ export const INITIAL_COURSES = [
   {
     id: 'c5',
     code: 'CS-EET',
-    name: 'CS EET / Executive (Inter)',
+    name: 'CS EET',
     level: 'ICSI Professional Course',
     board: 'Institute of Company Secretaries of India',
     branches: 'Gangapur Road & Satpur Centers',
+    perSubjectFee: 15000,
+    fullFee: 40000,
     subjectsList: [
-      { name: 'Law (CS EET & Inter)', note: 'Company law, jurisprudence, interpretation & general laws' },
-      { name: 'Economics (CS EET)', note: 'Economic and business environment & commercial aptitude' },
-      { name: 'Income Tax (CS Inter)', note: 'Direct tax laws and practice' },
-      { name: 'GST (CS Inter)', note: 'Goods and services tax & customs law' },
-      { name: 'Costing (CS Inter)', note: 'Corporate accounting & financial management' }
+      { name: 'Law', note: 'Company law, jurisprudence, interpretation & general laws' },
+      { name: 'Economics', note: 'Economic and business environment & commercial aptitude' },
+      { name: 'Account', note: 'Basic accounting & financial analysis' }
     ],
     servicesOffered: [
       'Intensive case law analysis and Section-wise memory techniques',
@@ -287,26 +439,76 @@ export const INITIAL_COURSES = [
   },
   {
     id: 'c6',
-    code: 'IGCSE-COM',
-    name: 'IGCSE (Commerce)',
+    code: 'ICGSE-10',
+    name: '10th ICGSE',
     level: 'International Curriculum',
-    board: 'Cambridge International / Pearson Edexcel',
+    board: 'Cambridge International / IGCSE',
     branches: 'Gangapur Road Center',
+    perSubjectFee: 15000,
+    fullFee: 45000,
     subjectsList: [
-      { name: 'Accounts', note: 'Cambridge Accounting (0452) syllabus & financial statements' },
-      { name: 'Economics', note: 'Cambridge Economics (0455) global resource allocation & trade' },
-      { name: 'Enterprises', note: 'Cambridge Enterprise (0454) business planning & venture project' }
+      { name: 'Economics', note: 'Cambridge Economics global resource allocation & market mechanisms' },
+      { name: 'Enterprise', note: 'Cambridge Enterprise venture project & business planning' },
+      { name: 'Account', note: 'Accounting principles & financial documentation' }
     ],
     servicesOffered: [
       'Cambridge International past paper series (Paper 1 & Paper 2 drills)',
-      'Enterprise (0454) coursework and project portfolio guidance',
+      'Enterprise coursework and project portfolio guidance',
       'Marking scheme alignment and command words answering skills',
       'Daily Portion Covered tracking and interactive concept demonstrations',
       'Small batch size (maximum 12 students) for personalized mentorship',
       'Global economics case study discussions and analytical feedback'
     ],
-    description: 'Cambridge-aligned international commerce curriculum with analytical case studies, global market evaluations, and enterprise business plan coaching.',
+    description: 'Cambridge-aligned 10th IGCSE commerce curriculum with analytical case studies, global market evaluations, and enterprise business plan coaching.',
     batchInfo: 'Small International Batch (Max 12) | After-School Timings'
+  },
+  {
+    id: 'c7',
+    code: 'ICGSE-12',
+    name: '12th ICGSE',
+    level: 'International Curriculum (A-Levels)',
+    board: 'Cambridge International / Edexcel',
+    branches: 'Gangapur Road Center',
+    perSubjectFee: 15000,
+    fullFee: 45000,
+    subjectsList: [
+      { name: 'Account', note: 'Advanced financial statements, manufacturing & partnership accounts' },
+      { name: 'Economics', note: 'International trade, exchange rates & macroeconomic stabilization' },
+      { name: 'Enterprise', note: 'Enterprise strategic growth & venture evaluation' }
+    ],
+    servicesOffered: [
+      'Cambridge A-Level Past Paper series & marking schemes',
+      'Advanced ledger rulings and financial ratio diagnostics',
+      'Weekly mock papers simulating Cambridge board conditions',
+      'One-on-one doubt clinics with CA faculty',
+      'WhatsApp performance and attendance alerts to parents'
+    ],
+    description: 'Premier Cambridge International 12th curriculum focused on international accounting, macroeconomics, and enterprise strategies.',
+    batchInfo: 'Elite International Batch | Afternoon & Evening'
+  },
+  {
+    id: 'c8',
+    code: 'BCOM-FY',
+    name: 'FY Bcom',
+    level: 'Undergraduate Degree',
+    board: 'Savitribai Phule Pune University (SPPU)',
+    branches: 'Gangapur Road & Satpur Colony Centers',
+    perSubjectFee: 8000,
+    fullFee: 24000,
+    subjectsList: [
+      { name: 'Account 1', note: 'Financial Accounting Paper 1: Amortization, Consignment & Royalty' },
+      { name: 'Account 2', note: 'Financial Accounting Paper 2: Departmental & Company Accounts' },
+      { name: 'Economics', note: 'Business Economics & National Income analysis' },
+      { name: 'Law', note: 'Mercantile Law & Indian Contract Act' }
+    ],
+    servicesOffered: [
+      'Pune University semester syllabus coverage & model answer writing',
+      'University question papers of last 10 years solved & practiced',
+      'Daily portion updates & attendance logs',
+      'Weekly unit tests with individual examiner feedback'
+    ],
+    description: 'Comprehensive degree preparation for Pune University FY B.Com students covering Financial Accounting Papers 1 & 2 and Business Economics.',
+    batchInfo: 'College Shift Friendly Timings | Morning & Evening'
   }
 ];
 
@@ -314,6 +516,206 @@ export const INITIAL_STUDENTS = [
   {
     id: 's1',
     rollNo: 'IMP-2026-01',
+    name: 'Arush Thorat',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
+    batch: 'Gangapur Road (Evening)',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    phone: '9850311082',
+    email: 'arushthorat@gmail.com',
+    parentName: 'Mr Thorat',
+    parentPhone: '9850311082',
+    parentEmail: 'mrthorat@gmail.com',
+    subjectsChosen: ['Account'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 15000,
+    paidFees: 15000,
+    dueFees: 0,
+    status: 'Paid',
+    attendancePercent: 96,
+    todayAttendance: 'Present',
+    homeworkCompleted: true,
+    avatar: 'AT',
+    behaviourRemarks: {
+      teacher: 'Sharp grasping in Cambridge Accountancy syllabus; consistent with daily homework.',
+      parent: 'Very focused on board examination preparations and revision.'
+    },
+    performanceMarks: {
+      weekly: [
+        { testName: 'Weekly Unit Test #1', subject: 'Account', maxMarks: 50, marks: 48, date: '2026-10-10' }
+      ],
+      quarterly: [
+        { testName: 'Quarterly Terminal Exam', subject: 'Account', maxMarks: 100, marks: 94, date: '2026-08-28' }
+      ],
+      sixMonthly: [
+        { testName: 'Six-Monthly Pre-Board', subject: '12th ICGSE Full Syllabus', maxMarks: 100, marks: 95, date: '2026-09-30' }
+      ]
+    }
+  },
+  {
+    id: 's2',
+    rollNo: 'IMP-2026-02',
+    name: 'Jatin Avhad',
+    courseId: 'c6',
+    courseName: '10th ICGSE',
+    batch: 'Gangapur Road (Morning)',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    phone: '9850311082',
+    email: 'jatinavhad@gmail.com',
+    parentName: 'Mr Avhad',
+    parentPhone: '9850311082',
+    parentEmail: 'mravhad@gmail.com',
+    subjectsChosen: ['Economics', 'Enterprise'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 30000,
+    paidFees: 20000,
+    dueFees: 10000,
+    status: 'Partial',
+    attendancePercent: 92,
+    todayAttendance: 'Present',
+    homeworkCompleted: true,
+    avatar: 'JA',
+    behaviourRemarks: {
+      teacher: 'Excellent engagement in Enterprise business planning case studies.',
+      parent: 'Regular in completing assignments; balance fees being cleared this week.'
+    },
+    performanceMarks: {
+      weekly: [
+        { testName: 'Weekly Test #2', subject: 'Economics', maxMarks: 50, marks: 45, date: '2026-10-14' }
+      ],
+      quarterly: [
+        { testName: 'Quarterly Mock', subject: 'Economics & Enterprise', maxMarks: 100, marks: 89, date: '2026-08-25' }
+      ],
+      sixMonthly: [
+        { testName: 'Six-Monthly Benchmark', subject: '10th ICGSE Commerce', maxMarks: 100, marks: 90, date: '2026-09-25' }
+      ]
+    }
+  },
+  {
+    id: 's3',
+    rollNo: 'IMP-2026-03',
+    name: 'Rutuja Shekokar',
+    courseId: 'c1',
+    courseName: '11th Commerce & CA Foundation',
+    batch: 'Gangapur Road (Dual Batch)',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    phone: '9850311082',
+    email: 'rutujashekokar@gmail.com',
+    parentName: 'Mr Shekokar',
+    parentPhone: '9850311082',
+    parentEmail: 'mrshekokar@gmail.com',
+    subjectsChosen: ['Account', 'Economics', 'Law', 'Maths'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 50000,
+    paidFees: 50000,
+    dueFees: 0,
+    status: 'Paid',
+    attendancePercent: 98,
+    todayAttendance: 'Present',
+    homeworkCompleted: true,
+    avatar: 'RS',
+    behaviourRemarks: {
+      teacher: 'Exceptional dedication balancing 11th Commerce along with CA Foundation modules.',
+      parent: 'Extremely committed to CA path; studies systematically every day.'
+    },
+    performanceMarks: {
+      weekly: [
+        { testName: 'Weekly Test #4', subject: 'Account & Law', maxMarks: 50, marks: 49, date: '2026-10-12' }
+      ],
+      quarterly: [
+        { testName: 'Quarterly Terminal', subject: 'Account, Eco & Law', maxMarks: 100, marks: 96, date: '2026-08-20' }
+      ],
+      sixMonthly: [
+        { testName: 'Six-Monthly Pre-Board', subject: 'Commerce Full Syllabus', maxMarks: 100, marks: 97, date: '2026-09-22' }
+      ]
+    }
+  },
+  {
+    id: 's4',
+    rollNo: 'IMP-2026-04',
+    name: 'Om Nimse',
+    courseId: 'c1',
+    courseName: '11th Commerce',
+    batch: 'Gangapur Road (Morning)',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    phone: '9850311082',
+    email: 'omnimse@gmail.com',
+    parentName: 'Mr Nimse',
+    parentPhone: '9850311082',
+    parentEmail: 'mrnimse@gmail.com',
+    subjectsChosen: ['Account'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 10000,
+    paidFees: 10000,
+    dueFees: 0,
+    status: 'Paid',
+    attendancePercent: 94,
+    todayAttendance: 'Present',
+    homeworkCompleted: true,
+    avatar: 'ON',
+    behaviourRemarks: {
+      teacher: 'Disciplined approach to ledger balancing and trial balance drills.',
+      parent: 'Happy with faculty attention and conceptual clarity in Accountancy.'
+    },
+    performanceMarks: {
+      weekly: [
+        { testName: 'Weekly Test #1', subject: 'Account', maxMarks: 50, marks: 46, date: '2026-10-09' }
+      ],
+      quarterly: [
+        { testName: 'Quarterly Exam', subject: 'Account', maxMarks: 100, marks: 91, date: '2026-08-22' }
+      ],
+      sixMonthly: [
+        { testName: 'Six-Monthly Test', subject: 'Accountancy 11th', maxMarks: 100, marks: 92, date: '2026-09-20' }
+      ]
+    }
+  },
+  {
+    id: 's5',
+    rollNo: 'IMP-2026-05',
+    name: 'Swaraj Kakade',
+    courseId: 'c8',
+    courseName: 'FY Bcom',
+    batch: 'Gangapur Road (Morning B.Com Batch)',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    phone: '9850311082',
+    email: 'swarajkakade@gmail.com',
+    parentName: 'Mr Kakade',
+    parentPhone: '9850311082',
+    parentEmail: 'mrkakade@gmail.com',
+    subjectsChosen: ['Account 1', 'Account 2'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 16000,
+    paidFees: 10000,
+    dueFees: 6000,
+    status: 'Partial',
+    attendancePercent: 90,
+    todayAttendance: 'Present',
+    homeworkCompleted: true,
+    avatar: 'SK',
+    behaviourRemarks: {
+      teacher: 'Very attentive during Consignment and Company final account problem sets.',
+      parent: 'Shows great interest in University level accountancy problems.'
+    },
+    performanceMarks: {
+      weekly: [
+        { testName: 'Weekly Unit Test #3', subject: 'Account 1', maxMarks: 50, marks: 44, date: '2026-10-15' }
+      ],
+      quarterly: [
+        { testName: 'Semester Mid-Term', subject: 'Financial Accounting 1 & 2', maxMarks: 100, marks: 87, date: '2026-08-26' }
+      ],
+      sixMonthly: [
+        { testName: 'University Mock Preliminary', subject: 'FY Bcom Accounts', maxMarks: 100, marks: 89, date: '2026-09-28' }
+      ]
+    }
+  },
+  {
+    id: 's6',
+    rollNo: 'IMP-2026-06',
     name: 'Aarav Sharma',
     courseId: 'c2',
     courseName: '12th Commerce',
@@ -325,10 +727,10 @@ export const INITIAL_STUDENTS = [
     parentName: 'Rajesh Sharma',
     parentPhone: '9820112233',
     parentEmail: 'rajesh.sharma@gmail.com',
-    subjectsChosen: ['Accounts', 'Maths & Statistics', 'Economics'],
-    assignedTeacher: 'Prof. Arvind Deshpande (CA)',
-    totalFees: 48000,
-    paidFees: 48000,
+    subjectsChosen: ['Account', 'Maths', 'Economics'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
+    totalFees: 30000,
+    paidFees: 30000,
     dueFees: 0,
     status: 'Paid',
     attendancePercent: 96,
@@ -341,11 +743,10 @@ export const INITIAL_STUDENTS = [
     },
     performanceMarks: {
       weekly: [
-        { testName: 'Weekly Unit Test #1', subject: 'Accounts', maxMarks: 50, marks: 49, date: '2026-10-10' },
-        { testName: 'Weekly Unit Test #2', subject: 'Economics', maxMarks: 50, marks: 47, date: '2026-10-14' }
+        { testName: 'Weekly Unit Test #1', subject: 'Account', maxMarks: 50, marks: 49, date: '2026-10-10' }
       ],
       quarterly: [
-        { testName: 'Quarterly Terminal Exam', subject: 'Accounts & Economics', maxMarks: 100, marks: 95, date: '2026-08-28' }
+        { testName: 'Quarterly Terminal Exam', subject: 'Account & Economics', maxMarks: 100, marks: 95, date: '2026-08-28' }
       ],
       sixMonthly: [
         { testName: 'Six-Monthly Pre-Board', subject: '12th Commerce Full Syllabus', maxMarks: 100, marks: 96, date: '2026-09-30' }
@@ -353,8 +754,8 @@ export const INITIAL_STUDENTS = [
     }
   },
   {
-    id: 's2',
-    rollNo: 'IMP-2026-02',
+    id: 's7',
+    rollNo: 'IMP-2026-07',
     name: 'Ananya Deshmukh',
     courseId: 'c3',
     courseName: 'CA Foundation / Inter',
@@ -393,8 +794,8 @@ export const INITIAL_STUDENTS = [
     }
   },
   {
-    id: 's3',
-    rollNo: 'IMP-2026-03',
+    id: 's8',
+    rollNo: 'IMP-2026-08',
     name: 'Rohan Kulkarni',
     courseId: 'c1',
     courseName: '11th Commerce',
@@ -406,8 +807,8 @@ export const INITIAL_STUDENTS = [
     parentName: 'Ramesh Kulkarni',
     parentPhone: '9820778899',
     parentEmail: 'ramesh.kulkarni@gmail.com',
-    subjectsChosen: ['Accounts', 'Maths & Statistics', 'Economics'],
-    assignedTeacher: 'Prof. Arvind Deshpande (CA)',
+    subjectsChosen: ['Account', 'Maths', 'Economics'],
+    assignedTeacher: 'Mrs Kavita Oak',
     totalFees: 42000,
     paidFees: 20000,
     dueFees: 22000,
@@ -422,7 +823,7 @@ export const INITIAL_STUDENTS = [
     },
     performanceMarks: {
       weekly: [
-        { testName: 'Weekly Test #3', subject: 'Accounts', maxMarks: 50, marks: 39, date: '2026-10-08' }
+        { testName: 'Weekly Test #3', subject: 'Account', maxMarks: 50, marks: 39, date: '2026-10-08' }
       ],
       quarterly: [
         { testName: 'Quarterly Assessment', subject: '11th Core Commerce', maxMarks: 100, marks: 81, date: '2026-08-20' }
@@ -433,11 +834,11 @@ export const INITIAL_STUDENTS = [
     }
   },
   {
-    id: 's4',
-    rollNo: 'IMP-2026-04',
+    id: 's9',
+    rollNo: 'IMP-2026-09',
     name: 'Priya Iyer',
     courseId: 'c4',
-    courseName: 'CMA Foundation / Inter',
+    courseName: 'CMA Foundation',
     batch: 'Gangapur Road (CMA FastTrack)',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
@@ -446,8 +847,8 @@ export const INITIAL_STUDENTS = [
     parentName: 'Raman Iyer',
     parentPhone: '9820334455',
     parentEmail: 'raman.iyer@gmail.com',
-    subjectsChosen: ['Costing', 'Income Tax', 'GST', 'Law', 'Accounts'],
-    assignedTeacher: 'Prof. Rajesh Kulkarni (CMA)',
+    subjectsChosen: ['Costing', 'Income Tax', 'GST', 'Law', 'Account'],
+    assignedTeacher: 'CA Ravindra Deshmukh',
     totalFees: 60000,
     paidFees: 60000,
     dueFees: 0,
@@ -473,11 +874,11 @@ export const INITIAL_STUDENTS = [
     }
   },
   {
-    id: 's5',
-    rollNo: 'IMP-2026-05',
+    id: 's10',
+    rollNo: 'IMP-2026-10',
     name: 'Kabir Mehta',
     courseId: 'c5',
-    courseName: 'CS EET / Executive (Inter)',
+    courseName: 'CS EET',
     batch: 'Gangapur Road (Law & CS)',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
@@ -486,8 +887,8 @@ export const INITIAL_STUDENTS = [
     parentName: 'Sanjay Mehta',
     parentPhone: '9820667788',
     parentEmail: 'sanjay.mehta@gmail.com',
-    subjectsChosen: ['Law', 'Income Tax', 'GST', 'Economics'],
-    assignedTeacher: 'Prof. Arvind Deshpande (CA)',
+    subjectsChosen: ['Law', 'Economics', 'Account'],
+    assignedTeacher: 'Pranav Toradmal',
     totalFees: 52000,
     paidFees: 30000,
     dueFees: 22000,
@@ -502,7 +903,7 @@ export const INITIAL_STUDENTS = [
     },
     performanceMarks: {
       weekly: [
-        { testName: 'Weekly Test #4', subject: 'Corporate Law', maxMarks: 50, marks: 44, date: '2026-10-11' }
+        { testName: 'Weekly Test #4', subject: 'Law', maxMarks: 50, marks: 44, date: '2026-10-11' }
       ],
       quarterly: [
         { testName: 'Quarterly Mock', subject: 'Jurisprudence & Law', maxMarks: 100, marks: 87, date: '2026-08-22' }
@@ -513,8 +914,8 @@ export const INITIAL_STUDENTS = [
     }
   },
   {
-    id: 's6',
-    rollNo: 'IMP-2026-06',
+    id: 's11',
+    rollNo: 'IMP-2026-11',
     name: 'Tanvi Patil',
     courseId: 'c6',
     courseName: 'IGCSE (Commerce)',
@@ -559,115 +960,115 @@ export const INITIAL_RECEIPTS = [
     receiptNo: 'REC-2026-001',
     date: '2026-10-10',
     studentId: 's1',
-    studentName: 'Aarav Sharma',
+    studentName: 'Arush Thorat',
     rollNo: 'IMP-2026-01',
-    courseId: 'c2',
-    courseName: '12th Commerce',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
-    subject: 'Accounts & Economics',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    amount: 48000,
-    teacherShare60: 28800,
+    subject: 'Account',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 15000,
+    teacherShare60: 9000,
     mode: 'Online (Bank UPI QR)',
-    txnId: 'UPI-AXIS-9928172940',
-    receivedBy: 'Admin Desk (Gangapur Road Center)',
-    notes: 'Full Annual Tuition Fee (Gangapur Road Center)'
+    txnId: 'UPI-HDFC-9928172940',
+    receivedBy: 'Director Ishwari Deshmukh',
+    notes: 'Full Tuition Fee for 12th ICGSE Account'
   },
   {
     receiptNo: 'REC-2026-002',
     date: '2026-10-12',
     studentId: 's2',
-    studentName: 'Ananya Deshmukh',
+    studentName: 'Jatin Avhad',
     rollNo: 'IMP-2026-02',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    branchId: 'b1',
-    branchName: 'Branch 1: Satpur Colony Center',
-    subject: 'Accounts & Taxation',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    amount: 40000,
-    teacherShare60: 24000,
+    courseId: 'c6',
+    courseName: '10th ICGSE',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    subject: 'Economics & Enterprise',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 20000,
+    teacherShare60: 12000,
     mode: 'Online (Bank UPI QR)',
-    txnId: 'HDFC-UPI-88491029',
-    receivedBy: 'Admin Desk (Satpur Center)',
-    notes: 'Term 1 Installment for CA Coaching'
+    txnId: 'UPI-ICICI-88491029',
+    receivedBy: 'Director Shrikrishna Deshmukh',
+    notes: 'Part Fee Payment for 10th ICGSE (Economics & Enterprise)'
   },
   {
     receiptNo: 'REC-2026-003',
     date: '2026-10-14',
     studentId: 's3',
-    studentName: 'Rohan Kulkarni',
+    studentName: 'Rutuja Shekokar',
     rollNo: 'IMP-2026-03',
     courseId: 'c1',
-    courseName: '11th Commerce',
-    branchId: 'b1',
-    branchName: 'Branch 1: Satpur Colony Center',
-    subject: 'Accounts',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    amount: 20000,
-    teacherShare60: 12000,
-    mode: 'Cash',
-    txnId: 'CASH-SAT-003',
-    receivedBy: 'Cashier (Satpur Center)',
-    notes: 'First Installment paid at Satpur office'
+    courseName: '11th Commerce & CA Foundation',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center',
+    subject: 'Account, Economics, Law & Maths',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 50000,
+    teacherShare60: 30000,
+    mode: 'Online (Bank UPI QR)',
+    txnId: 'UPI-SBI-77281923',
+    receivedBy: 'Director Ishwari Deshmukh',
+    notes: 'Full Annual Fee (11th Commerce + CA Foundation)'
   },
   {
     receiptNo: 'REC-2026-004',
     date: '2026-10-15',
     studentId: 's4',
-    studentName: 'Priya Iyer',
+    studentName: 'Om Nimse',
     rollNo: 'IMP-2026-04',
-    courseId: 'c4',
-    courseName: 'CMA Foundation / Inter',
+    courseId: 'c1',
+    courseName: '11th Commerce',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
-    subject: 'Costing',
-    teacherName: 'Prof. Rajesh Kulkarni (CMA)',
-    amount: 60000,
-    teacherShare60: 36000,
+    subject: 'Account',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 10000,
+    teacherShare60: 6000,
     mode: 'Online (Bank UPI QR)',
-    txnId: 'UPI-ICICI-771920491',
-    receivedBy: 'Accounts Desk (Gangapur Road Center)',
-    notes: 'Full Year CMA Professional Program'
+    txnId: 'UPI-AXIS-771920491',
+    receivedBy: 'Admin Staff Pranav Toradmal',
+    notes: 'Full Subject Tuition Fee for 11th Account'
   },
   {
     receiptNo: 'REC-2026-005',
     date: '2026-10-16',
     studentId: 's5',
-    studentName: 'Kabir Mehta',
+    studentName: 'Swaraj Kakade',
     rollNo: 'IMP-2026-05',
-    courseId: 'c5',
-    courseName: 'CS EET / Executive (Inter)',
+    courseId: 'c8',
+    courseName: 'FY Bcom',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
-    subject: 'Law & Tax',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    amount: 30000,
-    teacherShare60: 18000,
-    mode: 'Online (Bank UPI QR)',
-    txnId: 'UPI-SBI-3329011',
-    receivedBy: 'Admin Desk (Gangapur Road Center)',
-    notes: 'First Installment CS Executive'
+    subject: 'Account 1 & Account 2',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 10000,
+    teacherShare60: 6000,
+    mode: 'Cash',
+    txnId: 'CASH-REC-005',
+    receivedBy: 'Director Shrikrishna Deshmukh',
+    notes: 'Term 1 Installment for FY Bcom Financial Accounting'
   },
   {
     receiptNo: 'REC-2026-006',
     date: '2026-10-17',
     studentId: 's6',
-    studentName: 'Tanvi Patil',
+    studentName: 'Aarav Sharma',
     rollNo: 'IMP-2026-06',
-    courseId: 'c6',
-    courseName: 'IGCSE (Commerce)',
+    courseId: 'c2',
+    courseName: '12th Commerce',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center',
-    subject: 'Enterprises & Economics',
-    teacherName: 'Prof. Sunita Rao',
-    amount: 45000,
-    teacherShare60: 27000,
+    subject: 'Account, Maths & Economics',
+    teacherName: 'CA Ravindra Deshmukh',
+    amount: 30000,
+    teacherShare60: 18000,
     mode: 'Online (Bank UPI QR)',
-    txnId: 'UPI-KOTAK-441092',
-    receivedBy: 'Accounts Desk (Gangapur Road Center)',
-    notes: 'Cambridge IGCSE Commerce Term 1'
+    txnId: 'UPI-BOI-4429011',
+    receivedBy: 'Director Ishwari Deshmukh',
+    notes: 'Full Year Tuition Fee (Gangapur Road Center)'
   }
 ];
 

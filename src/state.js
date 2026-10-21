@@ -2,7 +2,10 @@
 
 import {
   UNIVERSAL_PASSWORD,
+  DIRECTORS_LIST,
   USER_CREDENTIALS,
+  SUBJECTS_CATALOG,
+  INITIAL_FEE_STRUCTURES,
   INITIAL_COURSES,
   INITIAL_STUDENTS,
   INITIAL_RECEIPTS,
@@ -44,6 +47,14 @@ import {
   dbFetchStudents,
   dbSaveTeacher,
   dbFetchTeachers,
+  dbSaveCourse,
+  dbFetchCourses,
+  dbDeleteCourse,
+  dbSaveSubject,
+  dbFetchSubjects,
+  dbDeleteSubject,
+  dbSaveFeeStructure,
+  dbFetchFeeStructures,
   seedSupabaseIfEmpty,
   testConnection
 } from './supabase.js';
@@ -66,12 +77,16 @@ class AppState {
       document.documentElement.setAttribute('data-theme', this.theme);
     }
 
+    // Directors Management (Ishwari Deshmukh & Shrikrishna Deshmukh)
+    this.directors = this._load('imp_directors_v6', DIRECTORS_LIST);
+    this.activeDirectorId = localStorage.getItem('imp_active_director_id_v6') || 'dir1';
+
     // Auth & Navigation State
-    this.currentUser = this._load('imp_current_user_v5', null);
-    this.currentRole = localStorage.getItem('imp_role_v5') || 'public';
-    this.currentStudentId = localStorage.getItem('imp_student_id_v5') || 's1';
-    this.currentParentStudentId = localStorage.getItem('imp_parent_ward_v5') || 's1';
-    this.currentTeacherId = localStorage.getItem('imp_teacher_id_v5') || 't1';
+    this.currentUser = this._load('imp_current_user_v6', null);
+    this.currentRole = localStorage.getItem('imp_role_v6') || 'public';
+    this.currentStudentId = localStorage.getItem('imp_student_id_v6') || 's1';
+    this.currentParentStudentId = localStorage.getItem('imp_parent_ward_v6') || 's1';
+    this.currentTeacherId = localStorage.getItem('imp_teacher_id_v6') || 't1';
     
     // Active tabs within portals
     this.currentPublicTab = localStorage.getItem('imp_public_tab_v5') || 'overview';
@@ -81,10 +96,12 @@ class AppState {
     this.currentStudentTab = 'notes';
     this.currentParentTab = 'overview';
 
-    // Business Data Stores (v5 with Branch P&L and Student Proportionate Allocation)
-    this.courses = this._load('imp_courses_v5', INITIAL_COURSES);
-    this.students = this._sanitizeStudents(this._load('imp_students_v5', INITIAL_STUDENTS));
-    this.receipts = this._sanitizeReceipts(this._load('imp_receipts_v5', INITIAL_RECEIPTS));
+    // Business Data Stores (v6 with Master Course, Subject and Per-Subject Fee Structure)
+    this.courses = this._sanitizeCourses(this._load('imp_courses_v6', INITIAL_COURSES));
+    this.subjectsCatalog = this._sanitizeSubjects(this._load('imp_subjects_v6', SUBJECTS_CATALOG));
+    this.feeStructures = this._load('imp_fee_structures_v6', INITIAL_FEE_STRUCTURES);
+    this.students = this._sanitizeStudents(this._load('imp_students_v6', INITIAL_STUDENTS));
+    this.receipts = this._sanitizeReceipts(this._load('imp_receipts_v6', INITIAL_RECEIPTS));
     this.expenses = this._sanitizeExpenses(this._load('imp_expenses_v5', INITIAL_EXPENSES));
     this.enquiries = this._load('imp_enquiries_v5', INITIAL_ENQUIRIES);
     this.portions = this._sanitizePortions(this._load('imp_portions_v5', INITIAL_PORTIONS));
@@ -94,7 +111,7 @@ class AppState {
     this.leaves = this._load('imp_leaves_v5', INITIAL_LEAVES);
     this.queries = this._sanitizeQueries(this._load('imp_queries_v5', INITIAL_QUERIES));
     this.recruitment = this._load('imp_recruitment_v5', INITIAL_RECRUITMENT);
-    this.teachers = this._sanitizeTeachers(this._load('imp_teachers_v5', INITIAL_TEACHERS));
+    this.teachers = this._sanitizeTeachers(this._load('imp_teachers_v6', INITIAL_TEACHERS));
 
     // Initialize Supabase Cloud Background Sync
     if (typeof window !== 'undefined') {
@@ -104,8 +121,40 @@ class AppState {
     }
   }
 
+  _sanitizeCourses(courses) {
+    const list = (courses && courses.length > 0) ? [...courses] : [...INITIAL_COURSES];
+    INITIAL_COURSES.forEach(initC => {
+      if (!list.some(c => c.id === initC.id || c.name.toLowerCase() === initC.name.toLowerCase())) {
+        list.push(JSON.parse(JSON.stringify(initC)));
+      }
+    });
+    return list.map(c => {
+      if (!c.subjectsList) c.subjectsList = [];
+      if (!c.servicesOffered) c.servicesOffered = [];
+      if (!c.branches) c.branches = 'Satpur Colony & Gangapur Road Centers';
+      if (!c.perSubjectFee) c.perSubjectFee = 10000;
+      return c;
+    });
+  }
+
+  _sanitizeSubjects(subjects) {
+    const list = (subjects && subjects.length > 0) ? [...subjects] : [...SUBJECTS_CATALOG];
+    SUBJECTS_CATALOG.forEach(initS => {
+      if (!list.some(s => s.name.toLowerCase() === initS.name.toLowerCase())) {
+        list.push(JSON.parse(JSON.stringify(initS)));
+      }
+    });
+    return list;
+  }
+
   _sanitizeStudents(students) {
-    return (students || []).map(s => {
+    const list = (students && students.length > 0) ? [...students] : [...INITIAL_STUDENTS];
+    INITIAL_STUDENTS.forEach(initS => {
+      if (!list.some(s => s.id === initS.id)) {
+        list.push(JSON.parse(JSON.stringify(initS)));
+      }
+    });
+    return list.map(s => {
       if (!s.branchId) {
         const isSatpur = s.batch && s.batch.includes('Satpur');
         s.branchId = isSatpur ? 'b1' : 'b2';
@@ -185,10 +234,16 @@ class AppState {
   }
 
   _sanitizeTeachers(teachers) {
-    return (teachers || []).map(t => {
+    const list = (teachers && teachers.length > 0) ? [...teachers] : [...INITIAL_TEACHERS];
+    INITIAL_TEACHERS.forEach(initT => {
+      if (!list.some(t => t.id === initT.id)) {
+        list.push(JSON.parse(JSON.stringify(initT)));
+      }
+    });
+    return list.map(t => {
       const initMatch = INITIAL_TEACHERS.find(it => it.id === t.id);
       if (!t.assignedSubjects || t.assignedSubjects.length === 0) {
-        t.assignedSubjects = initMatch ? initMatch.assignedSubjects : ['Accounts', 'Income Tax', 'GST'];
+        t.assignedSubjects = initMatch ? initMatch.assignedSubjects : ['Account', 'Economics', 'Maths'];
       }
       if (!t.qualification && initMatch) t.qualification = initMatch.qualification;
       if (!t.role && initMatch) t.role = initMatch.role;
@@ -322,7 +377,10 @@ class AppState {
         INITIAL_LEAVES,
         INITIAL_QUERIES,
         INITIAL_STUDENTS,
-        INITIAL_TEACHERS
+        INITIAL_TEACHERS,
+        INITIAL_COURSES,
+        SUBJECTS_CATALOG,
+        INITIAL_FEE_STRUCTURES
       });
 
       // Fetch cloud records and merge into state
@@ -337,7 +395,10 @@ class AppState {
         cloudExams,
         cloudPortions,
         cloudStudents,
-        cloudTeachers
+        cloudTeachers,
+        cloudCourses,
+        cloudSubjects,
+        cloudFeeStructures
       ] = await Promise.all([
         dbFetchEnquiries(),
         dbFetchRecruitmentCandidates(),
@@ -349,7 +410,10 @@ class AppState {
         dbFetchExams(),
         dbFetchPortions(),
         dbFetchStudents(),
-        dbFetchTeachers()
+        dbFetchTeachers(),
+        dbFetchCourses(),
+        dbFetchSubjects(),
+        dbFetchFeeStructures()
       ]);
 
       if (cloudEnquiries && cloudEnquiries.length > 0) {
@@ -362,7 +426,7 @@ class AppState {
       }
       if (cloudReceipts && cloudReceipts.length > 0) {
         this.receipts = this._sanitizeReceipts(this._mergeByField(this.receipts, cloudReceipts, 'receiptNo'));
-        this._save('imp_receipts_v5', this.receipts);
+        this._save('imp_receipts_v6', this.receipts);
       }
       if (cloudExpenses && cloudExpenses.length > 0) {
         this.expenses = this._sanitizeExpenses(this._mergeByField(this.expenses, cloudExpenses, 'voucherNo'));
@@ -390,11 +454,23 @@ class AppState {
       }
       if (cloudStudents && cloudStudents.length > 0) {
         this.students = this._sanitizeStudents(this._mergeById(this.students, cloudStudents));
-        this._save('imp_students_v5', this.students);
+        this._save('imp_students_v6', this.students);
       }
       if (cloudTeachers && cloudTeachers.length > 0) {
         this.teachers = this._sanitizeTeachers(this._mergeById(this.teachers, cloudTeachers));
-        this._save('imp_teachers_v5', this.teachers);
+        this._save('imp_teachers_v6', this.teachers);
+      }
+      if (cloudCourses && cloudCourses.length > 0) {
+        this.courses = this._sanitizeCourses(this._mergeById(this.courses, cloudCourses));
+        this._save('imp_courses_v6', this.courses);
+      }
+      if (cloudSubjects && cloudSubjects.length > 0) {
+        this.subjectsCatalog = this._sanitizeSubjects(this._mergeByField(this.subjectsCatalog, cloudSubjects, 'name'));
+        this._save('imp_subjects_v6', this.subjectsCatalog);
+      }
+      if (cloudFeeStructures && cloudFeeStructures.length > 0) {
+        this.feeStructures = this._mergeById(this.feeStructures, cloudFeeStructures);
+        this._save('imp_fee_structures_v6', this.feeStructures);
       }
 
       this.supabaseStatus.lastSync = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -539,16 +615,73 @@ class AppState {
     return this.theme;
   }
 
-  // --- AUTHENTICATION ---
+  // --- AUTHENTICATION & DIRECTORS DESK ---
+
+  getActiveDirector() {
+    return this.directors.find(d => d.id === this.activeDirectorId) || this.directors[0];
+  }
+
+  switchDirector(directorId) {
+    const dir = this.directors.find(d => 
+      d.id === directorId || 
+      d.id.toLowerCase() === String(directorId).toLowerCase() ||
+      d.name.toLowerCase().includes(String(directorId).toLowerCase())
+    );
+    if (!dir) return null;
+    this.activeDirectorId = dir.id;
+    localStorage.setItem('imp_active_director_id_v6', dir.id);
+    if (this.currentRole === 'director' || (this.currentUser && this.currentUser.role === 'director')) {
+      this.currentUser = {
+        userId: `Director - ${dir.name}`,
+        role: 'director',
+        directorId: dir.id,
+        name: dir.name,
+        email: dir.email,
+        phone: dir.phone,
+        avatar: dir.avatar,
+        title: dir.title,
+        badge: dir.badge
+      };
+      this._save('imp_current_user_v6', this.currentUser);
+    }
+    this.notify();
+    return dir;
+  }
 
   login(userId, password) {
     if (password !== UNIVERSAL_PASSWORD) {
       return { success: false, message: 'Invalid Password. Please use default credentials: Password@123' };
     }
 
-    const cred = USER_CREDENTIALS[userId];
+    let cred = USER_CREDENTIALS[userId];
+    if (!cred) {
+      // Check if user is one of the Directors
+      const dirMatch = this.directors.find(d => 
+        userId.toLowerCase().includes(d.name.toLowerCase()) || 
+        (d.email && userId.toLowerCase() === d.email.toLowerCase())
+      );
+      if (dirMatch) {
+        this.activeDirectorId = dirMatch.id;
+        cred = {
+          role: 'director',
+          directorId: dirMatch.id,
+          name: dirMatch.name,
+          email: dirMatch.email,
+          phone: dirMatch.phone,
+          avatar: dirMatch.avatar,
+          title: dirMatch.title,
+          badge: dirMatch.badge
+        };
+      }
+    }
+
     if (!cred) {
       return { success: false, message: `Unknown User ID "${userId}". Allowed IDs: Director, Admin Staff, Teacher, Student, Parents` };
+    }
+
+    if (cred.role === 'director' && cred.directorId) {
+      this.activeDirectorId = cred.directorId;
+      localStorage.setItem('imp_active_director_id_v6', cred.directorId);
     }
 
     this.currentUser = {
@@ -559,9 +692,10 @@ class AppState {
 
     if (cred.studentId) this.currentStudentId = cred.studentId;
     if (cred.wardId) this.currentParentStudentId = cred.wardId;
+    if (cred.teacherId) this.currentTeacherId = cred.teacherId;
 
-    this._save('imp_current_user_v5', this.currentUser);
-    localStorage.setItem('imp_role_v5', this.currentRole);
+    this._save('imp_current_user_v6', this.currentUser);
+    localStorage.setItem('imp_role_v6', this.currentRole);
     this.notify();
 
     return { success: true, user: this.currentUser };
@@ -570,15 +704,407 @@ class AppState {
   logout() {
     this.currentUser = null;
     this.currentRole = 'public';
-    localStorage.removeItem('imp_current_user_v5');
-    localStorage.setItem('imp_role_v5', 'public');
+    localStorage.removeItem('imp_current_user_v6');
+    localStorage.setItem('imp_role_v6', 'public');
     this.notify();
   }
 
   setRole(role) {
     this.currentRole = role;
-    localStorage.setItem('imp_role_v5', role);
+    localStorage.setItem('imp_role_v6', role);
     this.notify();
+  }
+
+  // --- ACTIONS: COURSE MASTER (Director Authority) ---
+
+  addCourse({ code, name, level, board, branches, perSubjectFee, fullFee, subjectsList, servicesOffered, description, batchInfo }) {
+    if (!name || !name.trim()) return { success: false, message: 'Course name is required' };
+    const cleanName = name.trim();
+    if (this.courses.some(c => c.name.toLowerCase() === cleanName.toLowerCase())) {
+      return { success: false, message: `Course "${cleanName}" already exists.` };
+    }
+
+    const id = 'c_' + Date.now();
+    const course = {
+      id,
+      code: code || `CRS-${this.courses.length + 1}`,
+      name: cleanName,
+      level: level || 'Junior College Foundation',
+      board: board || 'Maharashtra State Board',
+      branches: branches || 'Satpur Colony & Gangapur Road Centers',
+      perSubjectFee: Number(perSubjectFee) || 10000,
+      fullFee: Number(fullFee) || (Number(perSubjectFee || 10000) * (subjectsList?.length || 3)),
+      subjectsList: Array.isArray(subjectsList) ? subjectsList : (subjectsList ? subjectsList.split(',').map(s => ({ name: s.trim(), note: '' })) : []),
+      servicesOffered: Array.isArray(servicesOffered) ? servicesOffered : [
+        'Daily Portion Covered tracking visible to parents & students',
+        'Mandatory daily homework checking with faculty remarks',
+        'Weekly Saturday Mock Assessments simulating board format',
+        'Daily attendance tracking with automated WhatsApp absent alerts'
+      ],
+      description: description || `Comprehensive curriculum and examination coaching for ${cleanName}.`,
+      batchInfo: batchInfo || 'Morning & Evening Batches | Small Class Size',
+      createdBy: this.getActiveDirector().name,
+      createdAt: new Date().toISOString()
+    };
+
+    this.courses.push(course);
+    this._save('imp_courses_v6', this.courses);
+    dbSaveCourse(course);
+
+    // Auto-create standard fee records for this course in Gangapur and Satpur if not existing
+    if (!this.feeStructures.some(f => f.courseName === course.name && (f.branch || f.branchName || '').includes('Gangapur'))) {
+      const feeG = {
+        id: `fee_${Date.now()}_g`,
+        branchId: 'b2',
+        branch: 'Gangapur Road Center',
+        branchName: 'Gangapur Road',
+        courseId: course.id,
+        courseName: course.name,
+        perSubjectFee: course.perSubjectFee,
+        feeText: `per subject Rs ${course.perSubjectFee.toLocaleString()}/-`,
+        notes: `per subject Rs ${course.perSubjectFee.toLocaleString()}/-`,
+        specialRates: {}
+      };
+      this.feeStructures.push(feeG);
+      dbSaveFeeStructure(feeG);
+    }
+    if (!this.feeStructures.some(f => f.courseName === course.name && (f.branch || f.branchName || '').includes('Satpur'))) {
+      const satpurFee = Math.round(course.perSubjectFee * 0.7);
+      const feeS = {
+        id: `fee_${Date.now()}_s`,
+        branchId: 'b1',
+        branch: 'Satpur Colony Center',
+        branchName: 'Satpur Colony',
+        courseId: course.id,
+        courseName: course.name,
+        perSubjectFee: satpurFee,
+        feeText: `per subject Rs ${satpurFee.toLocaleString()}/-`,
+        notes: `per subject Rs ${satpurFee.toLocaleString()}/-`,
+        specialRates: {}
+      };
+      this.feeStructures.push(feeS);
+      dbSaveFeeStructure(feeS);
+    }
+    this._save('imp_fee_structures_v6', this.feeStructures);
+
+    this.notify();
+    return course;
+  }
+
+  updateCourse(courseId, updates) {
+    const course = this.courses.find(c => c.id === courseId);
+    if (!course) return { success: false, message: 'Course not found' };
+    Object.assign(course, updates, { updatedBy: this.getActiveDirector().name });
+    this._save('imp_courses_v6', this.courses);
+    dbSaveCourse(course);
+    this.notify();
+    return { success: true, course };
+  }
+
+  deleteCourse(courseId) {
+    const idx = this.courses.findIndex(c => c.id === courseId);
+    if (idx === -1) return { success: false, message: 'Course not found' };
+    const removed = this.courses.splice(idx, 1)[0];
+    this._save('imp_courses_v6', this.courses);
+    dbDeleteCourse(courseId);
+    this.notify();
+    return { success: true, course: removed };
+  }
+
+  // --- ACTIONS: SUBJECTS CATALOG (Director Authority) ---
+
+  addSubject({ id, name, category, coverage, tag, desc, defaultFee, specialFeeRule, courseIds } = {}) {
+    if (!name || !name.trim()) return { success: false, message: 'Subject name is required' };
+    const cleanName = name.trim();
+    if (this.subjectsCatalog.some(s => s.name.toLowerCase() === cleanName.toLowerCase())) {
+      return { success: false, message: `Subject "${cleanName}" already exists in the catalog.` };
+    }
+
+    const sub = {
+      id: id || ('sub_' + Date.now()),
+      name: cleanName,
+      category: category || 'General Commerce',
+      tag: tag || category || 'Curriculum',
+      coverage: coverage || 'All Batches',
+      desc: desc || `Comprehensive syllabus coverage, drills and exam preparation for ${cleanName}.`,
+      defaultFee: Number(defaultFee) || 10000,
+      specialFeeRule: specialFeeRule || '',
+      createdBy: this.getActiveDirector().name,
+      createdAt: new Date().toISOString()
+    };
+
+    this.subjectsCatalog.push(sub);
+    this._save('imp_subjects_v6', this.subjectsCatalog);
+    dbSaveSubject(sub);
+
+    // If associated with courses, add to courses' subjectsList
+    if (Array.isArray(courseIds) && courseIds.length > 0) {
+      this.courses.forEach(c => {
+        if (courseIds.includes(c.id) || courseIds.includes(c.name)) {
+          if (!c.subjectsList.some(s => s.name.toLowerCase() === cleanName.toLowerCase())) {
+            c.subjectsList.push({ name: cleanName, note: sub.desc });
+            dbSaveCourse(c);
+          }
+        }
+      });
+      this._save('imp_courses_v6', this.courses);
+    }
+
+    this.notify();
+    return sub;
+  }
+
+  updateSubject(subjectName, updates) {
+    const sub = this.subjectsCatalog.find(s => s.name.toLowerCase() === subjectName.toLowerCase() || (s.id && s.id === subjectName));
+    if (!sub) return null;
+    Object.assign(sub, updates, { updatedBy: this.getActiveDirector().name });
+    this._save('imp_subjects_v6', this.subjectsCatalog);
+    dbSaveSubject(sub);
+    this.notify();
+    return sub;
+  }
+
+  deleteSubject(subjectName) {
+    const idx = this.subjectsCatalog.findIndex(s => s.name.toLowerCase() === subjectName.toLowerCase() || (s.id && s.id === subjectName));
+    if (idx === -1) return null;
+    const removed = this.subjectsCatalog.splice(idx, 1)[0];
+    this._save('imp_subjects_v6', this.subjectsCatalog);
+    dbDeleteSubject(subjectName);
+    this.notify();
+    return removed;
+  }
+
+  // --- ACTIONS: FEE STRUCTURE & ESTIMATOR (Director Authority) ---
+
+  updateFeeStructure(id, updates) {
+    const fee = this.feeStructures.find(f => f.id === id);
+    if (!fee) return null;
+    Object.assign(fee, updates, { updatedBy: this.getActiveDirector().name, updatedAt: new Date().toISOString() });
+    this._save('imp_fee_structures_v6', this.feeStructures);
+    dbSaveFeeStructure(fee);
+    this.notify();
+    return fee;
+  }
+
+  addFeeStructure(feeData) {
+    const branch = feeData.branch || feeData.branchName || 'Gangapur Road Center';
+    const isSatpur = branch.toLowerCase().includes('satpur');
+    const courseObj = this.courses.find(c => c.id === feeData.courseId || c.name === feeData.courseName);
+    const courseName = courseObj ? courseObj.name : (feeData.courseName || 'Commerce Program');
+    const courseId = courseObj ? courseObj.id : (feeData.courseId || 'c1');
+    const perSubjectFee = Number(feeData.perSubjectFee) || 10000;
+    const notes = feeData.notes || feeData.feeText || feeData.specialNotes || `per subject Rs ${perSubjectFee.toLocaleString()}/-`;
+
+    // Check if fee rule already exists for this branch and course:
+    const existing = this.feeStructures.find(f => {
+      const bStr = (f.branch || f.branchName || '').toLowerCase();
+      const matchBranch = isSatpur ? bStr.includes('satpur') : bStr.includes('gangapur');
+      const cStr = (f.courseName || '').toLowerCase();
+      const matchCourse = f.courseId === courseId || cStr === courseName.toLowerCase();
+      return matchBranch && matchCourse;
+    });
+
+    if (existing) {
+      existing.perSubjectFee = perSubjectFee;
+      existing.feeText = notes;
+      existing.notes = notes;
+      if (feeData.specialRates) existing.specialRates = feeData.specialRates;
+      existing.updatedBy = this.getActiveDirector().name;
+      this._save('imp_fee_structures_v6', this.feeStructures);
+      dbSaveFeeStructure(existing);
+      this.notify();
+      return existing;
+    }
+
+    const id = 'fee_' + Date.now();
+    const fee = {
+      id,
+      branchId: isSatpur ? 'b1' : 'b2',
+      branch,
+      branchName: isSatpur ? 'Satpur Colony' : 'Gangapur Road',
+      courseId,
+      courseName,
+      perSubjectFee,
+      feeText: notes,
+      specialRates: feeData.specialRates || {},
+      notes,
+      updatedBy: this.getActiveDirector().name
+    };
+    this.feeStructures.push(fee);
+    this._save('imp_fee_structures_v6', this.feeStructures);
+    dbSaveFeeStructure(fee);
+    this.notify();
+    return fee;
+  }
+
+  calculateStudentFee(arg1, arg2, selectedSubjects) {
+    // Detect which argument is branch and which is course:
+    let branchStr = '';
+    let courseIdentifier = '';
+    if (typeof arg1 === 'string' && (arg1.toLowerCase().includes('gangapur') || arg1.toLowerCase().includes('satpur') || arg1 === 'b1' || arg1 === 'b2')) {
+      branchStr = arg1;
+      courseIdentifier = arg2;
+    } else {
+      courseIdentifier = arg1;
+      branchStr = arg2;
+    }
+
+    const courseObj = this.courses.find(c => c.id === courseIdentifier || c.name.toLowerCase() === String(courseIdentifier || '').toLowerCase());
+    const targetCourseName = courseObj ? courseObj.name : String(courseIdentifier || '');
+
+    const isSatpur = String(branchStr).toLowerCase().includes('satpur') || branchStr === 'b1';
+    const branchMatchName = isSatpur ? 'Satpur Colony Center' : 'Gangapur Road Center';
+
+    // Look up fee record in feeStructures
+    const feeRecord = this.feeStructures.find(f => {
+      const bStr = (f.branch || f.branchName || '').toLowerCase();
+      const matchBranch = isSatpur ? bStr.includes('satpur') : bStr.includes('gangapur');
+      const cStr = (f.courseName || '').toLowerCase();
+      const matchCourse = courseObj 
+        ? (f.courseId === courseObj.id || cStr.includes(courseObj.name.toLowerCase()) || courseObj.name.toLowerCase().includes(cStr))
+        : (cStr.includes(targetCourseName.toLowerCase()) || targetCourseName.toLowerCase().includes(cStr));
+      return matchBranch && matchCourse;
+    });
+
+    const standardRate = feeRecord ? Number(feeRecord.perSubjectFee) : (isSatpur ? 6500 : 10000);
+    const subjects = Array.isArray(selectedSubjects) ? selectedSubjects : [];
+    let totalFee = 0;
+    const breakdown = [];
+
+    subjects.forEach(subName => {
+      let subFee = standardRate;
+      let isSpecial = false;
+      let note = `Standard ${branchMatchName} rate`;
+
+      // Check special rates from feeRecord (e.g. Maths in Satpur: 11th = 8000, 12th = 9000)
+      if (feeRecord && feeRecord.specialRates) {
+        for (const [key, val] of Object.entries(feeRecord.specialRates)) {
+          if (subName.toLowerCase().includes(key.toLowerCase())) {
+            subFee = Number(val);
+            isSpecial = true;
+            note = `Special ${key} rate (Rs ${val.toLocaleString()})`;
+            break;
+          }
+        }
+      }
+
+      // Default schedule fallback for Maths in Satpur Colony
+      if (!isSpecial && subName.toLowerCase().includes('maths') && isSatpur) {
+        if (targetCourseName.includes('12th')) {
+          subFee = 9000;
+          note = 'Special Maths rate (12th Satpur: Rs 9,000)';
+        } else {
+          subFee = 8000;
+          note = 'Special Maths rate (11th Satpur: Rs 8,000)';
+        }
+        isSpecial = true;
+      }
+
+      totalFee += subFee;
+      breakdown.push({ subject: subName, fee: subFee, isSpecial, note });
+    });
+
+    return {
+      totalFee,
+      standardRate,
+      courseName: targetCourseName,
+      branchName: branchMatchName,
+      breakdown
+    };
+  }
+
+  // --- ACTIONS: STUDENT ENROLMENT & FEE ADJUSTMENT (Director / Admin Authority) ---
+
+  addStudent(studentData) {
+    const { 
+      name, phone, email, parentName, parentPhone, parentEmail, 
+      branchId, branchName, branch, courseId, courseName, 
+      subjectsChosen, assignedTeacher, totalFees, paidFees, discount,
+      initialMode, initialTxnId, remarks 
+    } = studentData;
+
+    if (!name || !name.trim()) return { success: false, message: 'Student name is required' };
+    const id = 's_' + Date.now();
+    const nextNum = this.students.length + 1;
+    const rollNo = `IMP-2026-${String(nextNum).padStart(2, '0')}`;
+    const tot = Number(totalFees) || 0;
+    const paid = Number(paidFees) || 0;
+    const due = Math.max(0, tot - paid);
+
+    const rawBranch = branchName || branch || (branchId === 'b1' ? 'Branch 1: Satpur Colony Center' : 'Branch 2: Gangapur Road Center');
+    const determinedBranchName = rawBranch.includes('Satpur') ? 'Satpur Colony Center' : 'Gangapur Road Center';
+    const determinedBranchId = branchId || (determinedBranchName.includes('Satpur') ? 'b1' : 'b2');
+
+    const courseObj = this.courses.find(c => c.id === courseId || c.name === courseName);
+
+    const student = {
+      id,
+      rollNo,
+      name: name.trim(),
+      courseId: courseObj ? courseObj.id : (courseId || 'c1'),
+      courseName: courseObj ? courseObj.name : (courseName || 'Commerce Program'),
+      batch: `${determinedBranchName.replace(/Center/, '').trim()} (Regular)`,
+      branchId: determinedBranchId,
+      branch: determinedBranchName,
+      branchName: determinedBranchName,
+      phone: phone || '',
+      email: email || '',
+      parentName: parentName || '',
+      parentPhone: parentPhone || phone || '',
+      parentEmail: parentEmail || '',
+      subjectsChosen: Array.isArray(subjectsChosen) ? subjectsChosen : (subjectsChosen ? subjectsChosen.split(',').map(s => s.trim()) : ['Account']),
+      assignedTeacher: assignedTeacher || (this.teachers[0] ? this.teachers[0].name : 'CA Ravindra Deshmukh'),
+      totalFees: tot,
+      paidFees: paid,
+      discount: Number(discount) || 0,
+      dueFees: due,
+      status: due === 0 ? 'Paid' : (paid > 0 ? 'Partial' : 'Pending'),
+      attendancePercent: 100,
+      todayAttendance: 'Present',
+      homeworkCompleted: true,
+      avatar: name.split(' ').map(n => n.charAt(0)).join('').slice(0, 2).toUpperCase(),
+      behaviourRemarks: {
+        teacher: remarks || 'Newly enrolled student. Orientation completed.',
+        parent: 'Guardian confirmed contact details for progress alerts.'
+      },
+      performanceMarks: {
+        weekly: [],
+        quarterly: [],
+        sixMonthly: []
+      }
+    };
+
+    this.students.unshift(student);
+    this._save('imp_students_v6', this.students);
+    dbSaveStudent(student);
+
+    // If initial payment was made, generate receipt immediately and allocate 60% teacher share!
+    if (paid > 0) {
+      this.collectFee({
+        studentId: student.id,
+        amount: paid,
+        mode: initialMode || 'Online (Bank UPI QR)',
+        txnId: initialTxnId || `UPI-${Date.now().toString().slice(-8)}`,
+        notes: `Initial Enrolment Fee Payment for ${student.courseName}`
+      });
+    }
+
+    this.notify();
+    return student;
+  }
+
+  updateStudent(studentId, updates) {
+    const student = this.students.find(s => s.id === studentId);
+    if (!student) return { success: false, message: 'Student not found' };
+    Object.assign(student, updates);
+    if (updates.totalFees !== undefined || updates.paidFees !== undefined) {
+      student.dueFees = Math.max(0, (student.totalFees || 0) - (student.paidFees || 0));
+      student.status = student.dueFees === 0 ? 'Paid' : ((student.paidFees || 0) > 0 ? 'Partial' : 'Pending');
+    }
+    this._save('imp_students_v6', this.students);
+    dbSaveStudent(student);
+    this.notify();
+    return { success: true, student };
   }
 
   setPublicTab(tab) {

@@ -5,12 +5,23 @@ import { state } from '../state.js';
 import { SUBJECTS_CATALOG } from '../mockData.js';
 import { openReceiptModal } from './receiptModal.js';
 import { openVoucherModal } from './voucherModal.js';
+import { 
+  renderAcademicAndFeeMasterTab,
+  openAddCourseModal,
+  openAddSubjectModal,
+  openFeeStructureModal,
+  openEnrolStudentModal,
+  openEditStudentModal
+} from './academicMaster.js';
 
 export function renderDirectorPortal(container, showToast) {
-  const activeTab = state.currentDirectorTab || 'fees';
+  const activeTab = state.currentDirectorTab || 'academicMaster';
+  const activeDirector = state.getActiveDirector();
+  const allDirectors = state.directors || [];
 
   const tabs = [
-    { id: 'fees', label: 'Fee Details', icon: '💰', desc: 'Enrolled students catalogue, subjects chosen, total fees, received & balance dues' },
+    { id: 'academicMaster', label: 'Courses, Subjects & Fees', icon: '🏛️', desc: 'Master Curriculum & per-subject fee structure for Gangapur Rd & Satpur Colony' },
+    { id: 'fees', label: 'Fee Details & Enrolments', icon: '💰', desc: 'Enrolled students catalogue, subjects chosen, total fees, received & balance dues' },
     { id: 'expenses', label: 'Expenses & Vouchers', icon: '🧾', desc: 'Course direct expenses & allocated common overheads (Rent, Utilities, Admin)' },
     { id: 'pnl', label: 'Profit & Loss', icon: '📊', desc: 'Course-wise surplus breakdown and integrated institute EBITDA statement' },
     { id: 'enquiries', label: 'Enquiry Report Status', icon: '📋', desc: 'Conversion analysis: Enquired & persuaded vs discontinued with documented reasons' },
@@ -32,24 +43,53 @@ export function renderDirectorPortal(container, showToast) {
             👑
           </div>
           <div>
-            <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
               <h2 style="font-size: 1.35rem; color: #fff; margin: 0; letter-spacing: -0.01em;">DIRECTOR'S EXECUTIVE CONSOLE</h2>
               <span class="status-badge status-active" style="background: rgba(207,168,78,0.2); color: var(--accent-gold); border: 1px solid var(--border-gold); font-size: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 20px; font-weight: 700;">
-                Director Dr. S. K. Joshi
+                Active: ${activeDirector.name}
               </span>
             </div>
             <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
-              Imperial Commerce Tutorials • Strategic Governance, 60% Faculty Ledgers & P&L Analysis • Nashik Centers
+              Imperial Commerce Tutorials • Strategic Governance & Master Administration • ${activeDirector.email} • 📞 ${activeDirector.phone}
             </div>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <button id="director-quick-receipt-btn" class="btn btn-primary" style="padding: 0.6rem 1.15rem; font-size: 0.85rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); color: #070b14; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 10px rgba(207,168,78,0.3); transition: all 0.2s;">
-            + Generate Fee Receipt
+        <!-- Director Persona Switcher & Fast Global Action Buttons -->
+        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+          <!-- Persona Switcher -->
+          <div style="display: flex; align-items: center; background: rgba(0,0,0,0.3); padding: 0.25rem 0.45rem; border-radius: 8px; border: 1px solid var(--border-subtle); gap: 0.35rem;">
+            <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; padding-left: 0.2rem;">Director:</span>
+            ${allDirectors.map(dir => {
+              const isCur = dir.id === activeDirector.id;
+              return `
+                <button 
+                  class="header-director-switch-btn" 
+                  data-director-id="${dir.id}"
+                  style="padding: 0.3rem 0.65rem; font-size: 0.76rem; border-radius: 5px; border: 1px solid ${isCur ? 'var(--accent-gold)' : 'transparent'}; background: ${isCur ? 'linear-gradient(135deg, var(--accent-gold), #b38938)' : 'rgba(255,255,255,0.05)'}; color: ${isCur ? '#070b14' : '#cbd5e1'}; font-weight: ${isCur ? '800' : '600'}; cursor: pointer; transition: all 0.2s;"
+                  title="Switch acting director to ${dir.name}"
+                >
+                  ${dir.id === 'dir_ishwari' ? '👩‍💼' : '👨‍💼'} ${dir.name.split(' ')[0]}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Fast Master Creation Buttons -->
+          <button id="director-quick-course-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(207,168,78,0.15); border: 1px solid var(--border-gold); color: var(--accent-gold-light); font-weight: 700; border-radius: 6px; cursor: pointer;">
+            + Course
           </button>
-          <button id="director-quick-voucher-btn" class="btn btn-secondary" style="padding: 0.6rem 1.15rem; font-size: 0.85rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); color: #e2e8f0; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
-            + Create Voucher
+          <button id="director-quick-subject-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #7dd3fc; font-weight: 700; border-radius: 6px; cursor: pointer;">
+            + Subject
+          </button>
+          <button id="director-quick-enrol-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; font-weight: 700; border-radius: 6px; cursor: pointer;">
+            + Enrol
+          </button>
+          <button id="director-quick-receipt-btn" class="btn btn-primary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); color: #070b14; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;">
+            + Receipt
+          </button>
+          <button id="director-quick-voucher-btn" class="btn btn-secondary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); color: #e2e8f0; border-radius: 6px; cursor: pointer;">
+            + Voucher
           </button>
         </div>
       </div>
@@ -58,7 +98,7 @@ export function renderDirectorPortal(container, showToast) {
       <aside class="portal-sidebar" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem; height: fit-content; position: sticky; top: 5.5rem;">
         <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 800; margin-bottom: 0.85rem; padding-left: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
           <span>EXECUTIVE DESK TABS</span>
-          <span style="font-size: 0.7rem; background: rgba(207,168,78,0.15); color: var(--accent-gold); padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700;">9 Modules</span>
+          <span style="font-size: 0.7rem; background: rgba(207,168,78,0.15); color: var(--accent-gold); padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700;">10 Modules</span>
         </div>
         <nav class="portal-nav-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
           ${tabs.map(t => {
@@ -83,7 +123,7 @@ export function renderDirectorPortal(container, showToast) {
         </div>
       </aside>
 
-      <!-- Right Column: Tab Content Canvas (Utilizing the entire blank area!) -->
+      <!-- Right Column: Tab Content Canvas -->
       <section class="portal-content" style="min-width: 0; display: flex; flex-direction: column; gap: 1.25rem;">
         <!-- Active Tab Header Bar -->
         <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(19, 29, 49, 0.75); border: 1px solid var(--border-gold); padding: 0.9rem 1.4rem; border-radius: var(--radius-md); flex-wrap: wrap; gap: 0.75rem; box-shadow: var(--shadow-sm);">
@@ -97,7 +137,7 @@ export function renderDirectorPortal(container, showToast) {
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--accent-gold); background: rgba(207,168,78,0.08); padding: 0.35rem 0.75rem; border-radius: 20px; border: 1px solid rgba(207,168,78,0.25);">
-            <span>● Live Data</span> • <span>Full Report Canvas</span>
+            <span>● Live Data</span> • <span>Executive Authority</span>
           </div>
         </div>
 
@@ -121,7 +161,38 @@ export function renderDirectorPortal(container, showToast) {
     });
   });
 
+  // Attach Director persona switcher in header
+  container.querySelectorAll('.header-director-switch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dirId = btn.getAttribute('data-director-id');
+      const dir = state.switchDirector(dirId);
+      renderDirectorPortal(container, showToast);
+      showToast(`Switched active Director to ${dir.name}.`, 'info');
+    });
+  });
+
   // Global action buttons
+  const quickCourseBtn = container.querySelector('#director-quick-course-btn');
+  if (quickCourseBtn) {
+    quickCourseBtn.addEventListener('click', () => {
+      openAddCourseModal(showToast, null, () => renderDirectorPortal(container, showToast));
+    });
+  }
+
+  const quickSubjectBtn = container.querySelector('#director-quick-subject-btn');
+  if (quickSubjectBtn) {
+    quickSubjectBtn.addEventListener('click', () => {
+      openAddSubjectModal(showToast, null, () => renderDirectorPortal(container, showToast));
+    });
+  }
+
+  const quickEnrolBtn = container.querySelector('#director-quick-enrol-btn');
+  if (quickEnrolBtn) {
+    quickEnrolBtn.addEventListener('click', () => {
+      openEnrolStudentModal(showToast, null, () => renderDirectorPortal(container, showToast));
+    });
+  }
+
   const quickReceiptBtn = container.querySelector('#director-quick-receipt-btn');
   if (quickReceiptBtn) {
     quickReceiptBtn.addEventListener('click', () => {
@@ -138,6 +209,9 @@ export function renderDirectorPortal(container, showToast) {
 
   // Render the active tab view
   switch (activeTab) {
+    case 'academicMaster':
+      renderAcademicAndFeeMasterTab(tabContent, showToast);
+      break;
     case 'fees':
       renderFeeDetailsTab(tabContent, showToast);
       break;
@@ -166,7 +240,7 @@ export function renderDirectorPortal(container, showToast) {
       renderRecruitmentTab(tabContent, showToast);
       break;
     default:
-      renderFeeDetailsTab(tabContent, showToast);
+      renderAcademicAndFeeMasterTab(tabContent, showToast);
       break;
   }
 }
@@ -201,10 +275,13 @@ function renderFeeDetailsTab(container, showToast) {
         <div style="font-size: 1.6rem; font-weight: 800; color: #f87171; margin-top: 0.35rem;">₹${totalDue.toLocaleString()}</div>
         <div style="font-size: 0.78rem; color: #fca5a5; margin-top: 0.25rem;">To be recovered via WhatsApp reminders</div>
       </div>
-      <div class="card" style="padding: 1.25rem; border: 1px solid var(--border-gold); background: rgba(207, 168, 78, 0.08);">
-        <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 600;">New Receipt Action</div>
-        <div style="margin-top: 0.75rem;">
-          <button id="tab-new-receipt-btn" class="btn btn-primary" style="width: 100%; padding: 0.55rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); color: #070b14; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;">
+      <div class="card" style="padding: 1.25rem; border: 1px solid var(--border-gold); background: rgba(207, 168, 78, 0.08); display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700;">Student & Fee Actions</div>
+        <div style="margin-top: 0.65rem; display: flex; flex-direction: column; gap: 0.45rem;">
+          <button id="tab-enrol-student-btn" class="btn btn-primary" style="width: 100%; padding: 0.45rem; background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
+            + Enrol New Student
+          </button>
+          <button id="tab-new-receipt-btn" class="btn" style="width: 100%; padding: 0.45rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); color: #070b14; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
             + Generate Fee Receipt
           </button>
         </div>
@@ -302,6 +379,13 @@ function renderFeeDetailsTab(container, showToast) {
   });
 
   // Attach button triggers
+  const tabEnrolBtn = container.querySelector('#tab-enrol-student-btn');
+  if (tabEnrolBtn) {
+    tabEnrolBtn.addEventListener('click', () => {
+      openEnrolStudentModal(showToast, null, () => renderFeeDetailsTab(container, showToast));
+    });
+  }
+
   container.querySelector('#tab-new-receipt-btn').addEventListener('click', () => {
     openFeeReceiptDialog(showToast);
   });
@@ -341,16 +425,28 @@ function renderStudentFeeRows(students) {
           ${s.status}
         </span>
       </td>
-      <td style="padding: 0.75rem; text-align: right;">
-        <button class="row-collect-btn" data-student-id="${s.id}" style="padding: 0.35rem 0.7rem; background: rgba(207,168,78,0.18); border: 1px solid var(--border-gold); border-radius: 5px; color: var(--accent-gold-light); font-size: 0.75rem; font-weight: 600; cursor: pointer;">
-          + Pay Receipt
-        </button>
+      <td style="padding: 0.75rem; text-align: right; white-space: nowrap;">
+        <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
+          <button class="row-adjust-btn" data-student-id="${s.id}" style="padding: 0.3rem 0.55rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border-light); border-radius: 4px; color: #cbd5e1; font-size: 0.72rem; cursor: pointer;" title="Director Fee & Subject Adjustment">
+            ✏️ Adjust
+          </button>
+          <button class="row-collect-btn" data-student-id="${s.id}" style="padding: 0.3rem 0.65rem; background: rgba(207,168,78,0.18); border: 1px solid var(--border-gold); border-radius: 4px; color: var(--accent-gold-light); font-size: 0.72rem; font-weight: 600; cursor: pointer;">
+            + Receipt
+          </button>
+        </div>
       </td>
     </tr>
   `).join('');
 }
 
 function attachStudentRowEvents(container, showToast) {
+  container.querySelectorAll('.row-adjust-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sId = btn.getAttribute('data-student-id');
+      openEditStudentModal(showToast, sId, () => renderFeeDetailsTab(container, showToast));
+    });
+  });
+
   container.querySelectorAll('.row-collect-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const sId = btn.getAttribute('data-student-id');
@@ -2300,8 +2396,12 @@ export function openAssignSubjectsModal(teacherId, showToast, onSuccess) {
   const teacher = state.teachers.find(t => t.id === teacherId);
   if (!teacher) return;
 
+  const availableCatalog = (state.subjectsCatalog && state.subjectsCatalog.length > 0)
+    ? state.subjectsCatalog
+    : SUBJECTS_CATALOG;
+
   const currentAssigned = new Set(teacher.assignedSubjects || []);
-  const catalogNames = SUBJECTS_CATALOG.map(s => s.name);
+  const catalogNames = availableCatalog.map(s => s.name);
   const customSubjects = (teacher.assignedSubjects || []).filter(s => !catalogNames.includes(s));
 
   modalContainer.innerHTML = `
@@ -2345,7 +2445,7 @@ export function openAssignSubjectsModal(teacherId, showToast, onSuccess) {
 
         <!-- Subjects Grid -->
         <div id="subjects-checkbox-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; max-height: 280px; overflow-y: auto; padding-right: 0.35rem; margin-bottom: 1.25rem;">
-          ${SUBJECTS_CATALOG.map(sub => {
+          ${availableCatalog.map(sub => {
             const isChecked = currentAssigned.has(sub.name);
             return `
               <label style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.75rem; background: ${isChecked ? 'rgba(16,185,129,0.08)' : 'rgba(255,255,255,0.02)'}; border: 1px solid ${isChecked ? 'rgba(16,185,129,0.3)' : 'var(--border-subtle)'}; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
@@ -2358,7 +2458,7 @@ export function openAssignSubjectsModal(teacherId, showToast, onSuccess) {
                 />
                 <div style="flex: 1;">
                   <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">${sub.name}</div>
-                  <div style="font-size: 0.7rem; color: var(--accent-gold); margin-top: 0.15rem;">${sub.tag} • ${sub.coverage}</div>
+                  <div style="font-size: 0.7rem; color: var(--accent-gold); margin-top: 0.15rem;">${sub.category || sub.tag || 'Subject'} • ${sub.coverage || 'Curriculum Module'}</div>
                 </div>
               </label>
             `;

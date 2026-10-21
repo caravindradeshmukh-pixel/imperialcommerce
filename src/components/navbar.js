@@ -88,10 +88,10 @@ export function renderNavbar(container) {
           ${user ? `
             <div class="user-profile-badge" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.3rem 0.65rem; border-radius: 20px; border: 1px solid var(--border-gold);">
               <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-gold), #856116); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: #070b14;">
-                ${user.avatar || 'U'}
+                ${user.role === 'director' ? (state.getActiveDirector().avatar || '👑') : (user.avatar || 'U')}
               </div>
               <div class="user-id-text" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-gold-light);">
-                ${user.userId}
+                ${user.role === 'director' ? `${state.getActiveDirector().name.split(' ')[0]} (Director)` : (user.name || user.userId)}
               </div>
             </div>
             <button 

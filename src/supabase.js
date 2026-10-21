@@ -838,6 +838,204 @@ export async function dbFetchTeachers() {
 }
 
 // -------------------------------------------------------------
+// 12. COURSES SERVICE
+// -------------------------------------------------------------
+export async function dbSaveCourse(c) {
+  try {
+    const row = {
+      id: c.id,
+      code: c.code || '',
+      name: c.name,
+      level: c.level || '',
+      board: c.board || '',
+      branches: c.branches || '',
+      fee_per_subject: Number(c.perSubjectFee || c.fee_per_subject) || 0,
+      full_fee: Number(c.fullFee || c.full_fee) || 0,
+      subjects_list: c.subjectsList || [],
+      services_offered: c.servicesOffered || [],
+      description: c.description || '',
+      batch_info: c.batchInfo || '',
+      created_by: c.createdBy || 'Director'
+    };
+
+    const { data, error } = await supabase
+      .from('courses')
+      .upsert(row, { onConflict: 'id' })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (err) {
+    console.error('Failed to save course in Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbFetchCourses() {
+  try {
+    const { data, error } = await supabase
+      .from('courses')
+      .select('*')
+      .order('id', { ascending: true });
+
+    if (error) throw error;
+    return (data || []).map(c => ({
+      id: c.id,
+      code: c.code,
+      name: c.name,
+      level: c.level,
+      board: c.board,
+      branches: c.branches,
+      perSubjectFee: Number(c.fee_per_subject),
+      fullFee: Number(c.full_fee),
+      subjectsList: c.subjects_list || [],
+      servicesOffered: c.services_offered || [],
+      description: c.description,
+      batchInfo: c.batch_info,
+      createdBy: c.created_by
+    }));
+  } catch (err) {
+    console.error('Failed to fetch courses from Supabase:', err);
+    return null;
+  }
+}
+
+export async function dbDeleteCourse(courseId) {
+  try {
+    const { error } = await supabase
+      .from('courses')
+      .delete()
+      .eq('id', courseId);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete course from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+// -------------------------------------------------------------
+// 13. SUBJECTS SERVICE
+// -------------------------------------------------------------
+export async function dbSaveSubject(s) {
+  try {
+    const row = {
+      name: s.name,
+      coverage: s.coverage || '',
+      tag: s.tag || s.category || '',
+      description: s.desc || s.description || '',
+      fee_per_subject: Number(s.defaultFee || s.fee_per_subject) || 0,
+      special_fee_rule: s.specialFeeRule || s.special_fee_rule || '',
+      created_by: s.createdBy || 'Director'
+    };
+
+    const { data, error } = await supabase
+      .from('subjects')
+      .upsert(row, { onConflict: 'name' })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (err) {
+    console.error('Failed to save subject in Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbFetchSubjects() {
+  try {
+    const { data, error } = await supabase
+      .from('subjects')
+      .select('*')
+      .order('name', { ascending: true });
+
+    if (error) throw error;
+    return (data || []).map(s => ({
+      name: s.name,
+      category: s.tag || '',
+      tag: s.tag || '',
+      coverage: s.coverage || '',
+      desc: s.description || '',
+      defaultFee: Number(s.fee_per_subject),
+      specialFeeRule: s.special_fee_rule || '',
+      createdBy: s.created_by
+    }));
+  } catch (err) {
+    console.error('Failed to fetch subjects from Supabase:', err);
+    return null;
+  }
+}
+
+export async function dbDeleteSubject(subjectName) {
+  try {
+    const { error } = await supabase
+      .from('subjects')
+      .delete()
+      .eq('name', subjectName);
+    if (error) throw error;
+    return { success: true };
+  } catch (err) {
+    console.error('Failed to delete subject from Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+// -------------------------------------------------------------
+// 14. FEE STRUCTURES SERVICE
+// -------------------------------------------------------------
+export async function dbSaveFeeStructure(f) {
+  try {
+    const row = {
+      id: f.id,
+      branch_name: f.branchName || '',
+      course_name: f.courseName || '',
+      fee_text: f.feeText || '',
+      per_subject_fee: Number(f.perSubjectFee) || 0,
+      special_notes: f.specialNotes || '',
+      updated_by: f.updatedBy || 'Director'
+    };
+
+    const { data, error } = await supabase
+      .from('fee_structures')
+      .upsert(row, { onConflict: 'id' })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (err) {
+    console.error('Failed to save fee structure in Supabase:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function dbFetchFeeStructures() {
+  try {
+    const { data, error } = await supabase
+      .from('fee_structures')
+      .select('*')
+      .order('id', { ascending: true });
+
+    if (error) throw error;
+    return (data || []).map(f => ({
+      id: f.id,
+      branchName: f.branch_name,
+      branchId: (f.branch_name && f.branch_name.includes('Satpur')) ? 'b1' : 'b2',
+      courseName: f.course_name,
+      feeText: f.fee_text,
+      perSubjectFee: Number(f.per_subject_fee),
+      specialNotes: f.special_notes,
+      updatedBy: f.updated_by
+    }));
+  } catch (err) {
+    console.error('Failed to fetch fee structures from Supabase:', err);
+    return null;
+  }
+}
+
+// -------------------------------------------------------------
 // BULK SEEDING & BACKUP EXPORT SERVICES
 // -------------------------------------------------------------
 export async function seedSupabaseIfEmpty(initialMockData) {
@@ -923,6 +1121,27 @@ export async function seedSupabaseIfEmpty(initialMockData) {
       if (initialMockData.INITIAL_TEACHERS) {
         for (const t of initialMockData.INITIAL_TEACHERS) {
           await dbSaveTeacher(t);
+        }
+      }
+
+      // Seed courses
+      if (initialMockData.INITIAL_COURSES) {
+        for (const c of initialMockData.INITIAL_COURSES) {
+          await dbSaveCourse(c);
+        }
+      }
+
+      // Seed subjects
+      if (initialMockData.SUBJECTS_CATALOG) {
+        for (const sub of initialMockData.SUBJECTS_CATALOG) {
+          await dbSaveSubject(sub);
+        }
+      }
+
+      // Seed fee structures
+      if (initialMockData.INITIAL_FEE_STRUCTURES) {
+        for (const f of initialMockData.INITIAL_FEE_STRUCTURES) {
+          await dbSaveFeeStructure(f);
         }
       }
 

@@ -45,6 +45,9 @@ export async function openCloudDataModal(modalContainer, showToast) {
 
   function render() {
     const counts = {
+      courses: (state.courses || []).length,
+      subjects: (state.subjectsCatalog || []).length,
+      feeStructures: (state.feeStructures || []).length,
       enquiries: state.enquiries.length,
       recruitment: state.recruitment.length,
       receipts: state.receipts.length,
@@ -208,6 +211,9 @@ export async function openCloudDataModal(modalContainer, showToast) {
           <!-- Tabs -->
           <div style="display: flex; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.2rem; max-width: 65%;">
             ${[
+              { id: 'courses', label: 'Courses', count: counts.courses },
+              { id: 'subjects', label: 'Subjects', count: counts.subjects },
+              { id: 'feeStructures', label: 'Fee Rules', count: counts.feeStructures },
               { id: 'enquiries', label: 'Enquiries', count: counts.enquiries },
               { id: 'recruitment', label: 'Candidates', count: counts.recruitment },
               { id: 'receipts', label: 'Fee Receipts', count: counts.receipts },
@@ -588,6 +594,9 @@ export async function openCloudDataModal(modalContainer, showToast) {
 
     // Generic JSON view fallback for other tables
     const dataMap = {
+      courses: state.courses,
+      subjects: state.subjectsCatalog,
+      feeStructures: state.feeStructures,
       homeworks: state.homeworks,
       exams: state.exams,
       portions: state.portions,

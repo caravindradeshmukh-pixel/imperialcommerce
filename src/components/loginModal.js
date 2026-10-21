@@ -7,16 +7,37 @@ export function openLoginModal(initialUserId = 'Director', onLoginSuccess = null
   const modalContainer = document.getElementById('modal-container');
   if (!modalContainer) return;
 
-  const validRoles = [
-    { id: 'Director', label: 'Director', icon: '👑', desc: 'Academic & Executive Administration' },
-    { id: 'Admin Staff', label: 'Admin Staff', icon: '🛡️', desc: 'Receipts, Vouchers, Attendance & Alerts' },
-    { id: 'Teacher', label: 'Teacher', icon: '👨‍🏫', desc: 'Notes, Homework, Exams & 60% Remuneration' },
-    { id: 'Student', label: 'Student', icon: '🎓', desc: 'Notes, Homework, Leave, Exams & Marks' },
-    { id: 'Parents', label: 'Parents', icon: '👨‍👩‍👧', desc: 'Attendance, Performance, Remarks & Fee UPI' }
+  const selectedUser = (initialUserId === 'Director' || !initialUserId)
+    ? (state.activeDirectorId === 'dir_shrikrishna' ? 'Director - Shrikrishna Deshmukh' : 'Director - Ishwari Deshmukh')
+    : initialUserId;
+
+  const quickPickRoles = [
+    { id: 'Director - Ishwari Deshmukh', label: 'Ishwari Deshmukh', icon: '👑' },
+    { id: 'Director - Shrikrishna Deshmukh', label: 'Shrikrishna Deshmukh', icon: '👑' },
+    { id: 'Admin Staff', label: 'Pranav Toradmal (Admin)', icon: '🛡️' },
+    { id: 'Teacher - CA Ravindra Deshmukh', label: 'CA Ravindra Deshmukh', icon: '👨‍🏫' },
+    { id: 'Student - Arush Thorat', label: 'Arush Thorat', icon: '🎓' },
+    { id: 'Parents', label: 'Parents', icon: '👨‍👩‍👧' }
+  ];
+
+  const allAvailableUsers = [
+    { id: 'Director - Ishwari Deshmukh', label: 'Ishwari Deshmukh (Director)', desc: 'Director • 9850311082' },
+    { id: 'Director - Shrikrishna Deshmukh', label: 'Shrikrishna Deshmukh (Director)', desc: 'Director • 9823979878' },
+    { id: 'Admin Staff', label: 'Pranav Toradmal (Admin Staff)', desc: 'Admin Staff • 9850311082' },
+    { id: 'Teacher - CA Ravindra Deshmukh', label: 'CA Ravindra Deshmukh (Faculty)', desc: 'Faculty • Gangapur Road • Account & Economics' },
+    { id: 'Teacher - Pranav Toradmal', label: 'Pranav Toradmal (Faculty)', desc: 'Faculty • Satpur Colony • Account & Law' },
+    { id: 'Teacher - Mrs Kavita Oak', label: 'Mrs Kavita Oak (Faculty)', desc: 'Faculty • Gangapur & Satpur • Maths' },
+    { id: 'Teacher - Mr Digvijay Pawar', label: 'Mr Digvijay Pawar (Faculty)', desc: 'Faculty • Satpur Colony • Economics' },
+    { id: 'Student - Arush Thorat', label: 'Arush Thorat (Student)', desc: 'Student • 12th ICGSE • Gangapur Road' },
+    { id: 'Student - Jatin Avhad', label: 'Jatin Avhad (Student)', desc: 'Student • 10th ICGSE • Gangapur Road' },
+    { id: 'Student - Rutuja Shekokar', label: 'Rutuja Shekokar (Student)', desc: 'Student • 11th Commerce & CA Foundation' },
+    { id: 'Student - Om Nimse', label: 'Om Nimse (Student)', desc: 'Student • 11th Commerce • Gangapur Road' },
+    { id: 'Student - Swaraj Kakade', label: 'Swaraj Kakade (Student)', desc: 'Student • FY Bcom • Gangapur Road' },
+    { id: 'Parents', label: 'Parents Portal', desc: 'Parent Portal Connect • Fees, Attendance & Remarks' }
   ];
 
   modalContainer.innerHTML = `
-    <div class="modal-box" style="max-width: 520px; border: 1px solid var(--border-gold); box-shadow: 0 20px 60px rgba(0,0,0,0.85); background: #0c1424;">
+    <div class="modal-box" style="max-width: 540px; border: 1px solid var(--border-gold); box-shadow: 0 20px 60px rgba(0,0,0,0.85); background: #0c1424;">
       <!-- Modal Header -->
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -34,15 +55,15 @@ export function openLoginModal(initialUserId = 'Director', onLoginSuccess = null
       <!-- Quick 1-Click Role Pickers -->
       <div style="margin-bottom: 1.25rem;">
         <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-gold); margin-bottom: 0.5rem; font-weight: 700;">
-          Quick 1-Click Role Selector:
+          Quick 1-Click Persona Selector:
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-          ${validRoles.map(r => `
+          ${quickPickRoles.map(r => `
             <button 
               type="button" 
-              class="quick-fill-btn ${r.id === initialUserId ? 'active-quick-fill' : ''}" 
+              class="quick-fill-btn ${r.id === selectedUser ? 'active-quick-fill' : ''}" 
               data-role-id="${r.id}"
-              style="padding: 0.4rem 0.65rem; font-size: 0.78rem; border-radius: 6px; border: 1px solid var(--border-light); background: rgba(255,255,255,0.05); color: #e2e8f0; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;"
+              style="padding: 0.4rem 0.65rem; font-size: 0.78rem; border-radius: 6px; border: 1px solid ${r.id === selectedUser ? 'var(--accent-gold)' : 'var(--border-light)'}; background: ${r.id === selectedUser ? 'rgba(207,168,78,0.18)' : 'rgba(255,255,255,0.05)'}; color: #e2e8f0; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;"
             >
               <span>${r.icon}</span>
               <span style="font-weight: 600;">${r.label}</span>
@@ -55,11 +76,11 @@ export function openLoginModal(initialUserId = 'Director', onLoginSuccess = null
       <form id="portal-login-form">
         <div class="form-group" style="margin-bottom: 1rem;">
           <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem;">
-            User ID <span style="color: var(--accent-gold);">*</span>
+            User ID / Acting Persona <span style="color: var(--accent-gold);">*</span>
           </label>
-          <select id="login-userid-input" class="form-control" style="width: 100%; padding: 0.75rem; background: #131d31; border: 1px solid var(--border-light); border-radius: 8px; color: #fff; font-size: 0.95rem;">
-            ${validRoles.map(r => `
-              <option value="${r.id}" ${r.id === initialUserId ? 'selected' : ''}>${r.id} - ${r.desc}</option>
+          <select id="login-userid-input" class="form-control" style="width: 100%; padding: 0.75rem; background: #131d31; border: 1px solid var(--border-light); border-radius: 8px; color: #fff; font-size: 0.92rem;">
+            ${allAvailableUsers.map(u => `
+              <option value="${u.id}" ${u.id === selectedUser ? 'selected' : ''}>${u.label} - ${u.desc}</option>
             `).join('')}
           </select>
         </div>
