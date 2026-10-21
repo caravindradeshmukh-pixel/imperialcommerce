@@ -14,6 +14,7 @@ import {
   openEditStudentModal
 } from './academicMaster.js';
 import { openDataCleanupModal } from './dataCleanupModal.js';
+import { renderUserCredentialsTab } from './userCredentialsModal.js';
 
 export function renderDirectorPortal(container, showToast) {
   const activeTab = state.currentDirectorTab || 'academicMaster';
@@ -22,6 +23,7 @@ export function renderDirectorPortal(container, showToast) {
 
   const tabs = [
     { id: 'academicMaster', label: 'Courses, Subjects & Fees', icon: '🏛️', desc: 'Master Curriculum & per-subject fee structure for Gangapur Rd & Satpur Colony' },
+    { id: 'userCredentials', label: 'User IDs & Passwords', icon: '🔑', desc: 'Director Ishwari Deshmukh Authority • Reset, generate and dispatch official user IDs and passwords for all users' },
     { id: 'fees', label: 'Fee Details & Enrolments', icon: '💰', desc: 'Enrolled students catalogue, subjects chosen, total fees, received & balance dues' },
     { id: 'expenses', label: 'Expenses & Vouchers', icon: '🧾', desc: 'Course direct expenses & allocated common overheads (Rent, Utilities, Admin)' },
     { id: 'pnl', label: 'Profit & Loss', icon: '📊', desc: 'Course-wise surplus breakdown and integrated institute EBITDA statement' },
@@ -39,19 +41,19 @@ export function renderDirectorPortal(container, showToast) {
   container.innerHTML = `
     <div class="portal-container" style="max-width: 1560px; margin: 0 auto; padding: 1.5rem 1.5rem 5rem; display: grid; grid-template-columns: 280px 1fr; gap: 1.75rem; align-items: start;">
       <!-- Director Header Banner (Full Width 100% across top) -->
-      <div class="card" style="grid-column: 1 / -1; margin-bottom: 0; background: linear-gradient(135deg, rgba(19, 29, 49, 0.95), rgba(13, 21, 39, 0.95)); border: 1px solid var(--border-gold); padding: 1.15rem 1.75rem; border-radius: var(--radius-lg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: var(--shadow-md);">
+      <div class="card" style="grid-column: 1 / -1; margin-bottom: 0; background: linear-gradient(135deg, #0f2042, #1e3a8a); border: 1px solid #1e3a8a; padding: 1.15rem 1.75rem; border-radius: var(--radius-lg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 8px 24px rgba(15, 32, 66, 0.15);">
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, #cfa84e, #966f1e); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #070b14; font-weight: 800; box-shadow: 0 4px 20px var(--accent-gold-glow);">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #0f2042; font-weight: 800; box-shadow: 0 4px 14px rgba(0,0,0,0.2);">
             👑
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
-              <h2 style="font-size: 1.35rem; color: #fff; margin: 0; letter-spacing: -0.01em;">DIRECTOR'S EXECUTIVE CONSOLE</h2>
-              <span class="status-badge status-active" style="background: rgba(207,168,78,0.2); color: var(--accent-gold); border: 1px solid var(--border-gold); font-size: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 20px; font-weight: 700;">
+              <h2 style="font-size: 1.35rem; color: #ffffff; margin: 0; letter-spacing: -0.01em; font-weight: 800;">DIRECTOR'S EXECUTIVE CONSOLE</h2>
+              <span class="status-badge status-active" style="background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.35); font-size: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 20px; font-weight: 700;">
                 Active: ${activeDirector.name}
               </span>
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            <div style="font-size: 0.85rem; color: #e2e8f0; margin-top: 0.2rem; font-weight: 500;">
               Imperial Commerce Tutorials • Strategic Governance & Master Administration • ${activeDirector.email} • 📞 ${activeDirector.phone}
             </div>
           </div>
@@ -60,15 +62,15 @@ export function renderDirectorPortal(container, showToast) {
         <!-- Director Persona Switcher & Fast Global Action Buttons -->
         <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
           <!-- Persona Switcher -->
-          <div style="display: flex; align-items: center; background: rgba(0,0,0,0.3); padding: 0.25rem 0.45rem; border-radius: 8px; border: 1px solid var(--border-subtle); gap: 0.35rem;">
-            <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; padding-left: 0.2rem;">Director:</span>
+          <div style="display: flex; align-items: center; background: rgba(0,0,0,0.25); padding: 0.25rem 0.45rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); gap: 0.35rem;">
+            <span style="font-size: 0.72rem; color: #cbd5e1; text-transform: uppercase; font-weight: 700; padding-left: 0.2rem;">Director:</span>
             ${allDirectors.map(dir => {
               const isCur = dir.id === activeDirector.id;
               return `
                 <button 
                   class="header-director-switch-btn" 
                   data-director-id="${dir.id}"
-                  style="padding: 0.3rem 0.65rem; font-size: 0.76rem; border-radius: 5px; border: 1px solid ${isCur ? 'var(--accent-gold)' : 'transparent'}; background: ${isCur ? 'linear-gradient(135deg, var(--accent-gold), #b38938)' : 'rgba(255,255,255,0.05)'}; color: ${isCur ? '#070b14' : '#cbd5e1'}; font-weight: ${isCur ? '800' : '600'}; cursor: pointer; transition: all 0.2s;"
+                  style="padding: 0.3rem 0.65rem; font-size: 0.76rem; border-radius: 5px; border: 1px solid ${isCur ? '#ffffff' : 'transparent'}; background: ${isCur ? '#ffffff' : 'rgba(255,255,255,0.12)'}; color: ${isCur ? '#0f2042' : '#ffffff'}; font-weight: ${isCur ? '800' : '600'}; cursor: pointer; transition: all 0.2s;"
                   title="Switch acting director to ${dir.name}"
                 >
                   ${dir.id === 'dir_ishwari' ? '👩‍💼' : '👨‍💼'} ${dir.name.split(' ')[0]}
@@ -78,23 +80,26 @@ export function renderDirectorPortal(container, showToast) {
           </div>
 
           <!-- Fast Master Creation & Data Management Buttons -->
-          <button id="director-quick-course-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(207,168,78,0.15); border: 1px solid var(--border-gold); color: var(--accent-gold-light); font-weight: 700; border-radius: 6px; cursor: pointer;">
+          <button id="director-quick-course-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; font-weight: 700; border-radius: 6px; cursor: pointer;">
             + Course
           </button>
-          <button id="director-quick-subject-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #7dd3fc; font-weight: 700; border-radius: 6px; cursor: pointer;">
+          <button id="director-quick-subject-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; font-weight: 700; border-radius: 6px; cursor: pointer;">
             + Subject
           </button>
-          <button id="director-quick-enrol-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; font-weight: 700; border-radius: 6px; cursor: pointer;">
+          <button id="director-quick-enrol-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; font-weight: 700; border-radius: 6px; cursor: pointer;">
             + Enrol
           </button>
-          <button id="director-quick-receipt-btn" class="btn btn-primary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); color: #070b14; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;">
+          <button id="director-quick-receipt-btn" class="btn btn-primary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: #ffffff; color: #0f2042; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
             + Receipt
           </button>
-          <button id="director-quick-voucher-btn" class="btn btn-secondary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-light); color: #e2e8f0; border-radius: 6px; cursor: pointer;">
+          <button id="director-quick-voucher-btn" class="btn btn-secondary" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; border-radius: 6px; cursor: pointer;">
             + Voucher
           </button>
-          <button id="director-quick-cleanup-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.45); color: #fca5a5; font-weight: 800; border-radius: 6px; cursor: pointer;" title="Director Data Cleanup & Purge Center">
+          <button id="director-quick-cleanup-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; font-weight: 800; border-radius: 6px; cursor: pointer;" title="Director Data Cleanup & Purge Center">
             🧹 Clean Data
+          </button>
+          <button id="director-quick-credentials-btn" class="btn" style="padding: 0.55rem 0.85rem; font-size: 0.8rem; background: #fef08a; border: 1px solid #facc15; color: #713f12; font-weight: 800; border-radius: 6px; cursor: pointer;" title="Director Ishwari Deshmukh Authority: User IDs & Passwords">
+            🔑 User IDs & Passwords
           </button>
         </div>
       </div>
@@ -103,7 +108,7 @@ export function renderDirectorPortal(container, showToast) {
       <aside class="portal-sidebar" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem; height: fit-content; position: sticky; top: 5.5rem;">
         <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 800; margin-bottom: 0.85rem; padding-left: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
           <span>EXECUTIVE DESK TABS</span>
-          <span style="font-size: 0.7rem; background: rgba(207,168,78,0.15); color: var(--accent-gold); padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700;">10 Modules</span>
+          <span style="font-size: 0.7rem; background: #eff6ff; color: #1e3a8a; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 700;">11 Modules</span>
         </div>
         <nav class="portal-nav-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
           ${tabs.map(t => {
@@ -112,18 +117,18 @@ export function renderDirectorPortal(container, showToast) {
               <button 
                 class="tab-btn ${isActive ? 'active-tab' : ''}" 
                 data-tab="${t.id}"
-                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0.95rem; border-radius: 8px; font-size: 0.88rem; font-weight: ${isActive ? '700' : '600'}; cursor: pointer; text-align: left; width: 100%; border: 1px solid ${isActive ? 'var(--accent-gold)' : 'transparent'}; background: ${isActive ? 'rgba(207,168,78,0.15)' : 'rgba(255,255,255,0.02)'}; color: ${isActive ? 'var(--accent-gold-light)' : 'var(--text-muted)'}; transition: all 0.2s ease;"
+                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0.95rem; border-radius: 8px; font-size: 0.88rem; font-weight: ${isActive ? '700' : '600'}; cursor: pointer; text-align: left; width: 100%; border: 1px solid ${isActive ? '#0f2042' : 'transparent'}; background: ${isActive ? '#eff6ff' : 'transparent'}; color: ${isActive ? '#0f2042' : '#475569'}; transition: all 0.2s ease;"
               >
                 <span style="font-size: 1.15rem; width: 22px; text-align: center;">${t.icon}</span>
                 <span style="flex: 1;">${t.label}</span>
-                ${isActive ? '<span style="font-size: 0.75rem; color: var(--accent-gold);">●</span>' : ''}
+                ${isActive ? '<span style="font-size: 0.75rem; color: #0f2042;">●</span>' : ''}
               </button>
             `;
           }).join('')}
         </nav>
 
         <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle); font-size: 0.78rem; color: var(--text-dim); text-align: center;">
-          <div style="font-weight: 600; color: #cbd5e1; margin-bottom: 0.2rem;">Imperial Tutorials</div>
+          <div style="font-weight: 600; color: #0f2042; margin-bottom: 0.2rem;">Imperial Tutorials</div>
           <div>Satpur Colony & Gangapur Rd</div>
         </div>
       </aside>
@@ -131,18 +136,18 @@ export function renderDirectorPortal(container, showToast) {
       <!-- Right Column: Tab Content Canvas -->
       <section class="portal-content" style="min-width: 0; display: flex; flex-direction: column; gap: 1.25rem;">
         <!-- Active Tab Header Bar -->
-        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(19, 29, 49, 0.75); border: 1px solid var(--border-gold); padding: 0.9rem 1.4rem; border-radius: var(--radius-md); flex-wrap: wrap; gap: 0.75rem; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #0f2042; padding: 0.9rem 1.4rem; border-radius: var(--radius-md); flex-wrap: wrap; gap: 0.75rem; box-shadow: 0 2px 8px rgba(15, 32, 66, 0.05);">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(207,168,78,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; border: 1px solid var(--border-gold);">
+            <div style="width: 38px; height: 38px; border-radius: 10px; background: #eff6ff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; border: 1px solid #bfdbfe;">
               ${currentTabObj.icon}
             </div>
             <div>
-              <div style="font-size: 1.1rem; font-weight: 800; color: #fff;">${currentTabObj.label}</div>
-              <div style="font-size: 0.78rem; color: var(--text-muted);">${currentTabObj.desc}</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #0f2042;">${currentTabObj.label}</div>
+              <div style="font-size: 0.82rem; color: #64748b; font-weight: 500;">${currentTabObj.desc}</div>
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--accent-gold); background: rgba(207,168,78,0.08); padding: 0.35rem 0.75rem; border-radius: 20px; border: 1px solid rgba(207,168,78,0.25);">
-            <span>● Live Data</span> • <span>Executive Authority</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: #0f2042; background: #eff6ff; padding: 0.35rem 0.75rem; border-radius: 20px; border: 1px solid #bfdbfe; font-weight: 600;">
+            <span style="color: #059669;">● Live Data</span> • <span>Executive Authority</span>
           </div>
         </div>
 
@@ -219,10 +224,21 @@ export function renderDirectorPortal(container, showToast) {
     });
   }
 
+  const quickCredentialsBtn = container.querySelector('#director-quick-credentials-btn');
+  if (quickCredentialsBtn) {
+    quickCredentialsBtn.addEventListener('click', () => {
+      state.currentDirectorTab = 'userCredentials';
+      renderDirectorPortal(container, showToast);
+    });
+  }
+
   // Render the active tab view
   switch (activeTab) {
     case 'academicMaster':
       renderAcademicAndFeeMasterTab(tabContent, showToast);
+      break;
+    case 'userCredentials':
+      renderUserCredentialsTab(tabContent, showToast);
       break;
     case 'fees':
       renderFeeDetailsTab(tabContent, showToast);

@@ -56,7 +56,7 @@ export function renderNavbar(container) {
           }).join('')}
         </nav>
 
-        <!-- Right Action: Formal Theme Mode Switcher & User Profile / Sign In -->
+        <!-- Right Action: Cloud DB & User Profile / Sign In -->
         <div style="display: flex; align-items: center; gap: 0.65rem;">
           <!-- Supabase Cloud DB Status & Hub Pill -->
           <button 
@@ -70,33 +70,18 @@ export function renderNavbar(container) {
             <span>Cloud DB</span>
           </button>
 
-          <!-- Formal Light / Dark Mode Toggle Button -->
-          <button 
-            id="theme-toggle-btn" 
-            class="theme-toggle-pill" 
-            type="button"
-            title="Switch Theme (Current: ${state.theme === 'light' ? 'Formal Light Mode' : 'Executive Dark Mode'})"
-            aria-label="Toggle Dark and Light Mode"
-          >
-            <span class="theme-pill-track">
-              <span class="theme-icon ${state.theme === 'light' ? 'active-icon' : ''}">☀️</span>
-              <span class="theme-icon ${state.theme === 'dark' ? 'active-icon' : ''}">🌙</span>
-            </span>
-            <span class="theme-label">${state.theme === 'light' ? 'Light' : 'Dark'}</span>
-          </button>
-
           ${user ? `
-            <div class="user-profile-badge" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.3rem 0.65rem; border-radius: 20px; border: 1px solid var(--border-gold);">
-              <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-gold), #856116); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: #070b14;">
+            <div class="user-profile-badge" style="display: flex; align-items: center; gap: 0.5rem; background: #eff6ff; padding: 0.3rem 0.65rem; border-radius: 20px; border: 1px solid #bfdbfe;">
+              <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #0f2042, #1e3a8a); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: #ffffff;">
                 ${user.role === 'director' ? (state.getActiveDirector().avatar || '👑') : (user.avatar || 'U')}
               </div>
-              <div class="user-id-text" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-gold-light);">
+              <div class="user-id-text" style="font-size: 0.8rem; font-weight: 700; color: #0f2042;">
                 ${user.role === 'director' ? `${state.getActiveDirector().name.split(' ')[0]} (Director)` : (user.name || user.userId)}
               </div>
             </div>
             <button 
               id="dock-logout-btn" 
-              style="padding: 0.4rem 0.75rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #fca5a5; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;"
+              style="padding: 0.4rem 0.75rem; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 6px; color: #991b1b; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;"
               title="Sign Out of Portal"
             >
               Log Out
@@ -104,7 +89,7 @@ export function renderNavbar(container) {
           ` : `
             <button 
               id="dock-signin-btn" 
-              style="padding: 0.45rem 0.9rem; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover)); border: none; border-radius: 6px; color: #070b14; font-size: 0.82rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: 0 2px 10px rgba(207,168,78,0.25);"
+              style="padding: 0.45rem 0.9rem; background: linear-gradient(135deg, #0f2042, #1e3a8a); border: none; border-radius: 6px; color: #ffffff; font-size: 0.82rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: 0 2px 10px rgba(15,32,66,0.25);"
             >
               <span>🔐</span> Sign In
             </button>
@@ -126,14 +111,6 @@ export function renderNavbar(container) {
           });
         });
       }
-    });
-  }
-
-  // Attach theme toggle button listener
-  const themeToggleBtn = container.querySelector('#theme-toggle-btn');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      state.toggleTheme();
     });
   }
 

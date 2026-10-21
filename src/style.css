@@ -1,81 +1,34 @@
 /* ==========================================================================
    IMPERIAL COMMERCE TUTORIALS, NASHIK - EXECUTIVE PROFESSIONAL DESIGN SYSTEM
-   Executive Midnight Obsidian & Imperial Champagne Gold Theme
+   Professional Executive White & Oxford Navy Blue Color Palette
    ========================================================================== */
 
 :root {
-  /* Color Palette - Executive Finance & Commerce Prestige */
-  --bg-primary: #070b14; /* Deepest Midnight Obsidian */
-  --bg-secondary: #0d1527;
-  --bg-surface: #131d31;
-  --bg-surface-elevated: #1a2742;
-  --bg-glass: rgba(19, 29, 49, 0.82);
-  --bg-glass-hover: rgba(26, 39, 66, 0.9);
-
-  /* Prestigious Imperial Gold & Champagne Accents */
-  --accent-gold: #cfa84e;
-  --accent-gold-hover: #b89138;
-  --accent-gold-light: #f3e5be;
-  --accent-gold-glow: rgba(207, 168, 78, 0.28);
-
-  /* Executive Oxford Blue & Sapphire */
-  --accent-primary: #2563eb;
-  --accent-primary-hover: #1d4ed8;
-  --accent-primary-glow: rgba(37, 99, 235, 0.25);
-
-  --accent-success: #10b981;
-  --accent-danger: #ef4444;
-  --accent-warning: #f59e0b;
-  --accent-info: #0284c7;
-
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --text-gold: #e2c070;
-
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-light: rgba(255, 255, 255, 0.12);
-  --border-gold: rgba(207, 168, 78, 0.35);
-  --border-accent: rgba(37, 99, 235, 0.35);
-
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
-  --radius-full: 9999px;
-
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 4px 25px var(--accent-gold-glow);
-
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-}
-
-:root[data-theme="light"], [data-theme="light"] {
-  /* ==========================================================================
-     FORMAL LIGHT THEME PALETTE - EXECUTIVE COMMERCE & PROFESSIONAL ACADEMY
-     Alabaster / Crisp Slate Canvas, Deep Midnight Slate Navy, Antique Bronze Gold
-     ========================================================================== */
-  --bg-primary: #f8fafc; /* Immaculate Executive Slate 50 Canvas */
+  /* Color Palette - Executive Commerce Prestige: Crisp White & Oxford Navy Blue */
+  --bg-primary: #f8fafc; /* Crisp Executive Slate 50 Canvas */
   --bg-secondary: #f1f5f9; /* Slate 100 Structural Container */
   --bg-surface: #ffffff; /* Crisp Pure Alabaster White Cards */
   --bg-surface-elevated: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.94);
+  --bg-glass: rgba(255, 255, 255, 0.96);
   --bg-glass-hover: rgba(248, 250, 252, 0.98);
 
-  /* Prestigious Imperial Antique Bronze Gold (Deep & High Contrast on Light Backgrounds) */
+  /* Prestigious Executive Navy Blue Palette */
+  --navy-deep: #0a152e; /* Deep Oxford Midnight Navy */
+  --navy-primary: #0f2042; /* Oxford Corporate Navy */
+  --navy-royal: #1e3a8a; /* Royal Navy Blue */
+  --navy-slate: #1e293b;
+  --navy-light: #eff6ff;
+
+  /* Prestigious Imperial Antique Bronze Gold Accents */
   --accent-gold: #966f1e;
   --accent-gold-hover: #785311;
   --accent-gold-light: #453106;
   --accent-gold-glow: rgba(150, 111, 30, 0.16);
 
-  /* Executive Oxford Navy Blue & Sapphire */
-  --accent-primary: #1d4ed8;
-  --accent-primary-hover: #1e40af;
-  --accent-primary-glow: rgba(29, 78, 216, 0.14);
+  /* Executive Primary Navy & Royal Blue */
+  --accent-primary: #1e3a8a;
+  --accent-primary-hover: #0f2042;
+  --accent-primary-glow: rgba(30, 58, 138, 0.15);
 
   --accent-success: #059669; /* Banker Emerald Green */
   --accent-danger: #b91c1c; /* Deep Corporate Crimson */
@@ -92,13 +45,52 @@
   --border-subtle: #e2e8f0;
   --border-light: #cbd5e1;
   --border-gold: rgba(150, 111, 30, 0.35);
-  --border-accent: rgba(29, 78, 216, 0.28);
+  --border-accent: rgba(30, 58, 138, 0.28);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 
   /* Refined Elevation Shadows */
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.03);
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
   --shadow-gold: 0 4px 18px rgba(150, 111, 30, 0.18);
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+:root[data-theme="light"], [data-theme="light"] {
+  /* Aligned with root White & Navy Blue Theme */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.96);
+  --bg-glass-hover: rgba(248, 250, 252, 0.98);
+  --accent-gold: #966f1e;
+  --accent-gold-hover: #785311;
+  --accent-gold-light: #453106;
+  --accent-gold-glow: rgba(150, 111, 30, 0.16);
+  --accent-primary: #1e3a8a;
+  --accent-primary-hover: #0f2042;
+  --accent-primary-glow: rgba(30, 58, 138, 0.15);
+  --accent-success: #059669;
+  --accent-danger: #b91c1c;
+  --accent-warning: #b45309;
+  --accent-info: #0284c7;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-dim: #64748b;
+  --text-gold: #855f17;
+  --border-subtle: #e2e8f0;
+  --border-light: #cbd5e1;
+  --border-gold: rgba(150, 111, 30, 0.35);
+  --border-accent: rgba(30, 58, 138, 0.28);
 }
 
 /* Base Resets */
@@ -114,7 +106,6 @@ html {
   background-color: var(--bg-primary);
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 body {
@@ -125,7 +116,6 @@ body {
   line-height: 1.6;
   background-color: var(--bg-primary);
   color: var(--text-main);
-  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -151,10 +141,10 @@ button, input, select, textarea {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(7, 11, 20, 0.94);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #0f2042;
+  box-shadow: 0 2px 14px rgba(15, 32, 66, 0.08);
 }
 
 .role-dock-inner {
@@ -177,7 +167,7 @@ button, input, select, textarea {
 .brand-crest {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, #0f2042, #1e3a8a);
   border: 1.5px solid var(--accent-gold);
   border-radius: var(--radius-sm);
   display: flex;
@@ -186,21 +176,20 @@ button, input, select, textarea {
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--accent-gold);
-  box-shadow: var(--shadow-gold);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 32, 66, 0.25);
 }
 
 .brand-title-group h1 {
   font-size: 1.15rem;
   letter-spacing: -0.01em;
-  background: linear-gradient(to right, #ffffff, #e2e8f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #0f2042;
+  font-weight: 800;
 }
 
 .brand-subtitle {
   font-size: 0.72rem;
-  color: var(--accent-gold);
+  color: #966f1e;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 700;
@@ -210,10 +199,10 @@ button, input, select, textarea {
 .role-switcher-container {
   display: flex;
   align-items: center;
-  background: var(--bg-secondary);
+  background: #f1f5f9;
   padding: 0.25rem;
   border-radius: var(--radius-full);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid #e2e8f0;
 }
 
 .role-pill {
@@ -233,14 +222,14 @@ button, input, select, textarea {
 
 .role-pill:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.05);
+  background: #e2e8f0;
 }
 
 .role-pill.active {
-  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover));
-  color: #070b14;
+  background: linear-gradient(135deg, #0f2042, #1e3a8a);
+  color: #ffffff;
   font-weight: 700;
-  box-shadow: var(--shadow-gold);
+  box-shadow: 0 2px 10px rgba(15, 32, 66, 0.25);
 }
 
 .role-status-badge {
@@ -1119,7 +1108,7 @@ button, input, select, textarea {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(8px);
   z-index: 2000;
   display: flex;
@@ -1133,34 +1122,37 @@ button, input, select, textarea {
 }
 
 .modal-box {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-gold);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-top: 4px solid #0f2042;
   border-radius: var(--radius-lg);
   max-width: 650px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 60px rgba(15, 32, 66, 0.2);
+  color: #0f172a;
 }
 
 .modal-header {
-  padding: 1.5rem 1.75rem;
+  padding: 1.25rem 1.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .modal-close-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: #64748b;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: color 0.15s ease;
 }
 
 .modal-close-btn:hover {
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .modal-body {

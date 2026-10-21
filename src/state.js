@@ -18,7 +18,8 @@ import {
   INITIAL_LEAVES,
   INITIAL_QUERIES,
   INITIAL_RECRUITMENT,
-  INITIAL_TEACHERS
+  INITIAL_TEACHERS,
+  INITIAL_USER_ACCOUNTS
 } from './mockData.js';
 
 import {
@@ -78,47 +79,50 @@ class AppState {
       isSyncing: false
     };
 
-    // Theme State (Dark / Highly Formal Light)
-    this.theme = localStorage.getItem('imp_theme_v5') || 'dark';
+    // Theme State: Executive White & Navy Blue Theme (Default & Permanent)
+    this.theme = 'light';
     if (typeof document !== 'undefined' && document.documentElement) {
-      document.documentElement.setAttribute('data-theme', this.theme);
+      document.documentElement.setAttribute('data-theme', 'light');
     }
 
     // Directors Management (Ishwari Deshmukh & Shrikrishna Deshmukh)
-    this.directors = this._load('imp_directors_v6', DIRECTORS_LIST);
-    this.activeDirectorId = localStorage.getItem('imp_active_director_id_v6') || 'dir1';
+    this.directors = this._load('imp_directors_v8', DIRECTORS_LIST);
+    this.activeDirectorId = localStorage.getItem('imp_active_director_id_v8') || 'dir1';
 
     // Auth & Navigation State
-    this.currentUser = this._load('imp_current_user_v6', null);
-    this.currentRole = localStorage.getItem('imp_role_v6') || 'public';
-    this.currentStudentId = localStorage.getItem('imp_student_id_v6') || 's1';
-    this.currentParentStudentId = localStorage.getItem('imp_parent_ward_v6') || 's1';
-    this.currentTeacherId = localStorage.getItem('imp_teacher_id_v6') || 't1';
+    this.currentUser = this._load('imp_current_user_v8', null);
+    this.currentRole = localStorage.getItem('imp_role_v8') || 'public';
+    this.currentStudentId = localStorage.getItem('imp_student_id_v8') || 's1';
+    this.currentParentStudentId = localStorage.getItem('imp_parent_ward_v8') || 's1';
+    this.currentTeacherId = localStorage.getItem('imp_teacher_id_v8') || 't1';
+
+    // User Accounts & Password Management Desk (Under authority of Director Ishwari Deshmukh)
+    this.userAccounts = this._load('imp_user_accounts_v8', INITIAL_USER_ACCOUNTS);
     
     // Active tabs within portals
-    this.currentPublicTab = localStorage.getItem('imp_public_tab_v5') || 'overview';
-    this.currentDirectorTab = 'fees';
+    this.currentPublicTab = localStorage.getItem('imp_public_tab_v8') || 'overview';
+    this.currentDirectorTab = 'academicMaster';
     this.currentAdminTab = 'receipts';
     this.currentTeacherTab = 'notes';
     this.currentStudentTab = 'notes';
     this.currentParentTab = 'overview';
 
-    // Business Data Stores (v6 with Master Course, Subject and Per-Subject Fee Structure)
-    this.courses = this._sanitizeCourses(this._load('imp_courses_v6', INITIAL_COURSES));
-    this.subjectsCatalog = this._sanitizeSubjects(this._load('imp_subjects_v6', SUBJECTS_CATALOG));
-    this.feeStructures = this._load('imp_fee_structures_v6', INITIAL_FEE_STRUCTURES);
-    this.students = this._sanitizeStudents(this._load('imp_students_v6', INITIAL_STUDENTS));
-    this.receipts = this._sanitizeReceipts(this._load('imp_receipts_v6', INITIAL_RECEIPTS));
-    this.expenses = this._sanitizeExpenses(this._load('imp_expenses_v5', INITIAL_EXPENSES));
-    this.enquiries = this._load('imp_enquiries_v5', INITIAL_ENQUIRIES);
-    this.portions = this._sanitizePortions(this._load('imp_portions_v5', INITIAL_PORTIONS));
-    this.teachingPlans = this._load('imp_teaching_plans_v5', INITIAL_TEACHING_PLANS);
-    this.homeworks = this._load('imp_homeworks_v5', INITIAL_HOMEWORKS);
-    this.exams = this._sanitizeExams(this._load('imp_exams_v5', INITIAL_EXAMS));
-    this.leaves = this._load('imp_leaves_v5', INITIAL_LEAVES);
-    this.queries = this._sanitizeQueries(this._load('imp_queries_v5', INITIAL_QUERIES));
-    this.recruitment = this._load('imp_recruitment_v5', INITIAL_RECRUITMENT);
-    this.teachers = this._sanitizeTeachers(this._load('imp_teachers_v6', INITIAL_TEACHERS));
+    // Business Data Stores (v8 Clean Baseline: 5 Official Students, Standard Curricula, Zero Mock Records)
+    this.courses = this._sanitizeCourses(this._load('imp_courses_v8', INITIAL_COURSES));
+    this.subjectsCatalog = this._sanitizeSubjects(this._load('imp_subjects_v8', SUBJECTS_CATALOG));
+    this.feeStructures = this._load('imp_fee_structures_v8', INITIAL_FEE_STRUCTURES);
+    this.students = this._sanitizeStudents(this._load('imp_students_v8', INITIAL_STUDENTS));
+    this.receipts = this._sanitizeReceipts(this._load('imp_receipts_v8', INITIAL_RECEIPTS));
+    this.expenses = this._sanitizeExpenses(this._load('imp_expenses_v8', INITIAL_EXPENSES));
+    this.enquiries = this._load('imp_enquiries_v8', INITIAL_ENQUIRIES);
+    this.portions = this._sanitizePortions(this._load('imp_portions_v8', INITIAL_PORTIONS));
+    this.teachingPlans = this._load('imp_teaching_plans_v8', INITIAL_TEACHING_PLANS);
+    this.homeworks = this._load('imp_homeworks_v8', INITIAL_HOMEWORKS);
+    this.exams = this._sanitizeExams(this._load('imp_exams_v8', INITIAL_EXAMS));
+    this.leaves = this._load('imp_leaves_v8', INITIAL_LEAVES);
+    this.queries = this._sanitizeQueries(this._load('imp_queries_v8', INITIAL_QUERIES));
+    this.recruitment = this._load('imp_recruitment_v8', INITIAL_RECRUITMENT);
+    this.teachers = this._sanitizeTeachers(this._load('imp_teachers_v8', INITIAL_TEACHERS));
 
     // Initialize Supabase Cloud Background Sync
     if (typeof window !== 'undefined') {
@@ -599,24 +603,23 @@ class AppState {
     this.subscribers.forEach(cb => cb(this));
   }
 
-  // --- THEME SWITCHING (DARK & HIGHLY FORMAL LIGHT) ---
+  // --- THEME STATE (EXECUTIVE WHITE & NAVY BLUE THEME) ---
 
   toggleTheme() {
-    this.theme = this.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('imp_theme_v5', this.theme);
+    this.theme = 'light';
+    localStorage.setItem('imp_theme_v8', 'light');
     if (typeof document !== 'undefined' && document.documentElement) {
-      document.documentElement.setAttribute('data-theme', this.theme);
+      document.documentElement.setAttribute('data-theme', 'light');
     }
     this.notify();
     return this.theme;
   }
 
   setTheme(theme) {
-    if (theme !== 'dark' && theme !== 'light') return;
-    this.theme = theme;
-    localStorage.setItem('imp_theme_v5', this.theme);
+    this.theme = 'light';
+    localStorage.setItem('imp_theme_v8', 'light');
     if (typeof document !== 'undefined' && document.documentElement) {
-      document.documentElement.setAttribute('data-theme', this.theme);
+      document.documentElement.setAttribute('data-theme', 'light');
     }
     this.notify();
     return this.theme;
@@ -636,7 +639,7 @@ class AppState {
     );
     if (!dir) return null;
     this.activeDirectorId = dir.id;
-    localStorage.setItem('imp_active_director_id_v6', dir.id);
+    localStorage.setItem('imp_active_director_id_v8', dir.id);
     if (this.currentRole === 'director' || (this.currentUser && this.currentUser.role === 'director')) {
       this.currentUser = {
         userId: `Director - ${dir.name}`,
@@ -649,60 +652,236 @@ class AppState {
         title: dir.title,
         badge: dir.badge
       };
-      this._save('imp_current_user_v6', this.currentUser);
+      this._save('imp_current_user_v8', this.currentUser);
     }
     this.notify();
     return dir;
   }
 
-  login(userId, password) {
-    if (password !== UNIVERSAL_PASSWORD) {
-      return { success: false, message: 'Invalid Password. Please use default credentials: Password@123' };
+  // --- USER ID & PASSWORD MANAGEMENT DESK (Director Ishwari Deshmukh Authority) ---
+
+  getUserAccounts(filterCategory = null) {
+    if (!filterCategory || filterCategory === 'all') {
+      return [...this.userAccounts];
+    }
+    return this.userAccounts.filter(u => 
+      u.category?.toLowerCase() === filterCategory.toLowerCase() ||
+      u.role?.toLowerCase() === filterCategory.toLowerCase()
+    );
+  }
+
+  getUserAccountById(id) {
+    return this.userAccounts.find(u => u.id === id);
+  }
+
+  updateUserAccount(id, { userId, password, name, email, phone }) {
+    const acc = this.userAccounts.find(u => u.id === id);
+    if (!acc) return { success: false, message: 'User account not found.' };
+
+    const trimmedUserId = userId ? userId.trim() : acc.userId;
+    if (!trimmedUserId || trimmedUserId.length < 3) {
+      return { success: false, message: 'User ID must be at least 3 characters long.' };
     }
 
-    let cred = USER_CREDENTIALS[userId];
-    if (!cred) {
-      // Check if user is one of the Directors
+    // Check if new userId is already in use by another user
+    const duplicate = this.userAccounts.find(u => u.id !== id && u.userId.toLowerCase() === trimmedUserId.toLowerCase());
+    if (duplicate) {
+      return { success: false, message: `User ID "${trimmedUserId}" is already assigned to ${duplicate.name}. Please choose a unique User ID.` };
+    }
+
+    if (password && password.trim().length < 4) {
+      return { success: false, message: 'Password must be at least 4 characters long.' };
+    }
+
+    acc.userId = trimmedUserId;
+    if (password) acc.password = password.trim();
+    if (name) acc.name = name.trim();
+    if (email) acc.email = email.trim();
+    if (phone) acc.phone = phone.trim();
+
+    acc.authorizedBy = 'Director Ishwari Deshmukh';
+    acc.updatedAt = new Date().toISOString();
+
+    // Propagate changes to students / teachers / directors if applicable
+    if (acc.role === 'student' && acc.studentId) {
+      const student = this.students.find(s => s.id === acc.studentId);
+      if (student) {
+        if (name) student.name = name.trim();
+        if (email) student.email = email.trim();
+        if (phone) student.phone = phone.trim();
+        this._save('imp_students_v8', this.students);
+      }
+    } else if (acc.role === 'teacher' && acc.teacherId) {
+      const teacher = this.teachers.find(t => t.id === acc.teacherId);
+      if (teacher) {
+        if (name) teacher.name = name.trim();
+        if (email) teacher.email = email.trim();
+        if (phone) teacher.phone = phone.trim();
+        this._save('imp_teachers_v8', this.teachers);
+      }
+    } else if (acc.role === 'director' && acc.directorId) {
+      const dir = this.directors.find(d => d.id === acc.directorId);
+      if (dir) {
+        if (name) dir.name = name.trim();
+        if (email) dir.email = email.trim();
+        if (phone) dir.phone = phone.trim();
+        this._save('imp_directors_v8', this.directors);
+      }
+    }
+
+    this._save('imp_user_accounts_v8', this.userAccounts);
+    this.notify();
+
+    return { 
+      success: true, 
+      message: `Credentials updated for ${acc.name}. User ID: ${acc.userId}`,
+      account: acc 
+    };
+  }
+
+  createUserAccount({ role, name, email, phone, userId, password, category, courseName, branch, title, badge }) {
+    if (!name || !name.trim()) return { success: false, message: 'Full name is required.' };
+    if (!userId || !userId.trim()) return { success: false, message: 'User ID is required.' };
+    if (!password || !password.trim()) return { success: false, message: 'Password is required.' };
+
+    const cleanUserId = userId.trim();
+    if (this.userAccounts.some(u => u.userId.toLowerCase() === cleanUserId.toLowerCase())) {
+      return { success: false, message: `User ID "${cleanUserId}" already exists.` };
+    }
+
+    const id = `usr_custom_${Date.now()}`;
+    const newAcc = {
+      id,
+      name: name.trim(),
+      role: role || 'student',
+      category: category || (role ? role.charAt(0).toUpperCase() + role.slice(1) : 'Student'),
+      courseName: courseName || '',
+      email: email ? email.trim() : '',
+      phone: phone ? phone.trim() : '',
+      userId: cleanUserId,
+      password: password.trim(),
+      title: title || `${name.trim()} (${role})`,
+      badge: badge || 'Verified User',
+      branch: branch || 'Gangapur Road Center',
+      status: 'Active',
+      authorizedBy: 'Director Ishwari Deshmukh',
+      updatedAt: new Date().toISOString()
+    };
+
+    this.userAccounts.push(newAcc);
+    this._save('imp_user_accounts_v8', this.userAccounts);
+    this.notify();
+
+    return { success: true, message: `New user account created for ${newAcc.name}.`, account: newAcc };
+  }
+
+  deleteUserAccount(id) {
+    const acc = this.userAccounts.find(u => u.id === id);
+    if (!acc) return { success: false, message: 'Account not found.' };
+    if (acc.id === 'usr_dir_ishwari') {
+      return { success: false, message: 'Cannot delete primary Managing Director Ishwari Deshmukh.' };
+    }
+
+    this.userAccounts = this.userAccounts.filter(u => u.id !== id);
+    this._save('imp_user_accounts_v8', this.userAccounts);
+    this.notify();
+    return { success: true, message: `Account "${acc.name}" deleted.` };
+  }
+
+  login(identifier, password) {
+    if (!identifier || !password) {
+      return { success: false, message: 'Please enter User ID / Email and Password.' };
+    }
+
+    const cleanIdent = String(identifier).trim().toLowerCase();
+    const cleanPass = String(password).trim();
+
+    // 1. Check in userAccounts by custom userId, email, altEmail, phone, name, or id
+    let acc = this.userAccounts.find(u => 
+      u.userId.toLowerCase() === cleanIdent ||
+      (u.email && u.email.toLowerCase() === cleanIdent) ||
+      (u.altEmail && u.altEmail.toLowerCase() === cleanIdent) ||
+      (u.phone && u.phone === cleanIdent) ||
+      u.name.toLowerCase() === cleanIdent ||
+      u.id.toLowerCase() === cleanIdent
+    );
+
+    // 2. Legacy / quick-picker format fallback
+    if (!acc && USER_CREDENTIALS[identifier]) {
+      const cred = USER_CREDENTIALS[identifier];
+      acc = this.userAccounts.find(u => 
+        u.role === cred.role && (
+          (cred.directorId && u.directorId === cred.directorId) ||
+          (cred.teacherId && u.teacherId === cred.teacherId) ||
+          (cred.studentId && u.studentId === cred.studentId) ||
+          (cred.wardId && u.wardId === cred.wardId) ||
+          u.name.toLowerCase() === cred.name?.toLowerCase()
+        )
+      );
+      if (!acc) {
+        acc = {
+          id: `usr_legacy_${Date.now()}`,
+          userId: identifier,
+          password: UNIVERSAL_PASSWORD,
+          ...cred
+        };
+      }
+    }
+
+    if (!acc) {
+      // Check if matches a director name
       const dirMatch = this.directors.find(d => 
-        userId.toLowerCase().includes(d.name.toLowerCase()) || 
-        (d.email && userId.toLowerCase() === d.email.toLowerCase())
+        cleanIdent.includes(d.name.toLowerCase()) || 
+        (d.email && cleanIdent === d.email.toLowerCase())
       );
       if (dirMatch) {
-        this.activeDirectorId = dirMatch.id;
-        cred = {
+        acc = this.userAccounts.find(u => u.directorId === dirMatch.id) || {
+          id: `usr_${dirMatch.id}`,
           role: 'director',
           directorId: dirMatch.id,
           name: dirMatch.name,
           email: dirMatch.email,
           phone: dirMatch.phone,
-          avatar: dirMatch.avatar,
+          userId: dirMatch.email,
+          password: UNIVERSAL_PASSWORD,
           title: dirMatch.title,
           badge: dirMatch.badge
         };
       }
     }
 
-    if (!cred) {
-      return { success: false, message: `Unknown User ID "${userId}". Allowed IDs: Director, Admin Staff, Teacher, Student, Parents` };
+    if (!acc) {
+      return { 
+        success: false, 
+        message: `Unknown User ID / Email "${identifier}". Please verify credentials issued by Director Ishwari Deshmukh.` 
+      };
     }
 
-    if (cred.role === 'director' && cred.directorId) {
-      this.activeDirectorId = cred.directorId;
-      localStorage.setItem('imp_active_director_id_v6', cred.directorId);
+    // Verify Password against custom assigned password OR universal fallback
+    const isPasswordValid = (acc.password && cleanPass === acc.password) || cleanPass === UNIVERSAL_PASSWORD;
+    if (!isPasswordValid) {
+      return { 
+        success: false, 
+        message: 'Incorrect password. Please contact Director Ishwari Deshmukh if you need your password reset.' 
+      };
     }
+
+    // Set persona & active references
+    if (acc.role === 'director') {
+      this.activeDirectorId = acc.directorId || 'dir1';
+      localStorage.setItem('imp_active_director_id_v8', this.activeDirectorId);
+    }
+    if (acc.studentId) this.currentStudentId = acc.studentId;
+    if (acc.wardId) this.currentParentStudentId = acc.wardId;
+    if (acc.teacherId) this.currentTeacherId = acc.teacherId;
 
     this.currentUser = {
-      userId,
-      ...cred
+      ...acc
     };
-    this.currentRole = cred.role;
+    this.currentRole = acc.role;
 
-    if (cred.studentId) this.currentStudentId = cred.studentId;
-    if (cred.wardId) this.currentParentStudentId = cred.wardId;
-    if (cred.teacherId) this.currentTeacherId = cred.teacherId;
-
-    this._save('imp_current_user_v6', this.currentUser);
-    localStorage.setItem('imp_role_v6', this.currentRole);
+    this._save('imp_current_user_v8', this.currentUser);
+    localStorage.setItem('imp_role_v8', this.currentRole);
     this.notify();
 
     return { success: true, user: this.currentUser };
@@ -711,14 +890,14 @@ class AppState {
   logout() {
     this.currentUser = null;
     this.currentRole = 'public';
-    localStorage.removeItem('imp_current_user_v6');
-    localStorage.setItem('imp_role_v6', 'public');
+    localStorage.removeItem('imp_current_user_v8');
+    localStorage.setItem('imp_role_v8', 'public');
     this.notify();
   }
 
   setRole(role) {
     this.currentRole = role;
-    localStorage.setItem('imp_role_v6', role);
+    localStorage.setItem('imp_role_v8', role);
     this.notify();
   }
 
@@ -1889,16 +2068,14 @@ class AppState {
       removedStudents = mockStudents.length;
       mockStudents.forEach(s => dbDeleteStudent(s.id));
       this.students = this.students.filter(s => officialStudentIds.includes(s.id));
-      this._save('imp_students_v6', this.students);
-      this._save('imp_students_v5', this.students);
+      this._save('imp_students_v8', this.students);
     }
 
     if (clearReceipts) {
       removedReceipts = this.receipts.length;
       this.receipts.forEach(r => dbDeleteReceipt(r.receiptNo));
       this.receipts = [];
-      this._save('imp_receipts_v6', this.receipts);
-      this._save('imp_receipts_v5', this.receipts);
+      this._save('imp_receipts_v8', this.receipts);
 
       // Reset students to pending
       this.students.forEach(s => {
@@ -1906,22 +2083,21 @@ class AppState {
         s.dueFees = s.totalFees;
         s.status = 'Pending';
       });
-      this._save('imp_students_v6', this.students);
-      this._save('imp_students_v5', this.students);
+      this._save('imp_students_v8', this.students);
     }
 
     if (clearExpenses) {
       removedExpenses = this.expenses.length;
       this.expenses.forEach(e => dbDeleteExpense(e.voucherNo));
       this.expenses = [];
-      this._save('imp_expenses_v5', this.expenses);
+      this._save('imp_expenses_v8', this.expenses);
     }
 
     if (clearEnquiries) {
       removedEnquiries = this.enquiries.length;
       this.enquiries.forEach(enq => dbDeleteEnquiry(enq.id));
       this.enquiries = [];
-      this._save('imp_enquiries_v5', this.enquiries);
+      this._save('imp_enquiries_v8', this.enquiries);
     }
 
     this.notify();
@@ -1944,19 +2120,18 @@ class AppState {
     this.enquiries = JSON.parse(JSON.stringify(INITIAL_ENQUIRIES));
     this.recruitment = JSON.parse(JSON.stringify(INITIAL_RECRUITMENT));
     this.teachers = JSON.parse(JSON.stringify(INITIAL_TEACHERS));
+    this.userAccounts = JSON.parse(JSON.stringify(INITIAL_USER_ACCOUNTS));
 
-    this._save('imp_students_v6', this.students);
-    this._save('imp_students_v5', this.students);
-    this._save('imp_courses_v6', this.courses);
-    this._save('imp_subjects_v6', this.subjectsCatalog);
-    this._save('imp_fee_structures_v6', this.feeStructures);
-    this._save('imp_receipts_v6', this.receipts);
-    this._save('imp_receipts_v5', this.receipts);
-    this._save('imp_expenses_v5', this.expenses);
-    this._save('imp_enquiries_v5', this.enquiries);
-    this._save('imp_recruitment_v5', this.recruitment);
-    this._save('imp_teachers_v6', this.teachers);
-    this._save('imp_teachers_v5', this.teachers);
+    this._save('imp_students_v8', this.students);
+    this._save('imp_courses_v8', this.courses);
+    this._save('imp_subjects_v8', this.subjectsCatalog);
+    this._save('imp_fee_structures_v8', this.feeStructures);
+    this._save('imp_receipts_v8', this.receipts);
+    this._save('imp_expenses_v8', this.expenses);
+    this._save('imp_enquiries_v8', this.enquiries);
+    this._save('imp_recruitment_v8', this.recruitment);
+    this._save('imp_teachers_v8', this.teachers);
+    this._save('imp_user_accounts_v8', this.userAccounts);
 
     this.notify();
     return { success: true, message: 'All records successfully restored to official baseline.' };

@@ -712,246 +712,6 @@ export const INITIAL_STUDENTS = [
         { testName: 'University Mock Preliminary', subject: 'FY Bcom Accounts', maxMarks: 100, marks: 89, date: '2026-09-28' }
       ]
     }
-  },
-  {
-    id: 's6',
-    rollNo: 'IMP-2026-06',
-    name: 'Aarav Sharma',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    batch: 'Gangapur Road (Evening)',
-    branchId: 'b2',
-    branchName: 'Branch 2: Gangapur Road Center',
-    phone: '9820112233',
-    email: 'aarav.sharma@gmail.com',
-    parentName: 'Rajesh Sharma',
-    parentPhone: '9820112233',
-    parentEmail: 'rajesh.sharma@gmail.com',
-    subjectsChosen: ['Account', 'Maths', 'Economics'],
-    assignedTeacher: 'CA Ravindra Deshmukh',
-    totalFees: 30000,
-    paidFees: 30000,
-    dueFees: 0,
-    status: 'Paid',
-    attendancePercent: 96,
-    todayAttendance: 'Present',
-    homeworkCompleted: true,
-    avatar: 'AS',
-    behaviourRemarks: {
-      teacher: 'Exceptionally attentive during ledger balance drills; helpful to batchmates.',
-      parent: 'Devotes 3 hours every evening for revision and maintains disciplined routine.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Unit Test #1', subject: 'Account', maxMarks: 50, marks: 49, date: '2026-10-10' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Terminal Exam', subject: 'Account & Economics', maxMarks: 100, marks: 95, date: '2026-08-28' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Pre-Board', subject: '12th Commerce Full Syllabus', maxMarks: 100, marks: 96, date: '2026-09-30' }
-      ]
-    }
-  },
-  {
-    id: 's7',
-    rollNo: 'IMP-2026-07',
-    name: 'Ananya Deshmukh',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    batch: 'Satpur Colony (Morning CA Elite)',
-    branchId: 'b1',
-    branchName: 'Branch 1: Satpur Colony Center',
-    phone: '9820445566',
-    email: 'ananya.d@gmail.com',
-    parentName: 'Sunil Deshmukh',
-    parentPhone: '9820445566',
-    parentEmail: 'sunil.deshmukh@gmail.com',
-    subjectsChosen: ['Accounts', 'Income Tax', 'GST', 'Costing', 'Law'],
-    assignedTeacher: 'Prof. Arvind Deshpande (CA)',
-    totalFees: 65000,
-    paidFees: 40000,
-    dueFees: 25000,
-    status: 'Partial',
-    attendancePercent: 94,
-    todayAttendance: 'Present',
-    homeworkCompleted: true,
-    avatar: 'AD',
-    behaviourRemarks: {
-      teacher: 'Analytical problem solving mindset; handles complex PGBP sections very well.',
-      parent: 'Very sincere about CA preparation; self-motivated study pattern.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Test #6', subject: 'Taxation (Income Tax & GST)', maxMarks: 50, marks: 46, date: '2026-10-12' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Mock', subject: 'CA Inter Group 1', maxMarks: 100, marks: 88, date: '2026-08-25' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Benchmark', subject: 'Taxation & Costing', maxMarks: 100, marks: 91, date: '2026-09-25' }
-      ]
-    }
-  },
-  {
-    id: 's8',
-    rollNo: 'IMP-2026-08',
-    name: 'Rohan Kulkarni',
-    courseId: 'c1',
-    courseName: '11th Commerce',
-    batch: 'Satpur Colony (Evening)',
-    branchId: 'b1',
-    branchName: 'Branch 1: Satpur Colony Center',
-    phone: '9820778899',
-    email: 'rohan.k@gmail.com',
-    parentName: 'Ramesh Kulkarni',
-    parentPhone: '9820778899',
-    parentEmail: 'ramesh.kulkarni@gmail.com',
-    subjectsChosen: ['Account', 'Maths', 'Economics'],
-    assignedTeacher: 'Mrs Kavita Oak',
-    totalFees: 42000,
-    paidFees: 20000,
-    dueFees: 22000,
-    status: 'Partial',
-    attendancePercent: 88,
-    todayAttendance: 'Absent',
-    homeworkCompleted: false,
-    avatar: 'RK',
-    behaviourRemarks: {
-      teacher: 'Good potential, but needs to be more consistent with daily homework submission.',
-      parent: 'Informed regarding today’s absence due to mild fever; will catch up tomorrow.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Test #3', subject: 'Account', maxMarks: 50, marks: 39, date: '2026-10-08' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Assessment', subject: '11th Core Commerce', maxMarks: 100, marks: 81, date: '2026-08-20' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Evaluation', subject: 'Full First Term', maxMarks: 100, marks: 83, date: '2026-09-22' }
-      ]
-    }
-  },
-  {
-    id: 's9',
-    rollNo: 'IMP-2026-09',
-    name: 'Priya Iyer',
-    courseId: 'c4',
-    courseName: 'CMA Foundation',
-    batch: 'Gangapur Road (CMA FastTrack)',
-    branchId: 'b2',
-    branchName: 'Branch 2: Gangapur Road Center',
-    phone: '9820334455',
-    email: 'priya.iyer@gmail.com',
-    parentName: 'Raman Iyer',
-    parentPhone: '9820334455',
-    parentEmail: 'raman.iyer@gmail.com',
-    subjectsChosen: ['Costing', 'Income Tax', 'GST', 'Law', 'Account'],
-    assignedTeacher: 'CA Ravindra Deshmukh',
-    totalFees: 60000,
-    paidFees: 60000,
-    dueFees: 0,
-    status: 'Paid',
-    attendancePercent: 98,
-    todayAttendance: 'Present',
-    homeworkCompleted: true,
-    avatar: 'PI',
-    behaviourRemarks: {
-      teacher: 'Exemplary dedication in Costing and Marginal variance calculations.',
-      parent: 'Extremely pleased with faculty mentorship and regular feedback.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Test #5', subject: 'Costing & Tax', maxMarks: 50, marks: 48, date: '2026-10-15' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Mock', subject: 'CMA Inter Stage 1', maxMarks: 100, marks: 92, date: '2026-08-30' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Simulation', subject: 'Cost & Management Accounting', maxMarks: 100, marks: 94, date: '2026-09-28' }
-      ]
-    }
-  },
-  {
-    id: 's10',
-    rollNo: 'IMP-2026-10',
-    name: 'Kabir Mehta',
-    courseId: 'c5',
-    courseName: 'CS EET',
-    batch: 'Gangapur Road (Law & CS)',
-    branchId: 'b2',
-    branchName: 'Branch 2: Gangapur Road Center',
-    phone: '9820667788',
-    email: 'kabir.m@gmail.com',
-    parentName: 'Sanjay Mehta',
-    parentPhone: '9820667788',
-    parentEmail: 'sanjay.mehta@gmail.com',
-    subjectsChosen: ['Law', 'Economics', 'Account'],
-    assignedTeacher: 'Pranav Toradmal',
-    totalFees: 52000,
-    paidFees: 30000,
-    dueFees: 22000,
-    status: 'Partial',
-    attendancePercent: 91,
-    todayAttendance: 'Present',
-    homeworkCompleted: true,
-    avatar: 'KM',
-    behaviourRemarks: {
-      teacher: 'Strong grasp of Companies Act sections and case laws drafting.',
-      parent: 'Spends quality time practicing legal resolutions and notes.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Test #4', subject: 'Law', maxMarks: 50, marks: 44, date: '2026-10-11' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Mock', subject: 'Jurisprudence & Law', maxMarks: 100, marks: 87, date: '2026-08-22' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Pre-Executive', subject: 'CS Executive Group 1', maxMarks: 100, marks: 89, date: '2026-09-27' }
-      ]
-    }
-  },
-  {
-    id: 's11',
-    rollNo: 'IMP-2026-11',
-    name: 'Tanvi Patil',
-    courseId: 'c6',
-    courseName: 'IGCSE (Commerce)',
-    batch: 'Gangapur Road (Cambridge)',
-    branchId: 'b2',
-    branchName: 'Branch 2: Gangapur Road Center',
-    phone: '9820990011',
-    email: 'tanvi.patil@gmail.com',
-    parentName: 'Prakash Patil',
-    parentPhone: '9820990011',
-    parentEmail: 'prakash.patil@gmail.com',
-    subjectsChosen: ['Accounts', 'Economics', 'Enterprises'],
-    assignedTeacher: 'Prof. Sunita Rao',
-    totalFees: 70000,
-    paidFees: 45000,
-    dueFees: 25000,
-    status: 'Partial',
-    attendancePercent: 90,
-    todayAttendance: 'Present',
-    homeworkCompleted: true,
-    avatar: 'TP',
-    behaviourRemarks: {
-      teacher: 'Creative thinker in Enterprise business model simulations.',
-      parent: 'Very satisfied with international syllabus coaching standards.'
-    },
-    performanceMarks: {
-      weekly: [
-        { testName: 'Weekly Test #5', subject: 'Enterprises & Economics', maxMarks: 50, marks: 45, date: '2026-10-13' }
-      ],
-      quarterly: [
-        { testName: 'Quarterly Cambridge Mock', subject: 'Accounting & Enterprise', maxMarks: 100, marks: 89, date: '2026-08-29' }
-      ],
-      sixMonthly: [
-        { testName: 'Six-Monthly Cambridge Model', subject: 'Cambridge 0452 & 0454', maxMarks: 100, marks: 92, date: '2026-09-29' }
-      ]
-    }
   }
 ];
 
@@ -1050,25 +810,6 @@ export const INITIAL_RECEIPTS = [
     txnId: 'CASH-REC-005',
     receivedBy: 'Director Shrikrishna Deshmukh',
     notes: 'Term 1 Installment for FY Bcom Financial Accounting'
-  },
-  {
-    receiptNo: 'REC-2026-006',
-    date: '2026-10-17',
-    studentId: 's6',
-    studentName: 'Aarav Sharma',
-    rollNo: 'IMP-2026-06',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    branchId: 'b2',
-    branchName: 'Branch 2: Gangapur Road Center',
-    subject: 'Account, Maths & Economics',
-    teacherName: 'CA Ravindra Deshmukh',
-    amount: 30000,
-    teacherShare60: 18000,
-    mode: 'Online (Bank UPI QR)',
-    txnId: 'UPI-BOI-4429011',
-    receivedBy: 'Director Ishwari Deshmukh',
-    notes: 'Full Year Tuition Fee (Gangapur Road Center)'
   }
 ];
 
@@ -1081,7 +822,7 @@ export const INITIAL_EXPENSES = [
     amount: 26000,
     mode: 'Bank NEFT',
     reference: 'NEFT-MHB-7721',
-    authorizedBy: 'Director',
+    authorizedBy: 'Director Ishwari Deshmukh',
     description: 'Monthly classroom lease for Satpur Colony Center (Near Saptashrungi Mandir)',
     isCommon: true,
     courseId: 'common',
@@ -1096,7 +837,7 @@ export const INITIAL_EXPENSES = [
     amount: 38000,
     mode: 'Cheque / Bank Transfer',
     reference: 'CHQ #781920',
-    authorizedBy: 'Director',
+    authorizedBy: 'Director Ishwari Deshmukh',
     description: 'Monthly classroom lease for Jehan Circle Gangapur Road Center',
     isCommon: true,
     courseId: 'common',
@@ -1111,25 +852,25 @@ export const INITIAL_EXPENSES = [
     amount: 14500,
     mode: 'Cash',
     reference: 'CASH-BILL-8821',
-    authorizedBy: 'Director',
-    description: 'Printing of Income Tax & GST Practice Modules and Saturday Test Papers for Satpur Batch',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    description: 'Printing of Accountancy Workbooks and Saturday Test Papers for Gangapur Road & Satpur batches',
     isCommon: false,
-    courseId: 'c3', // Directly for CA Foundation/Inter
-    branchId: 'b1',
-    branchName: 'Branch 1: Satpur Colony Center'
+    courseId: 'c1',
+    branchId: 'b2',
+    branchName: 'Branch 2: Gangapur Road Center'
   },
   {
     voucherNo: 'VOUCH-2026-043',
     date: '2026-10-11',
-    payee: 'Prof. Arvind Deshpande (Faculty Honorarium Paid)',
+    payee: 'CA Ravindra Deshmukh (Faculty Honorarium Paid)',
     category: 'Faculty Honorarium Paid',
     amount: 45000,
     mode: 'Online NEFT',
     reference: 'NEFT-AXIS-99120',
-    authorizedBy: 'Director',
-    description: 'Honorarium disbursement against 60% fee collection share',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    description: 'Honorarium disbursement against 60% fee collection share for Accounts & Economics batches',
     isCommon: false,
-    courseId: 'c2',
+    courseId: 'c7',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center'
   },
@@ -1141,7 +882,7 @@ export const INITIAL_EXPENSES = [
     amount: 5200,
     mode: 'Online UPI',
     reference: 'UPI-BILL-3391',
-    authorizedBy: 'Admin',
+    authorizedBy: 'Admin Staff Pranav Toradmal',
     description: 'Smart classroom fiber internet & electricity bill for Satpur Center',
     isCommon: true,
     courseId: 'common',
@@ -1156,10 +897,10 @@ export const INITIAL_EXPENSES = [
     amount: 12000,
     mode: 'Online Card',
     reference: 'INTL-VISA-5510',
-    authorizedBy: 'Director',
+    authorizedBy: 'Director Ishwari Deshmukh',
     description: 'Official Cambridge Enterprise and Accounting past workbooks for Gangapur Road',
     isCommon: false,
-    courseId: 'c6',
+    courseId: 'c7',
     branchId: 'b2',
     branchName: 'Branch 2: Gangapur Road Center'
   },
@@ -1171,7 +912,7 @@ export const INITIAL_EXPENSES = [
     amount: 6800,
     mode: 'Online UPI',
     reference: 'UPI-BILL-4412',
-    authorizedBy: 'Admin',
+    authorizedBy: 'Admin Staff Pranav Toradmal',
     description: 'Fiber broadband, projector lamp maintenance & power for Gangapur Road Center',
     isCommon: true,
     courseId: 'common',
@@ -1186,8 +927,8 @@ export const INITIAL_EXPENSES = [
     amount: 7200,
     mode: 'Online Card',
     reference: 'ERP-SUB-9912',
-    authorizedBy: 'Director',
-    description: 'Head office tuition management cloud hosting & WhatsApp gateway subscription (Shared across both branches in student proportion)',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    description: 'Tuition management cloud hosting & WhatsApp gateway subscription (Shared across both branches)',
     isCommon: true,
     courseId: 'common',
     branchId: 'all',
@@ -1195,115 +936,16 @@ export const INITIAL_EXPENSES = [
   }
 ];
 
-export const INITIAL_ENQUIRIES = [
-  {
-    id: 'enq-1',
-    date: '2026-10-15',
-    studentName: 'Snehal More',
-    parentName: 'Sunil More',
-    phone: '9822114477',
-    courseInterested: '11th Commerce',
-    courseId: 'c1',
-    branch: 'Satpur Colony Center',
-    status: 'persuaded',
-    reason: null,
-    counselorNotes: 'Attended free trial lecture with Prof. Deshpande. Convinced with ledger foundation drills. Enrolment token paid ₹2,000.',
-    followUpDate: '2026-10-20'
-  },
-  {
-    id: 'enq-2',
-    date: '2026-10-16',
-    studentName: 'Pranav Joshi',
-    parentName: 'Girish Joshi',
-    phone: '9822336699',
-    courseInterested: 'CA Foundation / Inter',
-    courseId: 'c3',
-    branch: 'Gangapur Road Center',
-    status: 'persuaded',
-    reason: null,
-    counselorNotes: 'Impressed by CA faculty mentorship and past AIR 14 track record. Confirmed joining CA FastTrack batch.',
-    followUpDate: '2026-10-21'
-  },
-  {
-    id: 'enq-3',
-    date: '2026-10-14',
-    studentName: 'Vedika Kulkarni',
-    parentName: 'Anil Kulkarni',
-    phone: '9822558811',
-    courseInterested: '12th Commerce',
-    courseId: 'c2',
-    branch: 'Gangapur Road Center',
-    status: 'persuaded',
-    reason: null,
-    counselorNotes: 'Targeting 95%+ in HSC board. Requested evening timing. Admission confirmed for Batch B.',
-    followUpDate: '2026-10-19'
-  },
-  {
-    id: 'enq-4',
-    date: '2026-10-11',
-    studentName: 'Rohit Deshmukh',
-    parentName: 'Deepak Deshmukh',
-    phone: '9822770022',
-    courseInterested: '11th Commerce',
-    courseId: 'c1',
-    branch: 'Satpur Colony Center',
-    status: 'discontinued',
-    reason: 'Family relocated residence to Nashik Road - daily travel distance too far from Satpur branch',
-    counselorNotes: 'Student liked demo, but parent unable to arrange daily transit from Nashik Road to Satpur.',
-    followUpDate: 'Closed'
-  },
-  {
-    id: 'enq-5',
-    date: '2026-10-12',
-    studentName: 'Megha Shah',
-    parentName: 'Kishore Shah',
-    phone: '9822991133',
-    courseInterested: 'CA Foundation / Inter',
-    courseId: 'c3',
-    branch: 'Gangapur Road Center',
-    status: 'discontinued',
-    reason: 'College morning timing clash (7:30 AM to 11:30 AM) with CA regular morning lecture slots',
-    counselorNotes: 'Invited for weekend fast-track, but opted for recorded online video classes.',
-    followUpDate: 'Closed'
-  },
-  {
-    id: 'enq-6',
-    date: '2026-10-13',
-    studentName: 'Tanmay Shinde',
-    parentName: 'Santosh Shinde',
-    phone: '9822002244',
-    courseInterested: '11th Commerce',
-    courseId: 'c1',
-    branch: 'Satpur Colony Center',
-    status: 'discontinued',
-    reason: 'Switched stream from Commerce to Science (PCM) upon 10th re-evaluation score',
-    counselorNotes: 'Cleared 10th re-evaluation with 92% in Maths and decided to pursue engineering stream.',
-    followUpDate: 'Closed'
-  },
-  {
-    id: 'enq-7',
-    date: '2026-10-14',
-    studentName: 'Arya Verma',
-    parentName: 'Rajeev Verma',
-    phone: '9822446688',
-    courseInterested: 'CMA Foundation / Inter',
-    courseId: 'c4',
-    branch: 'Gangapur Road Center',
-    status: 'discontinued',
-    reason: 'Financial budget constraint; seeking government polytechnic subsidized fee structure',
-    counselorNotes: 'Counselor offered partial installment flexibility, but family opted for subsidized govt course.',
-    followUpDate: 'Closed'
-  }
-];
+export const INITIAL_ENQUIRIES = [];
 
 export const INITIAL_PORTIONS = [
   {
     id: 'p1',
     date: '2026-10-18',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    subject: 'Accounts',
-    teacher: 'Prof. Arvind Deshpande (CA)',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
+    subject: 'Account',
+    teacher: 'CA Ravindra Deshmukh',
     topicCovered: 'Partnership Final Accounts - Treatment of Goodwill & Revaluation of Assets under Admission.',
     completionPercent: 84,
     nextLectureTopic: 'Hidden Goodwill calculation and adjustment of Capitals in new profit sharing ratio.',
@@ -1316,65 +958,33 @@ export const INITIAL_PORTIONS = [
   {
     id: 'p2',
     date: '2026-10-18',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    subject: 'Income Tax',
-    teacher: 'Prof. Arvind Deshpande (CA)',
-    topicCovered: 'Profits and Gains of Business or Profession (PGBP) - Admissible & Inadmissible deductions under Sec 30 to 43D.',
-    completionPercent: 78,
-    nextLectureTopic: 'Presumptive Taxation scheme under Section 44AD and 44ADA with numerical case studies.',
+    courseId: 'c1',
+    courseName: '11th Commerce',
+    subject: 'Account',
+    teacher: 'CA Ravindra Deshmukh',
+    topicCovered: 'Double Entry Book-keeping - Journal entries, Cash Book with discount & bank columns.',
+    completionPercent: 80,
+    nextLectureTopic: 'Bank Reconciliation Statement (BRS) practical problems.',
     mediaType: 'pdf',
-    mediaUrl: 'https://imperialcommerce.edu.in/docs/pgbp_sec30_43d_comprehensive_handout.pdf',
-    mediaName: 'PGBP_Sec30_to_43D_Master_Handout.pdf',
-    mediaSize: '3.8 MB',
+    mediaUrl: 'https://imperialcommerce.edu.in/docs/brs_master_handout.pdf',
+    mediaName: 'BRS_Classroom_Handout.pdf',
+    mediaSize: '2.5 MB',
     status: 'Completed'
   },
   {
     id: 'p3',
     date: '2026-10-18',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    subject: 'GST',
-    teacher: 'Prof. Arvind Deshpande (CA)',
-    topicCovered: 'Input Tax Credit (ITC) - Conditions for claiming ITC under Section 16 & Blocked credits under Section 17(5).',
-    completionPercent: 74,
-    nextLectureTopic: 'Rule 42 & 43 reversal of common credit for taxable and exempt supplies.',
+    courseId: 'c6',
+    courseName: '10th ICGSE',
+    subject: 'Economics',
+    teacher: 'CA Ravindra Deshmukh',
+    topicCovered: 'Price Elasticity of Demand (PED) - Determinants, calculation and graphical analysis.',
+    completionPercent: 78,
+    nextLectureTopic: 'Price Elasticity of Supply (PES) and market equilibrium shifts.',
     mediaType: 'video',
     mediaUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    mediaName: 'ITC_Section16_17_5_Lecture_Recording_Clip.mp4',
-    mediaSize: '14.5 MB',
-    status: 'Completed'
-  },
-  {
-    id: 'p4',
-    date: '2026-10-18',
-    courseId: 'c4',
-    courseName: 'CMA Foundation / Inter',
-    subject: 'Costing',
-    teacher: 'Prof. Rajesh Kulkarni (CMA)',
-    topicCovered: 'Standard Costing - Material Price Variance (MPV) and Material Usage Variance (MUV) with practical industrial cases.',
-    completionPercent: 70,
-    nextLectureTopic: 'Labor Variances: Rate Variance and Efficiency Variance computation.',
-    mediaType: 'pdf',
-    mediaUrl: 'https://imperialcommerce.edu.in/docs/standard_costing_variances_formulas.pdf',
-    mediaName: 'Standard_Costing_Variances_Formulas.pdf',
-    mediaSize: '1.9 MB',
-    status: 'Completed'
-  },
-  {
-    id: 'p5',
-    date: '2026-10-18',
-    courseId: 'c6',
-    courseName: 'IGCSE (Commerce)',
-    subject: 'Enterprises (IGCSE)',
-    teacher: 'Prof. Sunita Rao',
-    topicCovered: 'Enterprise Business Planning - Cash flow forecasting, sources of business start-up finance & Risk mitigation.',
-    completionPercent: 76,
-    nextLectureTopic: 'Marketing mix (4Ps) tailored for youth enterprise proposals.',
-    mediaType: 'image',
-    mediaUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80',
-    mediaName: 'Enterprise_Cashflow_Forecast_Model_Diagram.png',
-    mediaSize: '1.2 MB',
+    mediaName: 'PED_Concept_Lecture_Clip.mp4',
+    mediaSize: '12.5 MB',
     status: 'Completed'
   }
 ];
@@ -1384,37 +994,24 @@ export const INITIAL_TEACHING_PLANS = [
     id: 'plan-1',
     day: 'Day 42 (Today)',
     date: '2026-10-18',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    subject: 'Accounts',
-    teacher: 'Prof. Arvind Deshpande (CA)',
-    stipulatedByDirector: 'Partnership Final Accounts - Hidden Goodwill & Capital Adjustments (Pages 82-95 of Board Textbook)',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
+    subject: 'Account',
+    teacher: 'CA Ravindra Deshmukh',
+    stipulatedByDirector: 'Partnership Final Accounts - Hidden Goodwill & Capital Adjustments',
     actualTaughtByTeacher: 'Completed Hidden Goodwill derivations, working notes & 4 comprehensive ledger problems',
     variance: '100% On Track',
-    status: 'Verified by Director'
+    status: 'Verified by Director Ishwari Deshmukh'
   },
   {
     id: 'plan-2',
-    day: 'Day 42 (Today)',
-    date: '2026-10-18',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    subject: 'Income Tax',
-    teacher: 'Prof. Arvind Deshpande (CA)',
-    stipulatedByDirector: 'PGBP Sec 32 Depreciation + Additional Depreciation numericals',
-    actualTaughtByTeacher: 'Covered Sec 32, Block of assets and 3 practical ICAI study module illustrations',
-    variance: 'Ahead of Schedule (+1 illustration)',
-    status: 'Verified by Director'
-  },
-  {
-    id: 'plan-3',
     day: 'Day 43 (Tomorrow)',
     date: '2026-10-19',
-    courseId: 'c4',
-    courseName: 'CMA Foundation / Inter',
-    subject: 'Costing',
-    teacher: 'Prof. Rajesh Kulkarni (CMA)',
-    stipulatedByDirector: 'Labor Cost Variances: Rate, Efficiency and Idle Time variances',
+    courseId: 'c1',
+    courseName: '11th Commerce',
+    subject: 'Account',
+    teacher: 'CA Ravindra Deshmukh',
+    stipulatedByDirector: 'Bank Reconciliation Statement - Overdraft as per Cash Book',
     actualTaughtByTeacher: 'Scheduled for tomorrow morning 8:00 AM session',
     variance: 'Pending Lecture Delivery',
     status: 'Planned'
@@ -1424,43 +1021,22 @@ export const INITIAL_TEACHING_PLANS = [
 export const INITIAL_HOMEWORKS = [
   {
     id: 'hw1',
-    courseId: 'c2',
-    subject: 'Accounts',
-    title: 'Partnership Accounts Problem Set 4: Admission of Partner',
+    courseId: 'c7',
+    subject: 'Account',
+    title: 'Cambridge 12th ICGSE Accounting: Partnership & Goodwill Adjustment',
     assignedDate: '2026-10-18',
-    dueDate: '2026-10-19',
-    assignedBy: 'Prof. Arvind Deshpande (CA)',
-    description: 'Solve Practical Questions 6 to 12 from Board Question Bank. Prepare Revaluation A/c, Partners Capital A/c and Balance Sheet.',
+    dueDate: '2026-10-22',
+    assignedBy: 'CA Ravindra Deshmukh',
+    description: 'Solve Practical Questions 1 to 6 on Partnership Admission and Revaluation working notes.',
     submissions: [
       {
         studentId: 's1',
-        studentName: 'Aarav Sharma',
-        submittedAt: '2026-10-18 19:30',
+        studentName: 'Arush Thorat',
+        submittedAt: '2026-10-19 19:30',
         photoUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
         status: 'Checked',
         marksGiven: '10/10',
-        remarks: 'Excellent ledger presentation! Working notes for goodwill valuation are clean.'
-      }
-    ]
-  },
-  {
-    id: 'hw2',
-    courseId: 'c3',
-    subject: 'Income Tax',
-    title: 'PGBP Case Studies: Depreciation & Section 32 Numericals',
-    assignedDate: '2026-10-17',
-    dueDate: '2026-10-19',
-    assignedBy: 'Prof. Arvind Deshpande (CA)',
-    description: 'Calculate written down value (WDV) and allowable depreciation for manufacturing plant and machinery additions.',
-    submissions: [
-      {
-        studentId: 's2',
-        studentName: 'Ananya Deshmukh',
-        submittedAt: '2026-10-18 18:00',
-        photoUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
-        status: 'Checked',
-        marksGiven: '9.5/10',
-        remarks: 'Good grasp of additional depreciation under Section 32(1)(iia). Verified.'
+        remarks: 'Clean ledger presentation and accurate goodwill adjustments.'
       }
     ]
   }
@@ -1469,302 +1045,65 @@ export const INITIAL_HOMEWORKS = [
 export const INITIAL_EXAMS = [
   {
     id: 'exam-1',
-    title: '12th Commerce Weekly Accounts Assessment #5',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    subject: 'Accounts',
+    title: '12th ICGSE Weekly Accounts Assessment #1',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
+    subject: 'Account',
     examType: 'Weekly Test',
     date: '2026-10-17',
     maxMarks: 50,
     durationMinutes: 60,
-    questionPaperPdf: 'https://imperialcommerce.edu.in/docs/12th_accounts_weekly_test5.pdf',
+    questionPaperPdf: 'https://imperialcommerce.edu.in/docs/12th_accounts_weekly_test1.pdf',
     googleFormLink: 'https://forms.gle/imperial12thAccountsSample',
-    publishedBy: 'Prof. Arvind Deshpande (CA)',
+    publishedBy: 'CA Ravindra Deshmukh',
     submissions: [
       {
         studentId: 's1',
-        studentName: 'Aarav Sharma',
-        marksAssessed: 49,
+        studentName: 'Arush Thorat',
+        marksAssessed: 48,
         answerSheetPdf: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
-        answerSheetName: '12th_accounts_unit5_aarav.pdf',
+        answerSheetName: '12th_accounts_unit1_arush.pdf',
         answerSheetSize: '1.9 MB',
         submissionType: 'pdf',
         timeTakenSeconds: 3120,
         timeTakenFormatted: '52 mins 00 secs',
         submittedAt: '2026-10-17 11:52 AM',
-        remarks: 'Flawless ledger balancing and journal narration.',
+        remarks: 'Excellent ledger balancing and narration.',
         status: 'Graded'
       }
     ]
-  },
-  {
-    id: 'exam-2',
-    title: 'CA Inter Taxation Saturday Comprehensive Mock',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    subject: 'Taxation (Direct & Indirect Tax)',
-    examType: 'Quarterly Test',
-    date: '2026-10-15',
-    maxMarks: 100,
-    durationMinutes: 120,
-    questionPaperPdf: 'https://imperialcommerce.edu.in/docs/ca_inter_tax_mock6.pdf',
-    googleFormLink: '',
-    publishedBy: 'Prof. Arvind Deshpande (CA)',
-    submissions: [
-      {
-        studentId: 's2',
-        studentName: 'Ananya Deshmukh',
-        marksAssessed: 89,
-        answerSheetPdf: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
-        answerSheetName: 'ca_inter_tax_mock6_ananya_solved.pdf',
-        answerSheetSize: '2.8 MB',
-        submissionType: 'pdf',
-        timeTakenSeconds: 5880,
-        timeTakenFormatted: '1 hr 38 mins',
-        submittedAt: '2026-10-15 04:38 PM',
-        remarks: 'Sharp calculation in Section 17(5) blocked credit reversals.',
-        status: 'Graded'
-      }
-    ]
-  },
-  {
-    id: 'exam-3',
-    title: 'CA Inter Corporate Tax & GST Simulation Test #4',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    subject: 'GST (Goods & Services Tax - Indirect Taxation)',
-    examType: 'Weekly Test',
-    date: '2026-10-19',
-    maxMarks: 50,
-    durationMinutes: 60,
-    questionPaperPdf: 'https://imperialcommerce.edu.in/docs/ca_inter_gst_itc_test4.pdf',
-    googleFormLink: 'https://forms.gle/imperialCAGSTQuizMock',
-    publishedBy: 'Prof. Arvind Deshpande (CA)',
-    submissions: []
-  },
-  {
-    id: 'exam-4',
-    title: '12th Commerce Economics & National Income Unit Test',
-    courseId: 'c2',
-    courseName: '12th Commerce',
-    subject: 'Economics',
-    examType: 'Weekly Test',
-    date: '2026-10-19',
-    maxMarks: 50,
-    durationMinutes: 60,
-    questionPaperPdf: 'https://imperialcommerce.edu.in/docs/12th_economics_unit_test.pdf',
-    googleFormLink: 'https://forms.gle/imperial12thEcoQuiz',
-    publishedBy: 'Prof. Sunita Rao',
-    submissions: []
   }
 ];
 
-export const INITIAL_LEAVES = [
-  {
-    id: 'leave-1',
-    studentId: 's1',
-    studentName: 'Aarav Sharma',
-    courseName: '12th Commerce',
-    appliedDate: '2026-10-18',
-    leaveDate: '2026-10-24', // > 2 days advance
-    reason: 'Family wedding ceremony in Pune (Cousin wedding). Will complete all homework beforehand.',
-    status: 'Approved by Director',
-    directorNotes: 'Approved. Collect recorded video notes on return.'
-  },
-  {
-    id: 'leave-2',
-    studentId: 's3',
-    studentName: 'Rohan Kulkarni',
-    courseName: '11th Commerce',
-    appliedDate: '2026-10-17',
-    leaveDate: '2026-10-23', // > 2 days advance
-    reason: 'Annual religious family gathering in Trimbakeshwar.',
-    status: 'Pending Review',
-    directorNotes: 'Under review by Academic Head.'
-  }
-];
+export const INITIAL_LEAVES = [];
 
 export const INITIAL_QUERIES = [
   {
     id: 'qry-1',
     studentId: 's1',
-    studentName: 'Aarav Sharma',
-    courseId: 'c2',
-    courseName: '12th Commerce',
+    studentName: 'Arush Thorat',
+    courseId: 'c7',
+    courseName: '12th ICGSE',
     recipient: 'Teacher',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    subject: 'Accounts',
-    queryText: 'Respected Sir, in Question 9 of Partnership Accounts (Admission), should goodwill written off be debited to all partners in old ratio or new profit sharing ratio?',
+    teacherName: 'CA Ravindra Deshmukh',
+    subject: 'Account',
+    queryText: 'Respected Sir, in Question 4 of Partnership Accounts (Admission), should goodwill written off be debited to all partners in old ratio or new profit sharing ratio?',
     attachmentType: 'pdf',
-    attachment: 'partnership_q9_working.pdf',
-    attachmentUrl: 'https://imperialcommerce.edu.in/docs/partnership_q9_working.pdf',
-    replyText: 'Goodwill written off after admission is ALWAYS debited to all partners (including incoming partner) in the NEW profit sharing ratio. Refer to attached summary note.',
+    attachment: 'partnership_q4_working.pdf',
+    attachmentUrl: 'https://imperialcommerce.edu.in/docs/partnership_q4_working.pdf',
+    replyText: 'Goodwill written off after admission is ALWAYS debited to all partners in the NEW profit sharing ratio. Refer to attached summary note.',
     replyAttachmentType: 'pdf',
     replyAttachment: 'goodwill_treatment_summary.pdf',
     replyAttachmentUrl: 'https://imperialcommerce.edu.in/docs/goodwill_treatment_summary.pdf',
     status: 'Answered',
     date: '2026-10-18',
     studentResponse: 'Satisfactory',
-    studentFeedbackNote: 'Concept is 100% clear now, thank you sir! Practiced Question 9 again successfully with the new profit sharing ratio.',
+    studentFeedbackNote: 'Concept is 100% clear now, thank you sir!',
     respondedAt: '2026-10-18'
-  },
-  {
-    id: 'qry-2',
-    studentId: 's2',
-    studentName: 'Ananya Deshmukh',
-    courseId: 'c3',
-    courseName: 'CA Foundation / Inter',
-    recipient: 'Teacher',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    subject: 'GST',
-    queryText: 'Sir, regarding Section 17(5)(a) blocked credits, if a passenger motor vehicle has seating capacity greater than 13 persons, is input tax credit allowable?',
-    attachmentType: 'image',
-    attachment: 'bare_act_sec17_5_query.jpg',
-    attachmentUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
-    replyText: 'Yes Ananya! Blocked credit under Sec 17(5)(a) applies only to motor vehicles for transportation of persons having approved seating capacity of NOT more than 13 persons. If seating capacity > 13, ITC is eligible. Please watch this concise 2-minute video explanation on statutory exceptions.',
-    replyAttachmentType: 'video',
-    replyAttachment: 'gst_sec17_5_amendment_video_explanation.mp4',
-    replyAttachmentUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    status: 'Answered',
-    date: '2026-10-18',
-    studentResponse: 'Satisfactory',
-    studentFeedbackNote: 'The 2-min video lecture clip clarified the exact seating capacity condition and staff bus transport rules!',
-    respondedAt: '2026-10-18'
-  },
-  {
-    id: 'qry-3',
-    studentId: 's3',
-    studentName: 'Rohan Kulkarni',
-    courseId: 'c1',
-    courseName: '11th Commerce',
-    recipient: 'Teacher',
-    teacherName: 'Prof. Arvind Deshpande (CA)',
-    subject: 'Accounts',
-    queryText: 'Sir, I am still confused regarding why Outstanding Expenses are shown on the Liabilities side of the Balance sheet when in the Trial Balance they are on the credit side.',
-    attachmentType: 'pdf',
-    attachment: 'trial_balance_working.pdf',
-    attachmentUrl: 'https://imperialcommerce.edu.in/docs/trial_balance_working.pdf',
-    replyText: 'Outstanding expense represents an accrued liability that has fallen due for payment during the accounting year but has not been settled in cash. Hence, it is an obligation payable in future.',
-    replyAttachmentType: 'pdf',
-    replyAttachment: 'accrual_concept_outstanding_expenses.pdf',
-    replyAttachmentUrl: 'https://imperialcommerce.edu.in/docs/accrual_concept_outstanding_expenses.pdf',
-    status: 'Answered',
-    date: '2026-10-18',
-    studentResponse: 'Not Understood Yet',
-    studentFeedbackNote: 'Still confused about dual adjustment when it appears outside the Trial Balance in adjustments vs single entry when inside trial balance.',
-    respondedAt: '2026-10-18'
-  },
-  {
-    id: 'qry-4',
-    studentId: 's4',
-    studentName: 'Priya Iyer',
-    courseId: 'c4',
-    courseName: 'CMA Foundation / Inter',
-    recipient: 'Director',
-    teacherName: 'Director Dr. S. K. Joshi',
-    subject: 'Costing & Extra Session',
-    queryText: 'Respected Director Sir, could we arrange a special 2-hour Sunday workshop on Machine Hour Rate comprehensive past ICMAI problems at Gangapur Road?',
-    attachmentType: 'none',
-    attachment: null,
-    attachmentUrl: null,
-    replyText: 'Approved. Sunday 9:00 AM special 2-hour doubt clinic scheduled at Gangapur Road Center with Prof. Rajesh Kulkarni. Video recording of previous year workshop attached.',
-    replyAttachmentType: 'video',
-    replyAttachment: 'machine_hour_rate_clinic_part1.mp4',
-    replyAttachmentUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    status: 'Answered',
-    date: '2026-10-17',
-    studentResponse: 'Satisfactory',
-    studentFeedbackNote: 'Thank you Director Sir! Watching the preliminary video before the Sunday workshop.',
-    respondedAt: '2026-10-17'
   }
 ];
 
-export const INITIAL_RECRUITMENT = [
-  {
-    id: 'rec-1',
-    name: 'CA Manasi Kulkarni',
-    roleType: 'Teaching Faculty',
-    post: 'Senior Cost & Management Accounting Faculty',
-    qualification: 'Chartered Accountant (ICAI) & B.Com (Gold Medalist)',
-    experience: '6 Years in CA & CMA Inter coaching',
-    phone: '+91 98221 44556',
-    email: 'ca.manasi@gmail.com',
-    expectedPay: '₹1,500 / Lecture or 60% Sharing Model',
-    demoLectureDate: '2026-10-22',
-    status: 'Demo Cleared - Offer Extended',
-    branchPreference: 'Both Campuses (Satpur & Gangapur)',
-    resumeName: 'CA_Manasi_Kulkarni_CV.pdf',
-    resumeSize: '1.4 MB',
-    academicCertsList: ['CA Final Passing Certificate (ICAI)', 'B.Com Gold Medal Certificate', 'ICAI Rank Certificate'],
-    nonAcademicCertsList: ['National Commerce Faculty Conclave Award', 'Rotary Youth Leadership Award'],
-    photoUrl: '',
-    coverLetter: 'Dedicated to mentoring CA/CMA Inter students with real-world corporate case studies and rigorous test series.',
-    notes: 'Exceptional clarity in Standard Costing; highly recommended by Director.'
-  },
-  {
-    id: 'rec-2',
-    name: 'Adv. Sandeep Wagh',
-    roleType: 'Teaching Faculty',
-    post: 'Corporate & Mercantile Law Specialist',
-    qualification: 'LL.M (Corporate Law), CS Executive',
-    experience: '8 Years teaching Companies Act & Business Laws',
-    phone: '+91 98227 88990',
-    email: 'adv.sandeep.w@gmail.com',
-    expectedPay: '₹1,200 / Lecture',
-    demoLectureDate: '2026-10-25',
-    status: 'Interview Scheduled',
-    branchPreference: 'Branch 2: Gangapur Road Center',
-    resumeName: 'Adv_Sandeep_Wagh_LawFaculty_CV.pdf',
-    resumeSize: '950 KB',
-    academicCertsList: ['LL.M (Corporate Law) Degree Certificate', 'CS Executive Group Passing Certificate'],
-    nonAcademicCertsList: ['Bar Council of Maharashtra & Goa ID', 'State Level Moot Court Judge Citation'],
-    photoUrl: '',
-    coverLetter: 'Passionate about simplifying legal jargon into memorable mnemonic frameworks for 12th State Board and CA Foundation law.',
-    notes: 'Drafting and resolution expertise; scheduled for panel round.'
-  },
-  {
-    id: 'rec-3',
-    name: 'Sachin Jadhav',
-    roleType: 'Non-Teaching / Admin',
-    post: 'Front Desk Admission Counselor & Parent Coordinator',
-    qualification: 'MBA (Marketing & HR)',
-    experience: '4 Years in coaching institute operations in Nashik',
-    phone: '+91 98220 11223',
-    email: 'sachin.jadhav@gmail.com',
-    expectedPay: '₹28,000 / Month',
-    demoLectureDate: '2026-10-21',
-    status: 'Interview Scheduled',
-    branchPreference: 'Branch 1: Satpur Colony Center',
-    resumeName: 'Sachin_Jadhav_Admin_Profile.pdf',
-    resumeSize: '680 KB',
-    academicCertsList: ['MBA Degree Certificate (Pune University)', 'B.Com Degree'],
-    nonAcademicCertsList: ['Nashik Youth Sports Leadership Trophy', 'Customer Relationship Excellence Certificate'],
-    photoUrl: '',
-    coverLetter: 'Experienced in empathetic parent counseling, course conversions, and daily WhatsApp parent updates.',
-    notes: 'Fluent in Marathi, English, Hindi; proficient with WhatsApp CRM and fee receipts.'
-  },
-  {
-    id: 'rec-4',
-    name: 'Neha Chaudhari',
-    roleType: 'Non-Teaching / Admin',
-    post: 'Junior Accounts Assistant & Voucher Incharge',
-    qualification: 'M.Com, Tally Prime Certified',
-    experience: '3 Years accounting firm experience',
-    phone: '+91 98224 55667',
-    email: 'neha.chaudhari@gmail.com',
-    expectedPay: '₹22,000 / Month',
-    demoLectureDate: 'Completed',
-    status: 'Hired - Joining Nov 1',
-    branchPreference: 'Branch 1: Satpur Colony Center',
-    resumeName: 'Neha_Chaudhari_Tally_Accounts.pdf',
-    resumeSize: '720 KB',
-    academicCertsList: ['M.Com Degree Certificate', 'Tally Prime Professional Certificate'],
-    nonAcademicCertsList: ['Inter-Collegiate Accounting Quiz Winner'],
-    photoUrl: '',
-    coverLetter: 'Expertise in dual-branch expense vouchers, day-book reconciliation, and Tally Prime reporting.',
-    notes: 'Background verified; joining Satpur branch accounts desk on Nov 1.'
-  }
-];
+export const INITIAL_RECRUITMENT = [];
 
 export const TOPPERS_LIST = [
   {
@@ -1798,5 +1137,313 @@ export const TOPPERS_LIST = [
     school: 'Imperial Professional Wing',
     badge: 'Costing & Tax Distinction',
     image: 'OG'
+  }
+];
+
+/* Official Master User Accounts Directory
+   Authority Granted to Director Ishwari Deshmukh to reset/create user IDs and passwords for all users */
+export const INITIAL_USER_ACCOUNTS = [
+  // Directors
+  {
+    id: 'usr_dir_ishwari',
+    name: 'Ishwari Deshmukh',
+    role: 'director',
+    directorId: 'dir1',
+    category: 'Director',
+    email: 'ishwari1.deshmukh@gmail.com',
+    altEmail: 'ishwari.deshmukh@gmail.com',
+    phone: '9850311082',
+    userId: 'ishwari.deshmukh',
+    password: 'Password@123',
+    title: 'Managing Director & Academic Patron',
+    badge: 'Managing Director',
+    branch: 'Both Centers (Gangapur & Satpur)',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_dir_shrikrishna',
+    name: 'Shrikrishna Deshmukh',
+    role: 'director',
+    directorId: 'dir2',
+    category: 'Director',
+    email: 'k.deshmukh78@gmail.com',
+    phone: '9823979878',
+    userId: 'shrikrishna.deshmukh',
+    password: 'Password@123',
+    title: 'Managing Director & Operations Head',
+    badge: 'Managing Director',
+    branch: 'Both Centers (Gangapur & Satpur)',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  // Administration
+  {
+    id: 'usr_admin_pranav',
+    name: 'Pranav Toradmal',
+    role: 'admin',
+    category: 'Admin Staff',
+    email: 'toradmalpranav33@gmail.com',
+    phone: '9850311082',
+    userId: 'admin.pranav',
+    password: 'Password@123',
+    title: 'Administrator & Operations Desk',
+    badge: 'Operations Desk',
+    branch: 'Satpur Colony Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  // Faculty
+  {
+    id: 'usr_faculty_ravindra',
+    name: 'CA Ravindra Deshmukh',
+    role: 'teacher',
+    teacherId: 't1',
+    category: 'Teacher',
+    email: 'caravindradeshmukh@gmail.com',
+    phone: '9823283377',
+    userId: 'ca.ravindra',
+    password: 'Password@123',
+    title: 'Senior Faculty Lead - Accounts, Economics & Enterprise',
+    badge: 'Lead Faculty',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_faculty_pranav',
+    name: 'Pranav Toradmal',
+    role: 'teacher',
+    teacherId: 't2',
+    category: 'Teacher',
+    email: 'toradmalpranav33@gmail.com',
+    phone: '9370728283',
+    userId: 'faculty.pranav',
+    password: 'Password@123',
+    title: 'Senior Faculty - Accountancy & Corporate Law',
+    badge: 'Law & Accounts',
+    branch: 'Satpur Colony Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_faculty_kavita',
+    name: 'Mrs Kavita Oak',
+    role: 'teacher',
+    teacherId: 't3',
+    category: 'Teacher',
+    email: 'kavitaoak@gmail.com',
+    phone: '9359988246',
+    userId: 'kavita.oak',
+    password: 'Password@123',
+    title: 'Senior Quantitative Aptitude & Mathematics Faculty',
+    badge: 'Maths Faculty',
+    branch: 'Satpur & Gangapur Batches',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_faculty_digvijay',
+    name: 'Mr Digvijay Pawar',
+    role: 'teacher',
+    teacherId: 't4',
+    category: 'Teacher',
+    email: 'digvijaypawar410@gmail.com',
+    phone: '8275586504',
+    userId: 'digvijay.pawar',
+    password: 'Password@123',
+    title: 'Economics Specialist Faculty',
+    badge: 'Economics Faculty',
+    branch: 'Satpur Colony Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  // Real Students & Parents (Exact 5 from Users.xlsx)
+  {
+    id: 'usr_student_s1',
+    name: 'Arush Thorat',
+    role: 'student',
+    studentId: 's1',
+    category: 'Student',
+    courseName: '12th ICGSE',
+    email: 'arushthorat@gmail.com',
+    phone: '9850311082',
+    userId: 'arush.thorat',
+    password: 'Password@123',
+    title: '12th ICGSE Student (Roll #IMP-2026-01)',
+    badge: 'Gangapur Rd',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_parent_s1',
+    name: 'Mr Thorat',
+    role: 'parent',
+    wardId: 's1',
+    wardName: 'Arush Thorat (12th ICGSE)',
+    category: 'Parents',
+    email: 'mrthorat@gmail.com',
+    phone: '9850311082',
+    userId: 'parent.thorat',
+    password: 'Password@123',
+    title: 'Parent of Arush Thorat (12th ICGSE)',
+    badge: 'Verified Guardian',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_student_s2',
+    name: 'Jatin Avhad',
+    role: 'student',
+    studentId: 's2',
+    category: 'Student',
+    courseName: '10th ICGSE',
+    email: 'jatinavhad@gmail.com',
+    phone: '9850311082',
+    userId: 'jatin.avhad',
+    password: 'Password@123',
+    title: '10th ICGSE Student (Roll #IMP-2026-02)',
+    badge: 'Gangapur Rd',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_parent_s2',
+    name: 'Mr Avhad',
+    role: 'parent',
+    wardId: 's2',
+    wardName: 'Jatin Avhad (10th ICGSE)',
+    category: 'Parents',
+    email: 'mravhad@gmail.com',
+    phone: '9850311082',
+    userId: 'parent.avhad',
+    password: 'Password@123',
+    title: 'Parent of Jatin Avhad (10th ICGSE)',
+    badge: 'Verified Guardian',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_student_s3',
+    name: 'Rutuja Shekokar',
+    role: 'student',
+    studentId: 's3',
+    category: 'Student',
+    courseName: '11th Commerce & CA Foundation',
+    email: 'rutujashekokar@gmail.com',
+    phone: '9850311082',
+    userId: 'rutuja.shekokar',
+    password: 'Password@123',
+    title: '11th Commerce & CA Foundation (Roll #IMP-2026-03)',
+    badge: 'Gangapur Rd',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_parent_s3',
+    name: 'Mr Shekokar',
+    role: 'parent',
+    wardId: 's3',
+    wardName: 'Rutuja Shekokar (11th & CA)',
+    category: 'Parents',
+    email: 'mrshekokar@gmail.com',
+    phone: '9850311082',
+    userId: 'parent.shekokar',
+    password: 'Password@123',
+    title: 'Parent of Rutuja Shekokar',
+    badge: 'Verified Guardian',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_student_s4',
+    name: 'Om Nimse',
+    role: 'student',
+    studentId: 's4',
+    category: 'Student',
+    courseName: '11th Commerce',
+    email: 'omnimse@gmail.com',
+    phone: '9850311082',
+    userId: 'om.nimse',
+    password: 'Password@123',
+    title: '11th Commerce Student (Roll #IMP-2026-04)',
+    badge: 'Gangapur Rd',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_parent_s4',
+    name: 'Mr Nimse',
+    role: 'parent',
+    wardId: 's4',
+    wardName: 'Om Nimse (11th Commerce)',
+    category: 'Parents',
+    email: 'mrnimse@gmail.com',
+    phone: '9850311082',
+    userId: 'parent.nimse',
+    password: 'Password@123',
+    title: 'Parent of Om Nimse (11th Commerce)',
+    badge: 'Verified Guardian',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_student_s5',
+    name: 'Swaraj Kakade',
+    role: 'student',
+    studentId: 's5',
+    category: 'Student',
+    courseName: 'FY Bcom',
+    email: 'swarajkakade@gmail.com',
+    phone: '9850311082',
+    userId: 'swaraj.kakade',
+    password: 'Password@123',
+    title: 'FY Bcom Student (Roll #IMP-2026-05)',
+    badge: 'Gangapur Rd',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
+  },
+  {
+    id: 'usr_parent_s5',
+    name: 'Mr Kakade',
+    role: 'parent',
+    wardId: 's5',
+    wardName: 'Swaraj Kakade (FY Bcom)',
+    category: 'Parents',
+    email: 'mrkakade@gmail.com',
+    phone: '9850311082',
+    userId: 'parent.kakade',
+    password: 'Password@123',
+    title: 'Parent of Swaraj Kakade (FY Bcom)',
+    badge: 'Verified Guardian',
+    branch: 'Gangapur Road Center',
+    status: 'Active',
+    authorizedBy: 'Director Ishwari Deshmukh',
+    updatedAt: '2026-10-21T18:10:00'
   }
 ];
