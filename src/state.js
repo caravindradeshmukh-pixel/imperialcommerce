@@ -100,13 +100,30 @@ class AppState {
 
     // User Accounts & Password Management Desk (Under authority of Director Ishwari Deshmukh)
     this.userAccounts = this._load('imp_user_accounts_v8', INITIAL_USER_ACCOUNTS);
-    // Ensure both Directors require first-time password reset if not yet completed
+    // Ensure all accounts have accurate contact info from Users.xlsx and Directors require first-time password reset
+    let accountsUpdated = false;
+    INITIAL_USER_ACCOUNTS.forEach(initAcc => {
+      const match = this.userAccounts.find(u => u.id === initAcc.id || (u.userId && u.userId.toLowerCase() === initAcc.userId.toLowerCase()));
+      if (match) {
+        if (initAcc.phone && match.phone !== initAcc.phone && match.phone === '9850311082' && initAcc.id !== 'usr_dir_ishwari' && initAcc.id !== 'usr_admin_pranav') {
+          match.phone = initAcc.phone;
+          accountsUpdated = true;
+        }
+      } else {
+        this.userAccounts.push(JSON.parse(JSON.stringify(initAcc)));
+        accountsUpdated = true;
+      }
+    });
+
     this.userAccounts.forEach(u => {
       if (u.role === 'director' && u.hasResetInitialPassword === undefined && (u.password === 'Password@123' || !u.passwordChangedAt)) {
         u.mustResetPassword = true;
         u.hasResetInitialPassword = false;
       }
     });
+    if (accountsUpdated) {
+      this._save('imp_user_accounts_v8', this.userAccounts);
+    }
     
     // Active tabs within portals
     this.currentPublicTab = localStorage.getItem('imp_public_tab_v8') || 'overview';

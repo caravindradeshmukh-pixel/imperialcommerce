@@ -68,6 +68,22 @@ export function renderUserCredentialsTab(container, showToast) {
 
           <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
             <button 
+              id="btn-download-notepad-credentials" 
+              class="btn"
+              style="padding: 0.65rem 1.1rem; background: #ffffff; color: #0f2042; font-weight: 700; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
+              title="Download text file formatted for Windows Notepad to share with users"
+            >
+              <span>📄</span> Download for Notepad (.txt)
+            </button>
+            <button 
+              id="btn-copy-all-notepad-credentials" 
+              class="btn"
+              style="padding: 0.65rem 1.1rem; background: rgba(255,255,255,0.18); color: #ffffff; font-weight: 700; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.45rem;"
+              title="Copy entire list to clipboard in Notepad format"
+            >
+              <span>📋</span> Copy All for Notepad
+            </button>
+            <button 
               id="btn-create-new-user" 
               class="btn"
               style="padding: 0.65rem 1.25rem; background: linear-gradient(135deg, #cfa84e, #b48a3c); color: #070b14; font-weight: 800; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; box-shadow: 0 4px 12px rgba(207,168,78,0.3);"
@@ -376,15 +392,96 @@ export function renderUserCredentialsTab(container, showToast) {
     });
 
     // Create New User
+    // Create New User
     const createBtn = container.querySelector('#btn-create-new-user');
     if (createBtn) {
       createBtn.addEventListener('click', () => {
         openCreateUserAccountModal(showToast, () => renderView());
       });
     }
+
+    // Download Notepad Credentials (.txt)
+    const downloadTxtBtn = container.querySelector('#btn-download-notepad-credentials');
+    if (downloadTxtBtn) {
+      downloadTxtBtn.addEventListener('click', () => {
+        const fullText = generateNotepadCredentialsText(state.userAccounts);
+        const blob = new Blob([fullText], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Imperial_User_Credentials_Notepad.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloaded Imperial_User_Credentials_Notepad.txt successfully!', 'success');
+      });
+    }
+
+    // Copy All Notepad Credentials to Clipboard
+    const copyAllTxtBtn = container.querySelector('#btn-copy-all-notepad-credentials');
+    if (copyAllTxtBtn) {
+      copyAllTxtBtn.addEventListener('click', () => {
+        const fullText = generateNotepadCredentialsText(state.userAccounts);
+        navigator.clipboard.writeText(fullText).then(() => {
+          showToast('Copied all user credentials formatted for Notepad to clipboard!', 'success');
+        }).catch(() => {
+          showToast('Unable to copy to clipboard', 'warning');
+        });
+      });
+    }
   }
 
   renderView();
+}
+
+/**
+ * Generate formatted text for Windows Notepad containing all active users
+ */
+export function generateNotepadCredentialsText(accounts) {
+  const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  let text = `================================================================================\n` +
+    `          IMPERIAL COMMERCE TUTORIALS, NASHIK\n` +
+    `          Satpur Colony & Gangapur Road Centers\n` +
+    `     OFFICIAL USER ID & ACCESS CREDENTIALS DIRECTORY (NOTEPAD)\n` +
+    `================================================================================\n` +
+    `Date Generated : ${dateStr}\n` +
+    `Authority      : Director Ishwari Deshmukh & Director Shrikrishna Deshmukh\n` +
+    `Sign-In Rule   : Manually type your User ID in the portal login form (No dropdown)\n` +
+    `Default Initial Password: Password@123\n` +
+    `================================================================================\n\n`;
+
+  const sections = [
+    { title: 'DIRECTORS EXECUTIVE CONSOLE', role: 'director' },
+    { title: 'ADMINISTRATION DESK', role: 'admin' },
+    { title: 'TEACHING FACULTY', role: 'teacher' },
+    { title: 'STUDENTS DESK (OFFICIAL ENROLLED STUDENTS)', role: 'student' },
+    { title: 'PARENTS & GUARDIANS CONNECT', role: 'parent' }
+  ];
+
+  sections.forEach((sec, idx) => {
+    const groupAccounts = accounts.filter(a => a.role === sec.role);
+    text += `================================================================================\n` +
+      `[SECTION ${idx + 1}] ${sec.title} (${groupAccounts.length} ACCOUNTS)\n` +
+      `================================================================================\n\n`;
+
+    groupAccounts.forEach((u, i) => {
+      text += `${i + 1}. ${u.name.toUpperCase()}\n` +
+        `   Role / Details   : ${u.title || u.category || u.courseName || u.role}\n` +
+        `   Center / Branch  : ${u.branch || 'Both Centers'}\n` +
+        `   MANUAL USER ID   : ${u.userId}\n` +
+        `   Registered Email : ${u.email || 'N/A'}\n` +
+        `   Registered Phone : +91 ${u.phone || '9850311082'}\n` +
+        `   Current Password : ${u.password || UNIVERSAL_PASSWORD}\n` +
+        `   -----------------------------------------------------------------------------\n`;
+    });
+    text += `\n`;
+  });
+
+  text += `================================================================================\n` +
+    `End of Credentials Directory • © Imperial Commerce Tutorials, Nashik\n` +
+    `================================================================================\n`;
+  return text;
 }
 
 /**
