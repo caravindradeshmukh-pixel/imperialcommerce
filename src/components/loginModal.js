@@ -25,35 +25,35 @@ export function openLoginModal(initialRole = 'director', onLoginSuccess = null) 
       label: 'Director Console', 
       icon: '👑', 
       desc: 'Directors Ishwari & Shrikrishna Deshmukh',
-      placeholder: 'Enter Director User ID (e.g. ishwari.deshmukh, shrikrishna.deshmukh)'
+      placeholder: 'Enter Director User ID (e.g. Enter Student User ID / Registered Email / Mobile)'
     },
     { 
       id: 'admin', 
       label: 'Admin Desk', 
       icon: '🛡️', 
       desc: 'Office Administration & Accounts',
-      placeholder: 'Enter Admin User ID (e.g. admin.pranav or toradmalpranav33@gmail.com)'
+      placeholder: 'Enter Admin User ID (e.g. Enter Student User ID / Registered Email / Mobile)'
     },
     { 
       id: 'teacher', 
       label: 'Teaching Faculty', 
       icon: '👨‍🏫', 
       desc: 'Senior Faculty & Subject Leads',
-      placeholder: 'Enter Faculty User ID (e.g. ca.ravindra, faculty.pranav, kavita.oak)'
+      placeholder: 'Enter Faculty User ID (e.g. Enter Student User ID / Registered Email / Mobile)'
     },
     { 
       id: 'student', 
       label: 'Student Desk', 
       icon: '🎓', 
       desc: 'Enrolled Students (10th, 11th, 12th, CA, FY BCom)',
-      placeholder: 'Enter Student User ID (e.g. arush.thorat, jatin.avhad, rutuja.shekokar)'
+      placeholder: 'Enter Student User ID (e.g. Enter Student User ID / Registered Email / Mobile)'
     },
     { 
       id: 'parent', 
       label: 'Parent Connect', 
       icon: '👨‍👩‍👧', 
       desc: 'Parents & Verified Guardians',
-      placeholder: 'Enter Parent User ID (e.g. parent.thorat, parent.avhad, parent.shekokar)'
+      placeholder: 'Enter Parent User ID (e.g. Enter Student User ID / Registered Email / Mobile)'
     }
   ];
 
